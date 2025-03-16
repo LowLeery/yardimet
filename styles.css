@@ -55,8 +55,15 @@ h2 {
 
 .service-list {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Hizmetleri aşağıya dizmek için */
+    align-items: center;
     gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .service-item {
+        max-width: 90%;
+    }
 }
 
 .service-item a {
