@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hız dönüşümü aracı.">
+    <title>Hız Dönüştür</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Hız Dönüştür</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="speed" placeholder="Hız Girin (km/s)">
+        <select id="speedUnit">
+            <option value="m/s">Metre/Saniye</option>
+            <option value="mph">Mil/Saat</option>
+        </select>
+        <button onclick="convertSpeed()">Dönüştür</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function convertSpeed() {
+            let speed = document.getElementById('speed').value;
+            let unit = document.getElementById('speedUnit').value;
+            let result;
+            if (unit === "m/s") {
+                result = speed * 1000 / 3600; // km/s'den m/s'ye dönüşüm
+            } else if (unit === "mph") {
+                result = speed * 0.621371; // km/s'den mil/saat'e dönüşüm
+            }
+            document.getElementById('result').textContent = `Sonuç: ${result} ${unit}`;
+        }
+    </script>
+</body>
+</html>
