@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kredi kartı borcunu hesaplamak için araç.">
+    <title>Kredi Kartı Borç Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kredi Kartı Borç Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="principal" placeholder="Ana Para (TL)">
+        <input type="number" id="interest" placeholder="Yıllık Faiz Oranı (%)">
+        <input type="number" id="time" placeholder="Zaman (Yıl)">
+        <button onclick="calculateCreditDebt()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateCreditDebt() {
+            let principal = document.getElementById('principal').value;
+            let interest = document.getElementById('interest').value;
+            let time = document.getElementById('time').value;
+            let debt = principal * Math.pow(1 + interest / 100, time);
+            document.getElementById('result').textContent = `Borcunuz: ${debt.toFixed(2)} TL`;
+        }
+    </script>
+</body>
+</html>
