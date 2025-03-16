@@ -21,7 +21,7 @@ function updateVisitorData() {
             // Ziyaretçi sayısını güncelleme
             data.totalVisitors++; // Toplam ziyaretçi sayısını artır
             data.currentVisitors++; // Aktif ziyaretçi sayısını artır
-            if (window.location.pathname === '/service-page') { // Eğer ziyaretçi hizmet sayfasına geldiyse
+            if (window.location.pathname === '/hizmet') { // Eğer ziyaretçi hizmet sayfasına geldiyse
                 data.servicePageVisitors++; // Hizmet sayfası ziyaretçi sayısını artır
             }
 
