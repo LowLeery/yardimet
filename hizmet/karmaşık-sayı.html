@@ -30,4 +30,10 @@
     <script>
         function calculateComplexNumber() {
             let real = document.getElementById('real').value;
-           
+            let imaginary = document.getElementById('imaginary').value;
+            let complex = `${real} + ${imaginary}i`;
+            document.getElementById('result').textContent = `Karmaşık Sayı: ${complex}`;
+        }
+    </script>
+</body>
+</html>
