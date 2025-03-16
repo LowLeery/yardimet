@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sıcaklık direnci hesaplama aracı.">
+    <title>Sıcaklık Direnci Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Sıcaklık Direnci Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="initialTemp" placeholder="Başlangıç Sıcaklığı (°C)">
+        <input type="number" id="finalTemp" placeholder="Son Sıcaklık (°C)">
+        <button onclick="calculateTemperatureResistance()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateTemperatureResistance() {
+            let initialTemp = document.getElementById('initialTemp').value;
+            let finalTemp = document.getElementById('finalTemp').value;
+            let resistance = finalTemp - initialTemp;
+            document.getElementById('result').textContent = `Sıcaklık Direnci: ${resistance} °C`;
+        }
+    </script>
+</body>
+</html>
