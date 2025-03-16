@@ -21,14 +21,12 @@
     </header>
     
     <section class="main-content">
-
         <div class="content">
             <h2>Öne Çıkan Hizmetler</h2>
             <div class="service-list" id="service-list">
                 <!-- Öne çıkarılan hizmetler buraya dinamik olarak gelecek -->
             </div>
         </div>
-
     </section>
     
     <footer>
@@ -41,7 +39,7 @@
         // Hizmetlerin listesi (Adı ve linki)
         const services = [
             { name: "Vücut Kitle İndeksi Hesapla", link: "hizmet/vki.html" },
-            { name: "Permütasyon Hesaplama", link: "hizmet/permütasyon.html" },
+            { name: "Permütasyon Hesaplama", link:
             { name: "Regl Takip Aracı", link: "hizmet/regl-takip.html" },
             { name: "Faktöriyel Hesaplama", link: "hizmet/faktoriyel.html" },
             { name: "Matematiksel Ortalama Hesapla", link: "hizmet/ortalama.html" },
@@ -69,37 +67,35 @@
         }
 
         // Hizmetleri sayfada göster
-        function displayServices() {
-            const serviceList = document.getElementById('service-list');
-            const randomServices = getRandomServices();
-            
-            randomServices.forEach(service => {
+        function displayServices(serviceList) {
+            const serviceListContainer = document.getElementById('service-list');
+            serviceListContainer.innerHTML = '';  // Mevcut hizmetleri temizle
+            serviceList.forEach(service => {
                 const serviceItem = document.createElement('div');
                 serviceItem.classList.add('service-item');
                 const link = document.createElement('a');
                 link.href = service.link;
                 link.textContent = service.name;
                 serviceItem.appendChild(link);
-                serviceList.appendChild(serviceItem);
+                serviceListContainer.appendChild(serviceItem);
             });
         }
 
         // Sayfa yüklendiğinde hizmetleri göster
-        window.onload = displayServices;
+        window.onload = function() {
+            displayServices(getRandomServices());
+        }
 
         // Arama çubuğuyla hizmetleri filtrele
         function searchServices() {
             const searchQuery = document.getElementById('search-bar').value.toLowerCase();
-            const services = document.querySelectorAll('.service-item');
+            if (searchQuery === '') {
+                displayServices(getRandomServices());  // Eğer arama çubuğu boşsa sadece öne çıkanları göster
+                return;
+            }
             
-            services.forEach(function(service) {
-                let serviceName = service.textContent.toLowerCase();
-                if (serviceName.includes(searchQuery)) {
-                    service.style.display = "block";
-                } else {
-                    service.style.display = "none";
-                }
-            });
+            const filteredServices = services.filter(service => service.name.toLowerCase().includes(searchQuery));
+            displayServices(filteredServices);  // Filtrelenen hizmetleri göster
         }
     </script>
 </body>
