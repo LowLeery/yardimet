@@ -37,25 +37,40 @@
 
     <script>
         // Hizmetlerin listesi (Adı ve linki)
-        const services = [
-            { name: "Vücut Kitle İndeksi Hesapla", link: "hizmet/vki.html" },
-            { name: "Permütasyon Hesaplama", link: "hizmet/permütasyon.html" },
-            { name: "Regl Takip Aracı", link: "hizmet/regl-takip.html" },
-            { name: "Faktöriyel Hesaplama", link: "hizmet/faktoriyel.html" },
-            { name: "Matematiksel Ortalama Hesapla", link: "hizmet/ortalama.html" },
-            { name: "Dikdörtgen Alan Hesapla", link: "hizmet/dikdortgen-alan.html" },
-            { name: "Basit Faiz Hesapla", link: "hizmet/basit-faiz.html" },
-            { name: "Zaman Hesaplama", link: "hizmet/zaman-hesaplama.html" },
-            { name: "Karmaşık Sayı Hesapla", link: "hizmet/karmaşık-sayı.html" },
-            { name: "Hedef Kilo Hesaplama", link: "hizmet/hedef-kilo.html" },
-            { name: "Yaş Hesaplama", link: "hizmet/yas-hesaplama.html" },
-            { name: "Fiyat Karşılaştırma Aracı", link: "hizmet/fiyat-karsilastirma.html" },
-            { name: "Kredi Hesaplama Aracı", link: "hizmet/kredi-hesaplama.html" },
-            { name: "Daire Alan Hesaplama", link: "hizmet/daire-alan.html" },
-            { name: "Dama Oyna", link: "hizmet/dama.html" },
-            { name: "Tavla Oyna", link: "hizmet/tavla.html" },
-            { name: "Satranç Oyna", link: "hizmet/satranç.html" }
-        ];
+       const services = [
+    { name: "Vücut Kitle İndeksi Hesapla", link: "hizmet/vki.html" },
+    { name: "Permütasyon Hesaplama", link: "hizmet/permütasyon.html" },
+    { name: "Regl Takip Aracı", link: "hizmet/regl-takip.html" },
+    { name: "Faktöriyel Hesaplama", link: "hizmet/faktoriyel.html" },
+    { name: "Matematiksel Ortalama Hesapla", link: "hizmet/ortalama.html" },
+    { name: "Dikdörtgen Alan Hesapla", link: "hizmet/dikdortgen-alan.html" },
+    { name: "Basit Faiz Hesapla", link: "hizmet/basit-faiz.html" },
+    { name: "Zaman Hesaplama", link: "hizmet/zaman-hesaplama.html" },
+    { name: "Karmaşık Sayı Hesapla", link: "hizmet/karmaşık-sayı.html" },
+    { name: "Hedef Kilo Hesaplama", link: "hizmet/hedef-kilo.html" },
+    { name: "Yaş Hesaplama", link: "hizmet/yas-hesaplama.html" },
+    { name: "Fiyat Karşılaştırma Aracı", link: "hizmet/fiyat-karsilastirma.html" },
+    { name: "Kredi Hesaplama Aracı", link: "hizmet/kredi-hesaplama.html" },
+    { name: "Daire Alan Hesaplama", link: "hizmet/daire-alan.html" },
+    { name: "Dama Oyna", link: "hizmet/dama.html" },
+    { name: "Tavla Oyna", link: "hizmet/tavla.html" },
+    { name: "Satranç Oyna", link: "hizmet/satranç.html" },
+    { name: "Saat Dilimi Hesaplama", link: "hizmet/saat-dilimi.html" },
+    { name: "Takvim Hesaplama", link: "hizmet/takvim.html" },
+    { name: "Sıcaklık Dönüştürme", link: "hizmet/sicaklik-donusturme.html" },
+    { name: "Hava Durumu Bilgisi", link: "hizmet/hava-durumu.html" },
+    { name: "Vize Hesaplama", link: "hizmet/vize-hesaplama.html" },
+    { name: "Dolar/TL Dönüştürme", link: "hizmet/dolar-tl-donusturme.html" },
+    { name: "Taksit Hesaplama", link: "hizmet/taksit-hesaplama.html" },
+    { name: "Basit Geometri Hesaplama", link: "hizmet/basit-geometri-hesaplama.html" },
+    { name: "Deprem Risk Analizi", link: "hizmet/deprem-risk-analizi.html" },
+    { name: "Renk Dönüştürme (Hex/RGB)", link: "hizmet/renk-donusturme.html" },
+    { name: "Araç Vergisi Hesaplama", link: "hizmet/arac-vergisi-hesaplama.html" },
+    { name: "Evcil Hayvan Yaş Hesaplama", link: "hizmet/evcil-hayvan-yas-hesaplama.html" },
+    { name: "Bağlantı Hızı Hesaplama", link: "hizmet/baglanti-hizi-hesaplama.html" },
+    { name: "Daire Çevresi Hesaplama", link: "hizmet/daire-cevresi-hesaplama.html" }
+];
+
 
         // Rastgele 3 hizmeti seç
         function getRandomServices() {
