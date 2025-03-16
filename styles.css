@@ -57,14 +57,8 @@ h2 {
     display: flex;
     flex-direction: column; /* Hizmetleri aşağıya dizmek için */
     align-items: center;
-    gap: 20px;
-}
-
-.service-container {
-  display: flex;  /* Kartları yatayda hizalar */
-  flex-wrap: wrap;  /* Kartların alt satırlara geçmesini sağlar */
-  gap: 100px;  /* Kartlar arasındaki boşluk */
-  justify-content: center;  /* Kartları ortalar */
+    gap: 31px;
+      justify-content: center;  /* Kartları ortalar */
   align-items: flex-start;  /* Kartları üstten hizalar */
   padding: 70px;  /* Konteynırın etrafına boşluk ekler */
   max-width: 1800px;  /* Konteynerin maksimum genişliği */
