@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Evcil hayvan yaş hesaplama aracı.">
+    <title>Evcil Hayvan Yaş Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Evcil Hayvan Yaş Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="petAge">Evcil Hayvan Yaşını Girin:</label>
+        <input type="number" id="petAge" placeholder="Yaş">
+        <button onclick="calculatePetAge()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculatePetAge() {
+            const petAge = parseFloat(document.getElementById('petAge').value);
+            const humanAge = petAge * 7; // 1 yıl = 7 yıl insan yaşı
+            document.getElementById('result').textContent = `Evcil Hayvanınızın İnsan Yaşı: ${humanAge}`;
+        }
+    </script>
+</body>
+</html>
