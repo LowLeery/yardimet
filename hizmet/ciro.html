@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ciro hesaplama aracı.">
+    <title>Ciro Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Ciro Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="salesPrice" placeholder="Satış Fiyatı">
+        <input type="number" id="quantitySold" placeholder="Satılan Miktar">
+        <button onclick="calculateRevenue()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateRevenue() {
+            let salesPrice = document.getElementById('salesPrice').value;
+            let quantitySold = document.getElementById('quantitySold').value;
+            let revenue = salesPrice * quantitySold;
+            document.getElementById('result').textContent = `Ciro: ${revenue} TL`;
+        }
+    </script>
+</body>
+</html>
