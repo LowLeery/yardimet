@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elektrik faturasını hesaplama aracı.">
+    <title>Elektrik Faturasını Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Elektrik Faturasını Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="powerUsage" placeholder="Kullanılan Güç (kWh)">
+        <input type="number" id="unitCost" placeholder="Birim Fiyat (TL/kWh)">
+        <button onclick="calculateElectricBill()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateElectricBill() {
+            let powerUsage = document.getElementById('powerUsage').value;
+            let unitCost = document.getElementById('unitCost').value;
+            let bill = powerUsage * unitCost;
+            document.getElementById('result').textContent = `Elektrik Faturası: ${bill.toFixed(2)} TL`;
+        }
+    </script>
+</body>
+</html>
