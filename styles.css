@@ -63,13 +63,13 @@ h2 {
 .service-container {
   display: flex;  /* Kartları yatayda hizalar */
   flex-wrap: wrap;  /* Kartların alt satırlara geçmesini sağlar */
-  gap: 20px;  /* Kartlar arasındaki boşluk */
+  gap: 100px;  /* Kartlar arasındaki boşluk */
   justify-content: center;  /* Kartları ortalar */
   align-items: flex-start;  /* Kartları üstten hizalar */
-  padding: 20px;  /* Konteynırın etrafına boşluk ekler */
-  max-width: 1200px;  /* Konteynerin maksimum genişliği */
+  padding: 70px;  /* Konteynırın etrafına boşluk ekler */
+  max-width: 1800px;  /* Konteynerin maksimum genişliği */
   margin: 0 auto;  /* Konteyneri ortalar */
-  width: 100%;  /* Konteynerin tam genişliği */
+  width: 200%;  /* Konteynerin tam genişliği */
 }
 
 
