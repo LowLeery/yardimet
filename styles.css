@@ -61,13 +61,15 @@ h2 {
 }
 
 .service-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 23px;
-  max-height: 400px; /* scrollable yükseklik sınırı */
-  overflow-y: auto;   /* sadece içerik kayar */
-  padding: 10px;
-    justify-content: center;
+  display: flex;  /* Kartları yatayda hizalar */
+  flex-wrap: wrap;  /* Kartların alt satırlara geçmesini sağlar */
+  gap: 20px;  /* Kartlar arasındaki boşluk */
+  justify-content: center;  /* Kartları ortalar */
+  align-items: flex-start;  /* Kartları üstten hizalar */
+  padding: 20px;  /* Konteynırın etrafına boşluk ekler */
+  max-width: 1200px;  /* Konteynerin maksimum genişliği */
+  margin: 0 auto;  /* Konteyneri ortalar */
+  width: 100%;  /* Konteynerin tam genişliği */
 }
 
 
