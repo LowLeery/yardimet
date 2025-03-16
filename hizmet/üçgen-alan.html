@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Üçgen alanı hesaplamak için basit bir araç.">
+    <title>Üçgen Alan Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Üçgen Alan Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="base" placeholder="Taban Uzunluğunu Girin">
+        <input type="number" id="height" placeholder="Yüksekliği Girin">
+        <button onclick="calculateTriangleArea()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateTriangleArea() {
+            let base = document.getElementById('base').value;
+            let height = document.getElementById('height').value;
+            let area = (base * height) / 2;
+            document.getElementById('result').textContent = `Üçgen Alanı: ${area} cm²`;
+        }
+    </script>
+</body>
+</html>
