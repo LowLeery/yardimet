@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fiyat endeksi hesaplama aracı.">
+    <title>Fiyat Endeksi Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Fiyat Endeksi Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="initialPrice" placeholder="Başlangıç Fiyatı">
+        <input type="number" id="finalPrice" placeholder="Son Fiyat">
+        <button onclick="calculatePriceIndex()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculatePriceIndex() {
+            let initialPrice = document.getElementById('initialPrice').value;
+            let finalPrice = document.getElementById('finalPrice').value;
+            let priceIndex = (finalPrice / initialPrice) * 100;
+            document.getElementById('result').textContent = `Fiyat Endeksi: ${priceIndex.toFixed(2)}%`;
+        }
+    </script>
+</body>
+</html>
