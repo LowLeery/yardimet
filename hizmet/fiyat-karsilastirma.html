@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fiyat karşılaştırma aracını kullanarak alışveriş yapın.">
+    <title>Fiyat Karşılaştırma Aracı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Fiyat Karşılaştırma</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="text" id="product-name" placeholder="Ürün Adı">
+        <button onclick="comparePrices()">Karşılaştır</button>
+        <p id="comparison-result"></p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Fiyat Karşılaştırma Aracı</p>
+    </footer>
+
+    <script>
+        function comparePrices() {
+            var product = document.getElementById("product-name").value;
+            // Örnek olarak veritabanı veya API kullanılabilir.
+            // Burada ürünün fiyatları manuel girildi.
+            var price1 = 120;  // Mağaza 1
+            var price2 = 110;  // Mağaza 2
+            var price3 = 130;  // Mağaza 3
+            
+            var bestPrice = Math.min(price1, price2, price3);
+            document.getElementById("comparison-result").innerText = "En uygun fiyat: " + bestPrice + " TL";
+        }
+    </script>
+</body>
+</html>
