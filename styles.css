@@ -1,119 +1,120 @@
 /* Genel stil ayarları */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-header {
-    background-color: #32CD32; /* Yeşil arka plan */
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.navbar .logo h1 {
-    color: white;
-    margin-right: 20px;
-}
-
-.search-bar input {
-    padding: 10px;
-    width: 50%;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-}
-
-/* İçerik kısmı */
-.main-content {
-    flex-grow: 1;
-    padding: 40px;
-    text-align: center;
-}
-
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.service-list {
-    display: flex;
-    flex-direction: column; /* Hizmetleri aşağıya dizmek için */
-    align-items: center;
-    gap: 31px;
-      justify-content: center;  /* Kartları ortalar */
-  align-items: flex-start;  /* Kartları üstten hizalar */
-  padding: 70px;  /* Konteynırın etrafına boşluk ekler */
-  max-width: 1800px;  /* Konteynerin maksimum genişliği */
-  margin: 0 auto;  /* Konteyneri ortalar */
-  width: 200%;  /* Konteynerin tam genişliği */
-}
-
-
-@media (max-width: 600px) {
-    .service-item {
-        max-width: 90%;
-    }
-}
-
-.service-item a {
-    padding: 15px 30px;
-    background-color: #32CD32;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 18px;
-    width: calc(33% - 20px);  /* Kartların genişliği; 3 kolon yapar, aralarındaki boşluk 20px */
-  box-sizing: border-box;
-}
-
-.service-item a:hover {
-    background-color: #28a745;
-}
-
-/* Footer kısmı */
-footer {
-    background-color: #32CD32;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-footer p {
-    margin-top: 20px;
-}
-
-/* Sayfa en alt kısmında footer'ı görünür kılmak */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.main-content {
-    flex-grow: 1;
-}
-
-footer {
-    margin-top: auto;
-}
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ body {
+     font-family: Arial, sans-serif;
+     background-color: #f4f4f4;
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+ }
+ 
+ header {
+     background-color: #32CD32; /* Yeşil arka plan */
+     padding: 20px 0;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+ 
+ .navbar {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+ }
+ 
+ .navbar .logo h1 {
+     color: white;
+     margin-right: 20px;
+ }
+ 
+ .search-bar input {
+     padding: 10px;
+     width: 50%;
+     border-radius: 5px;
+     border: none;
+     font-size: 16px;
+ }
+ 
+ /* İçerik kısmı */
+ .main-content {
+     flex-grow: 1;
+     padding: 40px;
+     text-align: center;
+ }
+ 
+ h2 {
+     font-size: 24px;
+     margin-bottom: 20px;
+ }
+ 
+ .service-list {
+     display: flex;
+     flex-direction: column; /* Hizmetleri aşağıya dizmek için */
+     align-items: center;
+     gap: 20px;
+ }
+ 
+ .service-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+   gap: 16px;
+   max-height: 400px; /* scrollable yükseklik sınırı */
+   overflow-y: auto;   /* sadece içerik kayar */
+   padding: 10px;
+ }
+ 
+ 
+ @media (max-width: 600px) {
+     .service-item {
+         max-width: 90%;
+     }
+ }
+ 
+ .service-item a {
+     padding: 15px 30px;
+     background-color: #32CD32;
+     color: white;
+     border-radius: 5px;
+     text-decoration: none;
+     font-size: 18px;
+ }
+ 
+ .service-item a:hover {
+     background-color: #28a745;
+ }
+ 
+ /* Footer kısmı */
+ footer {
+     background-color: #32CD32;
+     color: white;
+     text-align: center;
+     padding: 20px 0;
+     position: relative;
+     bottom: 0;
+     width: 100%;
+ }
+ 
+ footer p {
+     margin-top: 20px;
+ }
+ 
+ /* Sayfa en alt kısmında footer'ı görünür kılmak */
+ body {
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+ }
+ 
+ .main-content {
+     flex-grow: 1;
+ }
+ 
+ footer {
+     margin-top: auto;
+ }
