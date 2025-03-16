@@ -1,0 +1,87 @@
+/* Genel Stil Ayarları */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #28a745; /* Yeşil tonunda */
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.navbar .logo h1 {
+    margin: 0;
+}
+
+.search-bar input {
+    padding: 5px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.ads {
+    width: 200px;
+    background-color: #d1d1d1;
+    padding: 10px;
+    margin: 10px;
+    height: 300px;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1;
+    padding: 10px;
+}
+
+.service-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.service-item {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-item a {
+    text-decoration: none;
+    color: #28a745;
+    font-size: 18px;
+}
+
+footer {
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+/* Arama Çubuğu */
+#search-bar {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+}
