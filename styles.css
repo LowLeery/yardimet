@@ -74,11 +74,14 @@ h2 {
 }
 
 .service-item a {
-  padding: 20px;  /* İçeriği etrafına yerleştirir */
-  width: calc(33% - 20px);  /* Kartların genişliği; 3 kolon yapar, aralarındaki boşluk 20px */
-  box-sizing: border-box;  /* Border ve padding hesaplamalara dahil edilir */
-  text-align: center;  /* Metni ortalar */
-  transition: transform 0.3s ease;  /* Hover efekti eklemek için */
+    padding: 15px 30px;
+    background-color: #32CD32;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    width: calc(33% - 20px);  /* Kartların genişliği; 3 kolon yapar, aralarındaki boşluk 20px */
+  box-sizing: border-box;
 }
 
 .service-item a:hover {
