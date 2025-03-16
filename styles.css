@@ -60,6 +60,16 @@ h2 {
     gap: 20px;
 }
 
+.service-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  max-height: 400px; /* scrollable yükseklik sınırı */
+  overflow-y: auto;   /* sadece içerik kayar */
+  padding: 10px;
+}
+
+
 @media (max-width: 600px) {
     .service-item {
         max-width: 90%;
