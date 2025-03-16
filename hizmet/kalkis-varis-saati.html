@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalkış ve varış saati hesaplama aracı.">
+    <title>Kalkış ve Varış Saati Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kalkış ve Varış Saati Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="time" id="departureTime" placeholder="Kalkış Saati">
+        <input type="number" id="duration" placeholder="Süre (dakika)">
+        <button onclick="calculateArrivalTime()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateArrivalTime() {
+            let departureTime = document.getElementById('departureTime').value.split(':');
+            let duration = document.getElementById('duration').value;
+            let hours = parseInt(departureTime[0]) + Math.floor(duration / 60);
+            let minutes = parseInt(departureTime[1]) + (duration % 60);
+            
+            if (minutes >= 60) {
+                minutes -= 60;
+                hours += 1;
+            }
+            
+            document.getElementById('result').textContent = `Varış Saati: ${hours}:${minutes}`;
+        }
+    </script>
+</body>
+</html>
