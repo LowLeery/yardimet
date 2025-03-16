@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Doğru oranı hesaplama aracı.">
+    <title>Doğru Oran Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Doğru Oran Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="part" placeholder="Bölüm">
+        <input type="number" id="whole" placeholder="Bütün">
+        <button onclick="calculateRatio()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateRatio() {
+            let part = document.getElementById('part').value;
+            let whole = document.getElementById('whole').value;
+            let ratio = (part / whole) * 100;
+            document.getElementById('result').textContent = `Doğru Oran: ${ratio.toFixed(2)}%`;
+        }
+    </script>
+</body>
+</html>
