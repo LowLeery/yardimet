@@ -8,9 +8,13 @@
 </head>
 <body>
     <header>
-        <h1>Regl Takip Aracı</h1>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Regl Takip Aracı</h1>
+            </div>
+        </div>
     </header>
-
+    
     <section class="content">
         <form id="regl-form">
             <label for="last-period">Son Regl Tarihiniz:</label>
@@ -25,6 +29,10 @@
         <div id="regl-result"></div>
     </section>
 
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+    
     <script>
         document.getElementById('regl-form').addEventListener('submit', function(e) {
             e.preventDefault();
