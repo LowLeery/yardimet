@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Birim dönüşümü hesaplama aracı.">
+    <title>Birim Dönüşümü (Kg/Litre)</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Birim Dönüşümü</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="value" placeholder="Değeri Girin">
+        <select id="unit">
+            <option value="kgToLitre">Kg -> Litre</option>
+            <option value="litreToKg">Litre -> Kg</option>
+        </select>
+        <button onclick="convertUnit()">Dönüştür</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function convertUnit() {
+            let value = document.getElementById('value').value;
+            let unit = document.getElementById('unit').value;
+            let result;
+
+            if (unit === 'kgToLitre') {
+                result = value * 1.0; // Orta değer, özelleştirilebilir.
+            } else {
+                result = value / 1.0; // Orta değer, özelleştirilebilir.
+            }
+
+            document.getElementById('result').textContent = `Sonuç: ${result}`;
+        }
+    </script>
+</body>
+</html>
