@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basit faiz hesaplama aracı.">
+    <title>Basit Faiz Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Basit Faiz Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="principal" placeholder="Anapara">
+        <input type="number" id="rate" placeholder="Faiz Oranı">
+        <input type="number" id="time" placeholder="Zaman (Yıl)">
+        <button onclick="calculateSimpleInterest()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateSimpleInterest() {
+            let principal = document.getElementById('principal').value;
+            let rate = document.getElementById('rate').value;
+            let time = document.getElementById('time').value;
+            let interest = (principal * rate * time) / 100;
+            document.getElementById('result').textContent = `Basit Faiz: ${interest}`;
+        }
+    </script>
+</body>
+</html>
