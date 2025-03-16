@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Takvim hesaplama aracı.">
+    <title>Takvim Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Takvim Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="date">Tarih Seçin:</label>
+        <input type="date" id="date">
+        <button onclick="calculateCalendar()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateCalendar() {
+            const selectedDate = document.getElementById('date').value;
+            const date = new Date(selectedDate);
+            document.getElementById('result').textContent = `Seçilen Tarih: ${date.toLocaleDateString()}`;
+        }
+    </script>
+</body>
+</html>
