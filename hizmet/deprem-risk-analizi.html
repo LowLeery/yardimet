@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deprem risk analizi aracı.">
+    <title>Deprem Risk Analizi</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Deprem Risk Analizi</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="risk">Deprem Riski Seçin:</label>
+        <input type="number" id="risk" placeholder="Riski Belirleyin">
+        <button onclick="calculateRisk()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateRisk() {
+            const risk = parseFloat(document.getElementById('risk').value);
+            if (risk < 4) {
+                document.getElementById('result').textContent = `Düşük Risk`;
+            } else if (risk < 7) {
+                document.getElementById('result').textContent = `Orta Risk`;
+            } else {
+                document.getElementById('result').textContent = `Yüksek Risk`;
+            }
+        }
+    </script>
+</body>
+</html>
