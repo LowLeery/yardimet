@@ -21,25 +21,25 @@
     </header>
     
     <section class="main-content">
+
         <div class="content">
             <h2>Öne Çıkan Hizmetler</h2>
             <div class="service-list" id="service-list">
                 <!-- Öne çıkarılan hizmetler buraya dinamik olarak gelecek -->
             </div>
         </div>
+
     </section>
     
     <footer>
         <p>&copy; 2025 Günlük Hesaplama Araçları</p>
     </footer>
 
-    <script src="script.js"></script>
-
     <script>
         // Hizmetlerin listesi (Adı ve linki)
         const services = [
             { name: "Vücut Kitle İndeksi Hesapla", link: "hizmet/vki.html" },
-            { name: "Permütasyon Hesaplama", link:
+            { name: "Permütasyon Hesaplama", link: "hizmet/permütasyon.html" },
             { name: "Regl Takip Aracı", link: "hizmet/regl-takip.html" },
             { name: "Faktöriyel Hesaplama", link: "hizmet/faktoriyel.html" },
             { name: "Matematiksel Ortalama Hesapla", link: "hizmet/ortalama.html" },
@@ -54,7 +54,7 @@
             { name: "Daire Alan Hesaplama", link: "hizmet/daire-alan.html" }
         ];
 
-        // Rastgele hizmetleri seç
+        // Rastgele 3 hizmeti seç
         function getRandomServices() {
             const randomServices = [];
             while (randomServices.length < 3) {
@@ -83,7 +83,7 @@
 
         // Sayfa yüklendiğinde hizmetleri göster
         window.onload = function() {
-            displayServices(getRandomServices());
+            displayServices(getRandomServices()); // Sayfa açıldığında 3 rastgele hizmeti göster
         }
 
         // Arama çubuğuyla hizmetleri filtrele
