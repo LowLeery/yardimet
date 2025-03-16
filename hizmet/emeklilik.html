@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emeklilik Planı Hesaplama aracı.">
+    <title>Emeklilik Planı Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Emeklilik Planı Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="yas" placeholder="Şu Anki Yaşınız">
+        <input type="number" id="emeklilikYas" placeholder="Emeklilik Yaşı">
+        <input type="number" id="birikim" placeholder="Aylık Birikim (TL)">
+        <button onclick="hesaplaEmeklilik()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function hesaplaEmeklilik() {
+            let yas = parseInt(document.getElementById('yas').value);
+            let emeklilikYas = parseInt(document.getElementById('emeklilikYas').value);
+            let birikim = parseFloat(document.getElementById('birikim').value);
+            let yil = emeklilikYas - yas;
+            if(yil <= 0){
+                document.getElementById('result').textContent = `Zaten emekli olabilirsiniz veya yaş verisi hatalı.`;
+                return;
+            }
+            let toplam = (yil * 12 * birikim).toFixed(2);
+            document.getElementById('result').textContent = `Emekliliğe kadar birikecek toplam: ${toplam} TL`;
+        }
+    </script>
+</body>
+</html>
