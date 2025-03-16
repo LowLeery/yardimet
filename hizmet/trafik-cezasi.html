@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trafik cezası hesaplama aracı.">
+    <title>Trafik Cezası Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Trafik Cezası Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="speedLimit" placeholder="Hız Sınırı (km/h)">
+        <input type="number" id="currentSpeed" placeholder="Şu Anki Hız (km/h)">
+        <button onclick="calculateTrafficFine()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateTrafficFine() {
+            let speedLimit = document.getElementById('speedLimit').value;
+            let currentSpeed = document.getElementById('currentSpeed').value;
+            let fine = (currentSpeed - speedLimit) * 10;
+            document.getElementById('result').textContent = `Trafik Cezası: ${fine.toFixed(2)} TL`;
+        }
+    </script>
+</body>
+</html>
