@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Daire çevresi hesaplama aracı.">
+    <title>Daire Çevresi Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Daire Çevresi Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="radius">Yarıçapı Girin:</label>
+        <input type="number" id="radius" placeholder="Yarıçap">
+        <button onclick="calculateCircumference()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateCircumference() {
+            const radius = parseFloat(document.getElementById('radius').value);
+            const circumference = 2 * Math.PI * radius;
+            document.getElementById('result').textContent = `Daire Çevresi: ${circumference.toFixed(2)} m`;
+        }
+    </script>
+</body>
+</html>
