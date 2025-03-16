@@ -80,9 +80,6 @@ h2 {
 }
 
 .service-item a {
-background-color: #fff;  /* Kartların arka plan rengi */
-  border: 1px solid #ddd;  /* Kartların kenarlarına ince bir sınır */
-  border-radius: 10px;  /* Yuvarlak köşeler */
   padding: 20px;  /* İçeriği etrafına yerleştirir */
   width: calc(33% - 20px);  /* Kartların genişliği; 3 kolon yapar, aralarındaki boşluk 20px */
   box-sizing: border-box;  /* Border ve padding hesaplamalara dahil edilir */
