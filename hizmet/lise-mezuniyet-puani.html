@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lise mezuniyet puanı hesaplama aracı.">
+    <title>Lise Mezuniyet Puanı Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Lise Mezuniyet Puanı Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="9" placeholder="9. Sınıf Ortalama">
+        <input type="number" id="10" placeholder="10. Sınıf Ortalama">
+        <input type="number" id="11" placeholder="11. Sınıf Ortalama">
+        <input type="number" id="12" placeholder="12. Sınıf Ortalama">
+        <button onclick="mezuniyetHesapla()">Hesapla</button>
+        <p id="sonuc"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function mezuniyetHesapla() {
+            let sinif9 = parseFloat(document.getElementById('9').value) || 0;
+            let sinif10 = parseFloat(document.getElementById('10').value) || 0;
+            let sinif11 = parseFloat(document.getElementById('11').value) || 0;
+            let sinif12 = parseFloat(document.getElementById('12').value) || 0;
+            let mezuniyet = (sinif9 + sinif10 + sinif11 + sinif12) / 4;
+            document.getElementById('sonuc').textContent = `Mezuniyet Ortalamanız: ${mezuniyet.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
