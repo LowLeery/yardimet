@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Okula başlama yaşı hesaplama aracı.">
+    <title>Okula Başlama Yaşı Hesapla</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Okula Başlama Yaşı Hesapla</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="date" id="dogumTarihi" placeholder="Doğum Tarihiniz">
+        <button onclick="okulBaslama()">Hesapla</button>
+        <p id="sonuc"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function okulBaslama() {
+            let dogum = new Date(document.getElementById('dogumTarihi').value);
+            let okulBaslamaYili = dogum.getFullYear() + 6;
+            document.getElementById('sonuc').textContent = `Tahmini Okula Başlama Yılınız: ${okulBaslamaYili}`;
+        }
+    </script>
+</body>
+</html>
