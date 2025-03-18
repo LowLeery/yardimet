@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şifre Güçlülük Testi</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Şifre Güçlülük Testi</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="text" id="password" placeholder="Şifrenizi girin">
+        <button onclick="checkPasswordStrength()">Şifreyi Test Et</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function checkPasswordStrength() {
+            let password = document.getElementById('password').value;
+            let strength = "Zayıf";
+
+            if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                strength = "Güçlü";
+            } else if (password.length >= 6) {
+                strength = "Orta";
+            }
+
+            document.getElementById('result').textContent = `Şifre Gücü: ${strength}`;
+        }
+    </script>
+</body>
+</html>
