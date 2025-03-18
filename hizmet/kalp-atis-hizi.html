@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalp Atış Hızı Hesaplayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kalp Atış Hızı Hesaplayıcı</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="age" placeholder="Yaşınızı girin">
+        <input type="number" id="restingHeartRate" placeholder="Dinlenme kalp atış hızınızı girin">
+        <button onclick="calculateHeartRate()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateHeartRate() {
+            let age = document.getElementById('age').value;
+            let restingHeartRate = document.getElementById('restingHeartRate').value;
+
+            let maxHeartRate = 220 - age;
+            let targetHeartRate = (maxHeartRate - restingHeartRate) * 0.7 + restingHeartRate;
+
+            document.getElementById('result').textContent = `Hedef kalp atış hızınız: ${targetHeartRate.toFixed(2)} bpm`;
+        }
+    </script>
+</body>
+</html>
