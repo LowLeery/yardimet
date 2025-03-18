@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makro Besin Dağılımı Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Makro Besin Dağılımı Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="totalCalories" placeholder="Toplam Kalori (kcal)">
+        <input type="number" id="proteinPercentage" placeholder="Protein Yüzdesi (%)">
+        <input type="number" id="carbsPercentage" placeholder="Karbonhidrat Yüzdesi (%)">
+        <input type="number" id="fatPercentage" placeholder="Yağ Yüzdesi (%)">
+        <button onclick="calculateMacros()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateMacros() {
+            let totalCalories = document.getElementById('totalCalories').value;
+            let proteinPercentage = document.getElementById('proteinPercentage').value;
+            let carbsPercentage = document.getElementById('carbsPercentage').value;
+            let fatPercentage = document.getElementById('fatPercentage').value;
+
+            let proteinCalories = (totalCalories * proteinPercentage) / 100;
+            let carbsCalories = (totalCalories * carbsPercentage) / 100;
+            let fatCalories = (totalCalories * fatPercentage) / 100;
+
+            let proteinGrams = proteinCalories / 4;
+            let carbsGrams = carbsCalories / 4;
+            let fatGrams = fatCalories / 9;
+
+            document.getElementById('result').textContent = `Protein: ${proteinGrams.toFixed(2)} g, Karbonhidrat: ${carbsGrams.toFixed(2)} g, Yağ: ${fatGrams.toFixed(2)} g`;
+        }
+    </script>
+</body>
+</html>
