@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Doğum günü sayacı ve burç hesaplama aracı.">
+    <title>Doğum Günü Sayacı ve Burç Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Doğum Günü Sayacı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label>Doğum Tarihini Seç:</label>
+        <input type="date" id="birthDate">
+        <button onclick="calculateBirthday()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateBirthday() {
+            const input = document.getElementById('birthDate').value;
+            if (!input) {
+                document.getElementById('result').textContent = "Lütfen doğum tarihinizi seçin.";
+                return;
+            }
+
+            const birthDate = new Date(input);
+            const today = new Date();
+            const currentYear = today.getFullYear();
+
+            let nextBirthday = new Date(currentYear, birthDate.getMonth(), birthDate.getDate());
+            if (today > nextBirthday) {
+                nextBirthday.setFullYear(currentYear + 1);
+            }
+
+            const diffTime = nextBirthday - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            const zodiac = getZodiacSign(birthDate.getDate(), birthDate.getMonth() + 1);
+
+            document.getElementById('result').innerHTML = `
+                Doğum gününe kalan gün: <strong>${diffDays} gün</strong><br>
+                Burcun: <strong>${zodiac}</strong>
+            `;
+        }
+
+        function getZodiacSign(day, month) {
+            const signs = [
+                { sign: "Oğlak", endDate: 19 },
+                { sign: "Kova", endDate: 18 },
+                { sign: "Balık", endDate: 20 },
+                { sign: "Koç", endDate: 19 },
+                { sign: "Boğa", endDate: 20 },
+                { sign: "İkizler", endDate: 20 },
+                { sign: "Yengeç", endDate: 22 },
+                { sign: "Aslan", endDate: 22 },
+                { sign: "Başak", endDate: 22 },
+                { sign: "Terazi", endDate: 22 },
+                { sign: "Akrep", endDate: 21 },
+                { sign: "Yay", endDate: 21 },
+                { sign: "Oğlak", endDate: 31 }
+            ];
+
+            return day <= signs[month - 1].endDate ? signs[month - 1].sign : signs[month % 12].sign;
+        }
+    </script>
+</body>
+</html>
