@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ev Taşıma Checklist</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Ev Taşıma Checklist</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="text" id="movingItem" placeholder="Taşımanız gereken eşya yazın">
+        <button onclick="addItem()">Listeye Ekle</button>
+        <ul id="checklist"></ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function addItem() {
+            let item = document.getElementById('movingItem').value;
+            let li = document.createElement('li');
+            li.textContent = item;
+            document.getElementById('checklist').appendChild(li);
+            document.getElementById('movingItem').value = '';
+        }
+    </script>
+</body>
+</html>
