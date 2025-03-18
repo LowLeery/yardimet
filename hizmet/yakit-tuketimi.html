@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araç Yakıt Tüketimi Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Araç Yakıt Tüketimi Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="distance" placeholder="Mesafe (km)">
+        <input type="number" id="fuelConsumed" placeholder="Tüketilen Yakıt (L)">
+        <button onclick="calculateFuelConsumption()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateFuelConsumption() {
+            let distance = document.getElementById('distance').value;
+            let fuelConsumed = document.getElementById('fuelConsumed').value;
+            let consumptionRate = (fuelConsumed / distance) * 100;
+            document.getElementById('result').textContent = `Yakıt Tüketimi: ${consumptionRate.toFixed(2)} L/100 km`;
+        }
+    </script>
+</body>
+</html>
