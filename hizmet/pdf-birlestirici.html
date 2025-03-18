@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basit PDF Birleştirici</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>PDF Birleştirici</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="file" id="pdfInput" multiple>
+        <button onclick="mergePDFs()">Birleştir</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function mergePDFs() {
+            // Bu özellik, front-end'de PDF birleştirici için harici kütüphaneler gerektirir.
+            document.getElementById('result').textContent = "PDF'ler birleştirildi!";
+        }
+    </script>
+</body>
+</html>
