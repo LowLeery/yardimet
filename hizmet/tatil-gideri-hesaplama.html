@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatil Gideri Hesaplayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Tatil Gideri Hesaplayıcı</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="numberOfPeople" placeholder="Kişi sayısını girin">
+        <input type="number" id="costPerPerson" placeholder="Kişi başı maliyeti girin">
+        <button onclick="calculateVacationCost()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateVacationCost() {
+            let numberOfPeople = document.getElementById('numberOfPeople').value;
+            let costPerPerson = document.getElementById('costPerPerson').value;
+            let totalCost = numberOfPeople * costPerPerson;
+            
+            document.getElementById('result').textContent = `Toplam tatil gideri: ${totalCost} TL`;
+        }
+    </script>
+</body>
+</html>
