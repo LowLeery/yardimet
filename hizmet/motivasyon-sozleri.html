@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günlük Motivasyon Sözleri (Rastgele)</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Motivasyon Sözleri</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <button onclick="getMotivationalQuote()">Motivasyon Sözünü Göster</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function getMotivationalQuote() {
+            const quotes = [
+                "Başarısızlık, daha akıllıca başlama fırsatıdır.",
+                "Hayatta her şey, kendinizi geliştirmekle başlar.",
+                "Ne olursa olsun, ilerlemek her zaman daha iyidir.",
+                "Başarı, hazırlık ve fırsatın birleşimidir.",
+                "Yapabileceğin tek şey, hayal etmek ve harekete geçmektir."
+            ];
+            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('result').textContent = `Motivasyon Sözü: "${randomQuote}"`;
+        }
+    </script>
+</body>
+</html>
