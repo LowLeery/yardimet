@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Üretici</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Lorem Ipsum Üretici</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="paragraphCount" placeholder="Kaç paragraf üretilecek?">
+        <button onclick="generateLoremIpsum()">Üret</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function generateLoremIpsum() {
+            let paragraphCount = document.getElementById('paragraphCount').value;
+            let loremText = '';
+
+            for (let i = 0; i < paragraphCount; i++) {
+                loremText += 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.\n\n';
+            }
+
+            document.getElementById('result').textContent = loremText;
+        }
+    </script>
+</body>
+</html>
