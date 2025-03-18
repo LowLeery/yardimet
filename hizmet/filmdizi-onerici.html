@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film/Dizi Önerici</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Film/Dizi Önerici</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <button onclick="getMovieOrSeries()">Öneri Al</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function getMovieOrSeries() {
+            const moviesAndSeries = [
+                "Başlangıç (Inception)", "Dövüş Kulübü (Fight Club)", "Breaking Bad", "Game of Thrones", 
+                "Matrix", "Stranger Things", "The Witcher", "Interstellar"
+            ];
+            let randomPick = moviesAndSeries[Math.floor(Math.random() * moviesAndSeries.length)];
+            document.getElementById('result').textContent = `Bugün için önerilen film/dizi: ${randomPick}`;
+        }
+    </script>
+</body>
+</html>
