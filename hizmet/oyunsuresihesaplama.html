@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyun Süresi Hesaplayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Oyun Süresi Hesaplayıcı</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <input type="number" id="hoursPerDay" placeholder="Günlük Oyun Süresi (saat)">
+        <select id="timePeriod">
+            <option value="week">Haftalık</option>
+            <option value="month">Aylık</option>
+        </select>
+        <button onclick="calculateGameTime()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateGameTime() {
+            let hoursPerDay = document.getElementById('hoursPerDay').value;
+            let timePeriod = document.getElementById('timePeriod').value;
+            let totalHours = 0;
+
+            if (timePeriod === 'week') {
+                totalHours = hoursPerDay * 7;
+            } else if (timePeriod === 'month') {
+                totalHours = hoursPerDay * 30;
+            }
+
+            document.getElementById('result').textContent = `Toplam Oyun Süresi: ${totalHours} saat`;
+        }
+    </script>
+</body>
+</html>
