@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Futbol Takımı Kadro Planlayıcı">
+    <title>Futbol Kadro Planlayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .pitch {
+            width: 300px;
+            height: 500px;
+            background: green;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .player {
+            width: 40px;
+            height: 40px;
+            background: white;
+            color: black;
+            font-size: 12px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kadro Planlayıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label>Takım Kişi Sayısı:</label>
+        <input type="number" id="playerCount" value="11" min="5" max="11"><br><br>
+
+        <label>Diziliş:</label>
+        <select id="formation">
+            <option value="4-4-2">4-4-2</option>
+            <option value="4-3-3">4-3-3</option>
+            <option value="3-5-2">3-5-2</option>
+            <option value="5-3-2">5-3-2</option>
+        </select><br><br>
+
+        <button onclick="generateFormation()">Kadro Oluştur</button>
+
+        <div class="pitch" id="pitch"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function generateFormation() {
+            const pitch = document.getElementById('pitch');
+            pitch.innerHTML = "";
+            const formation = document.getElementById('formation').value.split('-').map(Number);
+            const playerCount = document.getElementById('playerCount').value;
+
+            let y = 50;
+            let playerNum = 1;
+
+            // Kaleci
+            pitch.innerHTML += `<div class="player" style="top: ${450}px; left: ${130}px;">${playerNum++}</div>`;
+
+            formation.forEach(line => {
+                const spacing = 250 / (line + 1);
+                for (let i = 0; i < line; i++) {
+                    const x = (i + 1) * spacing;
+                    pitch.innerHTML += `<div class="player" style="top: ${y}px; left: ${x}px;">${playerNum++}</div>`;
+                }
+                y += 100;
+            });
+        }
+    </script>
+</body>
+
+</html>
