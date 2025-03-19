@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online ders programı oluşturma aracı.">
+    <title>Online Ders Programı Planlayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Ders Programı Planlayıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="lesson">Ders Adı:</label>
+        <input type="text" id="lesson" placeholder="Ders girin">
+        <button onclick="addLesson()">Ekle</button>
+        <ul id="lessonList"></ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function addLesson() {
+            const lesson = document.getElementById('lesson').value;
+            if (lesson.trim() !== "") {
+                const li = document.createElement('li');
+                li.textContent = lesson;
+                document.getElementById('lessonList').appendChild(li);
+                document.getElementById('lesson').value = "";
+            }
+        }
+    </script>
+</body>
+</html>
