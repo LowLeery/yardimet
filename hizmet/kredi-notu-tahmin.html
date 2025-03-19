@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kredi notu tahmin aracı.">
+    <title>Kredi Notu Tahmin Aracı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kredi Notu Tahmin Aracı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="income">Aylık Gelir (TL):</label>
+        <input type="number" id="income" placeholder="Gelir">
+        <label for="debt">Mevcut Borç (TL):</label>
+        <input type="number" id="debt" placeholder="Borç">
+        <button onclick="predictCredit()">Tahmin Et</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function predictCredit() {
+            const income = parseFloat(document.getElementById('income').value);
+            const debt = parseFloat(document.getElementById('debt').value);
+            const ratio = income / (debt + 1);
+            let score = Math.min(1900, Math.floor(300 + ratio * 50));
+            document.getElementById('result').textContent = `Tahmini Kredi Notu: ${score}`;
+        }
+    </script>
+</body>
+</html>
