@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="E-kitap okuma takip aracı.">
+    <title>E-kitap Okuma Takipçisi</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>E-kitap Okuma Takipçisi</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="pages">Okunan Sayfa:</label>
+        <input type="number" id="pages" placeholder="Kaç sayfa okudun?">
+        <button onclick="trackPages()">Kaydet</button>
+        <p id="totalPages">Toplam Okunan Sayfa: 0</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        let total = 0;
+        function trackPages() {
+            const pages = parseInt(document.getElementById('pages').value);
+            if (!isNaN(pages)) {
+                total += pages;
+                document.getElementById('totalPages').textContent = `Toplam Okunan Sayfa: ${total}`;
+            }
+        }
+    </script>
+</body>
+</html>
