@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Freelance gelir takibi aracı.">
+    <title>Freelance Gelir Takipçisi</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Freelance Gelir Takipçisi</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="income">Gelir Miktarı (TL):</label>
+        <input type="number" id="income" placeholder="Gelirinizi girin">
+        <button onclick="addIncome()">Ekle</button>
+        <p id="total">Toplam Gelir: 0 TL</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        let totalIncome = 0;
+        function addIncome() {
+            const income = parseFloat(document.getElementById('income').value);
+            if (!isNaN(income)) {
+                totalIncome += income;
+                document.getElementById('total').textContent = `Toplam Gelir: ${totalIncome.toFixed(2)} TL`;
+            }
+        }
+    </script>
+</body>
+</html>
