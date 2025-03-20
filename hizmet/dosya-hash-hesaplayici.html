@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dosya Hash Hesaplayıcı (MD5, SHA1, SHA256)">
+    <title>Dosya Hash Hesaplayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Dosya Hash Hesaplayıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Dosya Seçin</h2>
+        <input type="file" id="fileInput">
+        <button onclick="calcHash()">Hash Hesapla</button>
+        <h3>Sonuç</h3>
+        <textarea id="output" rows="8" cols="50"></textarea>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        async function calcHash() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) {
+                alert("Lütfen bir dosya seçin!");
+                return;
+            }
+            const arrayBuffer = await file.arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            document.getElementById('output').value = "SHA-256: " + hashHex;
+        }
+    </script>
+</body>
+
+</html>
