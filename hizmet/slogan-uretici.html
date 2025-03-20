@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Slogan Üretici">
+    <title>Slogan Üretici</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Slogan Üretici</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Anahtar Kelime Gir</h2>
+        <input type="text" id="keyword" placeholder="Anahtar kelime">
+        <button onclick="generate()">Slogan Üret</button>
+        <h3>Oluşturulan Slogan:</h3>
+        <p id="slogan"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        const endings = ["geleceği!", "seninle!", "bir adım önde!", "hızlıca yükselir!", "ile fark yarat!"];
+
+        function generate() {
+            const keyword = document.getElementById('keyword').value.trim();
+            if (keyword === '') {
+                alert("Kelime gir!");
+                return;
+            }
+            const random = endings[Math.floor(Math.random() * endings.length)];
+            document.getElementById('slogan').innerText = `${keyword} ${random}`;
+        }
+    </script>
+</body>
+
+</html>
