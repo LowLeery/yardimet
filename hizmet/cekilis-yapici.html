@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online Çekiliş Yapıcı">
+    <title>Online Çekiliş Yapıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Online Çekiliş Yapıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Katılımcılar</h2>
+        <textarea id="participants" rows="8" cols="50" placeholder="Her satıra bir kişi yaz..."></textarea>
+        <button onclick="draw()">Çekilişi Yap</button>
+        <h3>Kazanan:</h3>
+        <p id="winner"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function draw() {
+            const list = document.getElementById('participants').value.trim().split('\n');
+            if (list.length > 1) {
+                const winner = list[Math.floor(Math.random() * list.length)];
+                document.getElementById('winner').innerText = winner;
+            } else {
+                document.getElementById('winner').innerText = "En az 2 kişi yazmalısın!";
+            }
+        }
+    </script>
+</body>
+
+</html>
