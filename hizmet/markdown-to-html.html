@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Markdown to HTML Çevirici">
+    <title>Markdown to HTML</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Markdown to HTML Çevirici</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Markdown Metni</h2>
+        <textarea id="markdownInput" rows="8" cols="50" placeholder="Markdown metni buraya yazın..."></textarea>
+        <button onclick="convert()">HTML'ye Çevir</button>
+        <h3>HTML Çıktısı</h3>
+        <textarea id="htmlOutput" rows="8" cols="50" readonly></textarea>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function convert() {
+            let md = document.getElementById('markdownInput').value;
+            md = md.replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                   .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                   .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                   .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+                   .replace(/\*(.*)\*/gim, '<i>$1</i>')
+                   .replace(/\n$/gim, '<br>');
+            document.getElementById('htmlOutput').value = md;
+        }
+    </script>
+</body>
+
+</html>
