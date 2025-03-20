@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IP Adresi Bilgi Aracı">
+    <title>IP Adresi Bilgi Aracı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>IP Adresi Bilgi Aracı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>IP Bilgisi</h2>
+        <input type="text" id="ipInput" placeholder="IP adresini gir (örnek: 8.8.8.8)">
+        <button onclick="getInfo()">Bilgileri Göster</button>
+        <pre id="output"></pre>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function getInfo() {
+            const ip = document.getElementById('ipInput').value;
+            const output = document.getElementById('output');
+            // Basit bir demo verisi, API olmadan simülasyon
+            if (ip) {
+                output.textContent = `IP: ${ip}\nYerel: Türkiye (simülasyon)\nDurum: Statik (demo)\nISP: ÖrnekNet`;
+            } else {
+                output.textContent = 'Lütfen bir IP adresi girin.';
+            }
+        }
+    </script>
+</body>
+
+</html>
