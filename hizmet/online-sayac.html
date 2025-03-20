@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online Sayaç / Kronometre Aracı">
+    <title>Online Sayaç</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Online Sayaç / Kronometre</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Online Sayaç</h2>
+        <div id="display">00:00:00</div>
+        <button onclick="start()">Başlat</button>
+        <button onclick="stop()">Durdur</button>
+        <button onclick="reset()">Sıfırla</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        let seconds = 0;
+        let timer;
+        function start() {
+            if (!timer) {
+                timer = setInterval(() => {
+                    seconds++;
+                    document.getElementById('display').innerText = new Date(seconds * 1000).toISOString().substr(11, 8);
+                }, 1000);
+            }
+        }
+        function stop() {
+            clearInterval(timer);
+            timer = null;
+        }
+        function reset() {
+            stop();
+            seconds = 0;
+            document.getElementById('display').innerText = "00:00:00";
+        }
+    </script>
+</body>
+
+</html>
