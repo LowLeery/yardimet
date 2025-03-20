@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Paragraf Spin / Yeniden Yazıcı">
+    <title>Paragraf Yeniden Yazıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Paragraf Yeniden Yazıcı (Spin)</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Metni Girin</h2>
+        <textarea id="inputText" rows="8" cols="50" placeholder="Metni buraya yazın..."></textarea>
+        <button onclick="spinText()">Yeniden Yaz</button>
+        <h3>Sonuç</h3>
+        <textarea id="outputText" rows="8" cols="50"></textarea>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        const synonyms = {
+            "hızlı": ["çabuk", "seri", "süratli"],
+            "büyük": ["geniş", "iri", "kocaman"],
+            "güzel": ["hoş", "çekici", "şık"],
+            "küçük": ["ufak", "minik", "dar"],
+        };
+
+        function spinText() {
+            let text = document.getElementById('inputText').value;
+            for (let word in synonyms) {
+                const re = new RegExp("\\b" + word + "\\b", "gi");
+                text = text.replace(re, () => {
+                    const options = synonyms[word];
+                    return options[Math.floor(Math.random() * options.length)];
+                });
+            }
+            document.getElementById('outputText').value = text;
+        }
+    </script>
+</body>
+
+</html>
