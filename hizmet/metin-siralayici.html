@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metin Sıralayıcı (Sorter)">
+    <title>Metin Sıralayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Metin Sıralayıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Satırları Gir</h2>
+        <textarea id="linesInput" rows="8" cols="50" placeholder="Her satıra bir kelime yaz..."></textarea>
+        <button onclick="sortLines()">Sırala</button>
+        <h3>Sıralı Sonuç</h3>
+        <textarea id="sortedOutput" rows="8" cols="50" readonly></textarea>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function sortLines() {
+            const lines = document.getElementById('linesInput').value.trim().split('\n');
+            lines.sort((a, b) => a.localeCompare(b));
+            document.getElementById('sortedOutput').value = lines.join('\n');
+        }
+    </script>
+</body>
+
+</html>
