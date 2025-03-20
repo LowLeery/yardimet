@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metin kelime ve harf sayacı.">
+    <title>Kelime ve Harf Sayacı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kelime ve Harf Sayacı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <textarea id="textInput" placeholder="Metninizi buraya yazın"></textarea>
+        <button onclick="countText()">Say</button>
+        <p id="textCountResult"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function countText() {
+            const text = document.getElementById('textInput').value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            const chars = text.length;
+            document.getElementById('textCountResult').textContent = `Kelime: ${words}, Harf: ${chars}`;
+        }
+    </script>
+</body>
+</html>
