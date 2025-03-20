@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Favicon Üretici">
+    <title>Favicon Üretici</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Favicon Üretici</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>PNG Yükle</h2>
+        <input type="file" id="pngInput" accept="image/png">
+        <button onclick="generateFavicon()">Favicon Üret (.ico)</button>
+        <h3>Önizleme</h3>
+        <canvas id="canvas" width="64" height="64" style="border:1px solid #ccc;"></canvas>
+        <br><br>
+        <a id="downloadLink" style="display:none;">Favicon'u İndir</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function generateFavicon() {
+            const file = document.getElementById('pngInput').files[0];
+            if (!file) {
+                alert("PNG yükleyin!");
+                return;
+            }
+            const img = new Image();
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+                img.onload = function () {
+                    const canvas = document.getElementById('canvas');
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, 64, 64);
+                    canvas.toBlob(function (blob) {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.getElementById('downloadLink');
+                        link.href = url;
+                        link.download = "favicon.ico";
+                        link.textContent = "Favicon'u İndir";
+                        link.style.display = "inline";
+                    }, "image/x-icon");
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+
+</html>
