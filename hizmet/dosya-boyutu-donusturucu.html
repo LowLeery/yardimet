@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dosya Boyutu Dönüştürücü ile MB, GB, KB gibi birim dönüşümleri yapın.">
+    <title>Dosya Boyutu Dönüştürücü</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Dosya Boyutu Dönüştürücü</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <input type="number" id="size" placeholder="Boyutu girin">
+        <select id="fromUnit">
+            <option value="B">Bayt (B)</option>
+            <option value="KB">Kilobayt (KB)</option>
+            <option value="MB">Megabayt (MB)</option>
+            <option value="GB">Gigabayt (GB)</option>
+        </select>
+        <select id="toUnit">
+            <option value="B">Bayt (B)</option>
+            <option value="KB">Kilobayt (KB)</option>
+            <option value="MB">Megabayt (MB)</option>
+            <option value="GB">Gigabayt (GB)</option>
+        </select>
+        <button onclick="convert()">Dönüştür</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function convert() {
+            const size = parseFloat(document.getElementById('size').value);
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+            const units = { B: 1, KB: 1024, MB: 1048576, GB: 1073741824 };
+            const bytes = size * units[from];
+            const result = bytes / units[to];
+            document.getElementById('result').textContent = `${result.toFixed(4)} ${to}`;
+        }
+    </script>
+</body>
+</html>
