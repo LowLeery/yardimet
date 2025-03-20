@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Regex testi yapın.">
+    <title>Regex Tester</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Regex Tester</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <textarea id="testString" placeholder="Metni buraya yazın"></textarea>
+        <input type="text" id="regexPattern" placeholder="Regex deseni girin">
+        <button onclick="testRegex()">Test Et</button>
+        <p id="regexResult"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function testRegex() {
+            const str = document.getElementById('testString').value;
+            const pattern = document.getElementById('regexPattern').value;
+            try {
+                const regex = new RegExp(pattern);
+                const result = regex.test(str);
+                document.getElementById('regexResult').textContent = result ? "Eşleşme Bulundu!" : "Eşleşme Yok!";
+            } catch (e) {
+                document.getElementById('regexResult').textContent = "Geçersiz Regex!";
+            }
+        }
+    </script>
+</body>
+</html>
