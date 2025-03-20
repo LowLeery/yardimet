@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JSON to CSV Dönüştürücü">
+    <title>JSON to CSV Dönüştürücü</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>JSON to CSV Dönüştürücü</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>JSON Verisi Girin</h2>
+        <textarea id="jsonInput" rows="10" cols="50" placeholder='[{"ad":"Ahmet","yas":25},{"ad":"Mehmet","yas":30}]'></textarea>
+        <button onclick="convertToCSV()">Dönüştür</button>
+        <h3>CSV Çıktısı</h3>
+        <textarea id="csvOutput" rows="10" cols="50"></textarea>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function convertToCSV() {
+            try {
+                const json = JSON.parse(document.getElementById('jsonInput').value);
+                if (!Array.isArray(json)) throw "Geçerli bir dizi girin!";
+                const headers = Object.keys(json[0]);
+                const csv = [
+                    headers.join(","),
+                    ...json.map(row => headers.map(field => row[field]).join(","))
+                ].join("\n");
+                document.getElementById('csvOutput').value = csv;
+            } catch (e) {
+                alert("Hata: " + e);
+            }
+        }
+    </script>
+</body>
+
+</html>
