@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HTML, CSS, JS Kod Editörü">
+    <title>Kod Editörü</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        textarea { width: 100%; height: 100px; }
+        iframe { width: 100%; height: 300px; border: 1px solid #ccc; margin-top: 10px; }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>HTML, CSS ve JS Kod Editörü</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Kodlarını Yaz</h2>
+        <h3>HTML</h3>
+        <textarea id="html"></textarea>
+        <h3>CSS</h3>
+        <textarea id="css"></textarea>
+        <h3>JavaScript</h3>
+        <textarea id="js"></textarea>
+        <button onclick="run()">Çalıştır</button>
+        <iframe id="output"></iframe>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function run() {
+            const html = document.getElementById('html').value;
+            const css = `<style>${document.getElementById('css').value}</style>`;
+            const js = `<script>${document.getElementById('js').value}<\/script>`;
+            const iframe = document.getElementById('output');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(html + css + js);
+            doc.close();
+        }
+    </script>
+</body>
+
+</html>
