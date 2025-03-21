@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Karakter Karşılaştırıcı">
+    <title>Karakter Karşılaştırıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Karakter Karşılaştırıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>İki Metni Karşılaştır</h2>
+        <textarea id="text1" rows="5" placeholder="Birinci metni girin"></textarea>
+        <textarea id="text2" rows="5" placeholder="İkinci metni girin"></textarea>
+        <button onclick="compare()">Karşılaştır</button>
+        <pre id="result"></pre>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function compare() {
+            const t1 = document.getElementById('text1').value;
+            const t2 = document.getElementById('text2').value;
+            let output = '';
+
+            for (let i = 0; i < Math.max(t1.length, t2.length); i++) {
+                const char1 = t1[i] || '';
+                const char2 = t2[i] || '';
+                if (char1 !== char2) {
+                    output += `Fark ${i + 1}: "${char1}" vs "${char2}"\n`;
+                }
+            }
+            document.getElementById('result').innerText = output || 'Metinler aynı.';
+        }
+    </script>
+</body>
+
+</html>
