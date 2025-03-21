@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PDF'den Görsel Çıkarma Aracı">
+    <title>PDF'den Görsel Çıkarma</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>PDF'den Görsel Çıkar</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>PDF Yükleyin ve Görselleri Çıkarın</h2>
+        <input type="file" id="pdfFile" accept="application/pdf">
+        <button onclick="extractImages()">Görselleri Çıkar</button>
+        <div id="imagesOutput"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 PDF Görsel Çıkarma Aracı</p>
+    </footer>
+
+    <script>
+        function extractImages() {
+            const file = document.getElementById('pdfFile').files[0];
+            if (!file) {
+                alert('Lütfen bir PDF dosyası seçin.');
+                return;
+            }
+            // PDF.js veya benzeri bir kütüphane ile görselleri çıkarabilirsiniz.
+            alert('Bu özellik henüz geliştirilmemiştir.');
+        }
+    </script>
+</body>
+
+</html>
