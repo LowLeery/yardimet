@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mekanik Klavye Tuşu Kombinasyonu Öğretici">
+    <title>Mekanik Klavye Tuş Kombinasyonu</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Mekanik Klavye Tuş Kombinasyonu</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Tuş Kombinasyonu Öğren</h2>
+        <p>Belirli tuş kombinasyonlarını öğrenmek için aşağıdaki listeden birini seçin:</p>
+        <ul>
+            <li><button onclick="showCombo('ctrl')">CTRL + C (Kopyala)</button></li>
+            <li><button onclick="showCombo('shift')">Shift + T (Büyük Harf T)</button></li>
+            <li><button onclick="showCombo('alt')">Alt + Tab (Pencere Geçişi)</button></li>
+        </ul>
+        <div id="comboInfo"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Klavye Kombinasyonları</p>
+    </footer>
+
+    <script>
+        function showCombo(combo) {
+            let message = '';
+            if (combo === 'ctrl') {
+                message = 'CTRL + C: Kopyalama işlemi için kullanılır.';
+            } else if (combo === 'shift') {
+                message = 'Shift + T: Büyük harf T yazar.';
+            } else if (combo === 'alt') {
+                message = 'Alt + Tab: Pencereler arası geçiş sağlar.';
+            }
+            document.getElementById('comboInfo').innerText = message;
+        }
+    </script>
+</body>
+
+</html>
