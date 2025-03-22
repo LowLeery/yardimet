@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Teklif ve Fatura Şablonu Üretici">
+    <title>Teklif & Fatura Şablonu</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fatura-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background: #f9f9f9;
+        }
+        input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Teklif & Fatura Şablonu</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Bilgileri Doldur</h2>
+        <input type="text" id="firma" placeholder="Firma Adı">
+        <input type="text" id="musteri" placeholder="Müşteri Adı">
+        <textarea id="urunler" placeholder="Ürün/Hizmet ve Fiyatları Girin (örn: Logo Tasarımı - 1000 TL)"></textarea>
+        <button onclick="olustur()">Fatura Oluştur</button>
+
+        <div id="sonuc" class="fatura-box" style="display:none;"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function olustur() {
+            const firma = document.getElementById('firma').value;
+            const musteri = document.getElementById('musteri').value;
+            const urunler = document.getElementById('urunler').value.split('\n');
+
+            let html = `<h3>${firma}</h3><p><strong>Müşteri:</strong> ${musteri}</p><ul>`;
+            urunler.forEach(u => {
+                html += `<li>${u}</li>`;
+            });
+            html += '</ul><p><em>Teşekkür ederiz!</em></p>';
+            document.getElementById('sonuc').innerHTML = html;
+            document.getElementById('sonuc').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>
