@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meta Tag Generator">
+    <title>Meta Tag Generator</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Meta Tag Generator</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Meta Tag Üretici</h2>
+        <input type="text" id="title" placeholder="Başlık">
+        <input type="text" id="desc" placeholder="Açıklama">
+        <input type="text" id="keywords" placeholder="Anahtar Kelimeler (virgülle)">
+        <button onclick="generate()">Üret</button>
+        <pre id="result"></pre>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function generate() {
+            const title = document.getElementById('title').value;
+            const desc = document.getElementById('desc').value;
+            const keywords = document.getElementById('keywords').value;
+            const meta = `
+<meta name="title" content="${title}">
+<meta name="description" content="${desc}">
+<meta name="keywords" content="${keywords}">
+`;
+            document.getElementById('result').innerText = meta.trim();
+        }
+    </script>
+</body>
+
+</html>
