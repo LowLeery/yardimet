@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UTM Link Builder">
+    <title>UTM Link Builder</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>UTM Link Builder</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>UTM Parametreli Link Oluştur</h2>
+        <input type="text" id="url" placeholder="Temel URL">
+        <input type="text" id="source" placeholder="utm_source">
+        <input type="text" id="medium" placeholder="utm_medium">
+        <input type="text" id="campaign" placeholder="utm_campaign">
+        <button onclick="generateUTM()">Link Üret</button>
+        <pre id="result"></pre>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function generateUTM() {
+            const url = document.getElementById('url').value;
+            const source = document.getElementById('source').value;
+            const medium = document.getElementById('medium').value;
+            const campaign = document.getElementById('campaign').value;
+
+            const utm = `${url}?utm_source=${encodeURIComponent(source)}&utm_medium=${encodeURIComponent(medium)}&utm_campaign=${encodeURIComponent(campaign)}`;
+            document.getElementById('result').innerText = utm;
+        }
+    </script>
+</body>
+
+</html>
