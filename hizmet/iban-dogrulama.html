@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IBAN Doğrulama Aracı">
+    <title>IBAN Doğrulama Aracı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>IBAN Doğrulama Aracı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>IBAN Numaranızı Girin</h2>
+        <input type="text" id="iban" placeholder="TR00 0000 0000 0000 0000 0000 00">
+        <button onclick="validateIBAN()">Doğrula</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function validateIBAN() {
+            const iban = document.getElementById('iban').value.replace(/\s/g, '').toUpperCase();
+            if (!/^TR\d{2}\d{16}$/.test(iban)) {
+                document.getElementById('result').innerText = "Geçersiz IBAN formatı!";
+                return;
+            }
+            const rearranged = iban.slice(4) + iban.slice(0, 4);
+            const converted = rearranged.replace(/[A-Z]/g, char => char.charCodeAt(0) - 55);
+            const isValid = BigInt(converted) % 97n === 1n;
+            document.getElementById('result').innerText = isValid ? "Geçerli IBAN!" : "Geçersiz IBAN!";
+        }
+    </script>
+</body>
+
+</html>
