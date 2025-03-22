@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Open Graph Debug Tool">
+    <title>Open Graph Debug Tool</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Open Graph Debug Tool</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Open Graph Etiketlerini Görüntüle</h2>
+        <input type="text" id="url" placeholder="Site URL'si (yalnızca statik gösterim)">
+        <button onclick="mockData()">Görüntüle (Simülasyon)</button>
+        <pre id="result"></pre>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function mockData() {
+            const ogTags = `
+<meta property="og:title" content="Örnek Başlık">
+<meta property="og:description" content="Örnek Açıklama">
+<meta property="og:image" content="https://example.com/image.jpg">
+<meta property="og:url" content="https://example.com/">
+            `;
+            document.getElementById('result').innerText = ogTags.trim();
+        }
+    </script>
+</body>
+
+</html>
