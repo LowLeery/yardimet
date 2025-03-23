@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalori Hesaplayıcı">
+    <title>Kalori Hesaplayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kalori Hesaplayıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Günlük Kalori İhtiyacını Hesapla</h2>
+        <input type="number" id="weight" placeholder="Kilo (kg)">
+        <input type="number" id="height" placeholder="Boy (cm)">
+        <input type="number" id="age" placeholder="Yaş">
+        <select id="gender">
+            <option value="male">Erkek</option>
+            <option value="female">Kadın</option>
+        </select>
+        <button onclick="calculateCalories()">Hesapla</button>
+        <p id="result"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script>
+        function calculateCalories() {
+            const weight = parseInt(document.getElementById('weight').value);
+            const height = parseInt(document.getElementById('height').value);
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            document.getElementById('result').innerText = "Tahmini günlük kalori ihtiyacınız: " + bmr + " kcal";
+        }
+    </script>
+</body>
+
+</html>
