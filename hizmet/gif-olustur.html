@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GIF Oluşturucu">
+    <title>GIF Oluşturucu</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>GIF Oluşturucu</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Basit GIF Oluştur</h2>
+        <input type="file" id="images" multiple accept="image/*">
+        <button onclick="createGIF()">GIF Oluştur</button>
+        <div id="output"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.3.2/gifshot.min.js"></script>
+    <script>
+        function createGIF() {
+            const files = document.getElementById('images').files;
+            if (files.length < 1) {
+                alert("Lütfen en az 1 resim seçin.");
+                return;
+            }
+            const images = [];
+            for (let i = 0; i < files.length; i++) {
+                const url = URL.createObjectURL(files[i]);
+                images.push(url);
+            }
+            gifshot.createGIF({
+                images: images,
+                interval: 0.5,
+                gifWidth: 300,
+                gifHeight: 300,
+            }, function(obj) {
+                if (!obj.error) {
+                    document.getElementById('output').innerHTML = '<img src="' + obj.image + '" />';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
