@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>İletişim</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Bizimle İletişime Geçin</h2>
+            <p>Bize e-posta ile ulaşabilir veya aşağıdaki iletişim formunu doldurabilirsiniz.</p>
+            
+            <form action="submit_contact_form" method="POST">
+                <label for="name">Adınız:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="email">E-posta Adresiniz:</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <label for="message">Mesajınız:</label>
+                <textarea id="message" name="message" required></textarea><br>
+
+                <button type="submit">Gönder</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <ul>
+            <li><a href="hakkinda.html">Hakkında</a></li>
+            <li><a href="kvkk.html">KVKK</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
