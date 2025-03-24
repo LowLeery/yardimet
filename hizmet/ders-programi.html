@@ -7,6 +7,85 @@
     <meta name="description" content="Online ders programı oluşturma aracı.">
     <title>Online Ders Programı Planlayıcı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: #333;
+            padding: 15px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .main-content {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #007BFF;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -22,12 +101,22 @@
         <label for="lesson">Ders Adı:</label>
         <input type="text" id="lesson" placeholder="Ders girin">
 
-        <label for="hours">Kaç saat çalışacaksınız?</label>
-        <input type="number" id="hours" placeholder="Saat girin" step="0.5" min="0">
+        <label for="hours">Çalışma Süresi (saat):</label>
+        <input type="number" id="hours" placeholder="Saat girin" min="1">
 
         <button onclick="addLesson()">Ekle</button>
 
-        <ul id="lessonList"></ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ders Adı</th>
+                    <th>Çalışma Süresi (saat)</th>
+                </tr>
+            </thead>
+            <tbody id="lessonTable">
+                <!-- Dinamik veri buraya eklenecek -->
+            </tbody>
+        </table>
 
         <div class="seo-container">
             <p>
@@ -48,21 +137,33 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html" style="color: #fff;">Hakkında</a> | <a href="/iletisim.html" style="color: #fff;">İletişim</a> | <a href="/kvkk.html" style="color: #fff;">KVKK</a></p>
     </footer>
 
     <script>
         function addLesson() {
-            const lesson = document.getElementById('lesson').value;
-            const hours = document.getElementById('hours').value;
-            if (lesson.trim() !== "" && hours.trim() !== "") {
-                const li = document.createElement('li');
-                li.textContent = `${lesson} - ${hours} saat`;
-                document.getElementById('lessonList').appendChild(li);
+            const lesson = document.getElementById('lesson').value.trim();
+            const hours = document.getElementById('hours').value.trim();
+
+            if (lesson !== "" && hours !== "" && hours > 0) {
+                const table = document.getElementById('lessonTable');
+                const row = document.createElement('tr');
+
+                const lessonCell = document.createElement('td');
+                lessonCell.textContent = lesson;
+
+                const hoursCell = document.createElement('td');
+                hoursCell.textContent = `${hours} saat`;
+
+                row.appendChild(lessonCell);
+                row.appendChild(hoursCell);
+                table.appendChild(row);
+
+                // inputları temizle
                 document.getElementById('lesson').value = "";
                 document.getElementById('hours').value = "";
             } else {
-                alert("Lütfen ders adını ve çalışma süresini girin.");
+                alert("Lütfen geçerli bir ders ve çalışma süresi girin.");
             }
         }
     </script>
