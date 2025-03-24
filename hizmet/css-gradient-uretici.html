@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CSS Gradient Üretici">
+    <meta name="description" content="CSS Gradient Üretici aracı ile kolayca renk geçişleri oluşturabilirsiniz.">
+    <meta name="keywords" content="CSS, gradient, renk geçişi, linear gradient, radial gradient">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>CSS Gradient Üretici</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
@@ -22,19 +24,50 @@
         <h2>Renkleri Seç</h2>
         <input type="color" id="color1" value="#ff0000">
         <input type="color" id="color2" value="#0000ff">
+        
+        <h3>Gradient Türünü Seç</h3>
         <select id="type">
             <option value="linear">Linear</option>
             <option value="radial">Radial</option>
         </select>
+        
+        <h3>Gradient Yönü Seç</h3>
+        <input type="range" id="angle" min="0" max="360" value="90">
+        <label for="angle" id="angleLabel">90°</label>
+        
         <button onclick="generateGradient()">Gradient Üret</button>
+
         <h3>Önizleme</h3>
         <div id="preview" style="width: 100%; height: 150px; border: 1px solid #ccc;"></div>
+        
         <h3>CSS Kodu</h3>
-        <textarea id="cssOutput" rows="4" cols="50" readonly></textarea>
+        <textarea id="cssOutput" rows="6" cols="50" readonly></textarea>
+
+        <!-- SEO dostu açıklama -->
+        <div class="seo-container">
+            <p>
+                CSS Gradient Üretici, web tasarımında kullanabileceğiniz renk geçişlerini hızlı bir şekilde oluşturmanıza olanak tanır. 
+                Hem lineer (linear) hem de radyal (radial) gradientler üretebilir ve seçtiğiniz renklerle görsel açıdan şık geçişler elde edebilirsiniz.
+            </p>
+            <p>
+                Bu araç, web sayfalarınızda kullanabileceğiniz CSS gradient kodlarını anında üretir. Kolayca renklerinizi seçin, gradient türünü ve yönünü belirleyin, ardından oluşturduğunuz kodu kopyalayarak projelerinizde kullanın.
+            </p>
+
+            <!-- Kullanım talimatları -->
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <ul>
+                    <li>İlk renk ve ikinci renk kutularını kullanarak renkleri seçin.</li>
+                    <li>Gradient türünü (lineer veya radyal) seçin.</li>
+                    <li>Gradientin yönünü belirlemek için kaydırıcıyı kullanın.</li>
+                    <li>“Gradient Üret” butonuna tıklayarak sonucu görsel ve CSS kodu olarak görüntüleyin.</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -42,15 +75,24 @@
             const c1 = document.getElementById('color1').value;
             const c2 = document.getElementById('color2').value;
             const type = document.getElementById('type').value;
+            const angle = document.getElementById('angle').value;
+            
             let css = '';
             if (type === 'linear') {
-                css = `background: linear-gradient(90deg, ${c1}, ${c2});`;
+                css = `background: linear-gradient(${angle}deg, ${c1}, ${c2});`;
             } else {
                 css = `background: radial-gradient(circle, ${c1}, ${c2});`;
             }
+
             document.getElementById('preview').style = css + "width:100%; height:150px; border:1px solid #ccc;";
             document.getElementById('cssOutput').value = css;
+            document.getElementById('angleLabel').textContent = `${angle}°`;
         }
+
+        // Angle slider event listener
+        document.getElementById('angle').addEventListener('input', function() {
+            document.getElementById('angleLabel').textContent = `${this.value}°`;
+        });
     </script>
 </body>
 
