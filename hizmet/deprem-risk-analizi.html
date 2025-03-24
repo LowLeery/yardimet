@@ -24,6 +24,7 @@
         <label for="risk">Deprem Riski Değerini Girin (1-10 arası):</label>
         <input type="number" id="risk" min="1" max="10" placeholder="1 ile 10 arasında bir değer girin">
         <button onclick="calculateRisk()">Hesapla</button>
+        <p></p>
         <p id="result"></p>
 
             <!-- SEO Bölümü -->
@@ -57,10 +58,13 @@
                 return;
             }
             if (risk < 4) {
+                document.getElementById('result').style.color = "green";
                 document.getElementById('result').textContent = "Düşük Risk: Bölgeniz düşük deprem riski taşıyor.";
             } else if (risk < 7) {
+                document.getElementById('result').style.color = "yellow";
                 document.getElementById('result').textContent = "Orta Risk: Bölgeniz orta seviyede deprem riski taşıyor.";
             } else {
+                document.getElementById('result').style.color = "red";
                 document.getElementById('result').textContent = "Yüksek Risk: Bölgeniz yüksek deprem riski taşıyor, önlem almanız önerilir.";
             }
         }
