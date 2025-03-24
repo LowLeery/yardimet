@@ -77,6 +77,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-top: 20px;
+    width: 80%;
+    margin: 20px auto;
 }
 
 /* SEO başlığı */
@@ -86,6 +88,7 @@
     font-weight: 600;
     margin-bottom: 15px;
     text-align: center;
+    font-family: 'Arial', sans-serif;
 }
 
 /* SEO açıklaması */
@@ -95,28 +98,65 @@
     color: #7f8c8d;
     text-align: justify;
     margin-bottom: 10px;
+    font-family: 'Verdana', sans-serif;
 }
 
 /* SEO metni içindeki önemli kısımlar (örneğin "Fibonacci dizisi") */
 .seo-container .highlight {
     color: #2980b9;
     font-weight: 600;
+    text-decoration: underline;
 }
 
+/* SEO yazılarının kutularını ayırt etmek için stil */
+.seo-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+}
 
+.seo-item h3 {
+    font-size: 18px;
+    color: #34495e;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: 'Helvetica', sans-serif;
+}
 
- @media (max-width: 600px) {
+.seo-item p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #7f8c8d;
+    text-align: justify;
+}
+
+/* Mobil uyumlu */
+@media (max-width: 600px) {
+
      .service-item {
          max-width: 90%;
      }
-
-     .seo-container {
+     
+    .seo-container {
         padding: 15px;
     }
+
     .seo-container h2 {
         font-size: 20px;
     }
- }
+
+    .seo-item {
+        max-width: 90%;
+        padding: 10px;
+    }
+
+    .seo-item h3 {
+        font-size: 16px;
+    }
+}
+
  
  .service-item a {
      padding: 15px 30px;
