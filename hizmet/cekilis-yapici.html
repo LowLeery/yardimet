@@ -7,6 +7,143 @@
     <meta name="description" content="Online Çekiliş Yapıcı">
     <title>Online Çekiliş Yapıcı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* Katılımcı kutusu */
+        textarea {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Çekilişi yap butonu */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Dönme Animasyonu */
+        .circle-container {
+            position: relative;
+            margin: 20px auto;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotate 5s infinite linear;
+        }
+
+        .circle span {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            transform-origin: center center;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Kazanan Kişiyi Vurgulama */
+        .winner {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,36 +157,14 @@
 
     <section class="main-content">
         <h2>Katılımcılar</h2>
-        <textarea id="participants" rows="8" cols="50" placeholder="Her satıra bir kişi yaz..."></textarea>
+        <textarea id="participants" placeholder="Her satıra bir kişi yaz..."></textarea>
         <button onclick="draw()">Çekilişi Yap</button>
         <h3>Kazanan:</h3>
         <p id="winner"></p>
 
-        <!-- Çekiliş Detayları -->
-        <div id="draw-details" style="display:none;">
-            <h3>Çekiliş Detayları</h3>
-            <p><strong>Katılımcılar:</strong></p>
-            <ul id="participants-list"></ul>
-            <p><strong>Çekiliş Sonucu:</strong></p>
-            <p id="final-winner"></p>
-        </div>
-
-        <!-- SEO dostu açıklama -->
-        <div class="seo-container">
-            <p>
-                Online Çekiliş Yapıcı aracı sayesinde istediğiniz kişiler arasında rastgele bir çekiliş yapabilirsiniz. Katılımcı listesini kolayca girip, çekilişi başlattığınızda kazanan kişi anında görüntülenir. Bu araç, etkinliklerde veya yarışmalarda hızlı ve adil bir çekiliş yapmak için idealdir.
-            </p>
-            <p>
-                Katılımcılarınızı sırayla yazın ve bir tıklama ile çekilişi yaparak kazananı belirleyin. Şeffaf ve hızlı bir şekilde çekiliş yapmak artık çok kolay!
-            </p>
-
-            <!-- Kullanım talimatları -->
-            <div class="seo-item">
-                <h3>Nasıl Kullanılır?</h3>
-                <p>Her satıra bir kişi yazarak katılımcı listesini oluşturun.</p>
-                <p>Çekilişi Yap butonuna tıklayın.</p>
-                <p>Çekilişin kazananı anında ekranda görünecektir.</p>
-            </div>
+        <!-- Dönme Animasyonuyla Katılımcılar -->
+        <div class="circle-container">
+            <div id="circle" class="circle"></div>
         </div>
     </section>
 
@@ -61,25 +176,30 @@
         function draw() {
             const list = document.getElementById('participants').value.trim().split('\n');
             if (list.length > 1) {
-                // Kazananı seç
-                const winner = list[Math.floor(Math.random() * list.length)];
+                // Dönme animasyonu başlat
+                const circle = document.getElementById('circle');
+                circle.innerHTML = ''; // Mevcut içeriği temizle
 
-                // Kazananı göster
-                document.getElementById('winner').innerText = winner;
-
-                // Çekiliş Detaylarını göster
-                document.getElementById('draw-details').style.display = 'block';
-                document.getElementById('final-winner').innerText = winner;
-
-                // Katılımcıları listele
-                const participantsList = document.getElementById('participants-list');
-                participantsList.innerHTML = '';
-                list.forEach(function(participant) {
-                    let listItem = document.createElement('li');
-                    listItem.textContent = participant;
-                    participantsList.appendChild(listItem);
+                // Katılımcıları daireye ekle
+                const angleStep = 360 / list.length;
+                list.forEach((participant, index) => {
+                    const span = document.createElement('span');
+                    span.style.transform = `rotate(${index * angleStep}deg) translateY(-130px) rotate(-${index * angleStep}deg)`;
+                    span.textContent = participant;
+                    circle.appendChild(span);
                 });
 
+                // Animasyonu tetikle
+                circle.style.animation = 'rotate 5s infinite linear';
+
+                // Kazananı seç
+                setTimeout(() => {
+                    const winnerIndex = Math.floor(Math.random() * list.length);
+                    const winner = list[winnerIndex];
+                    document.getElementById('winner').innerText = winner;
+                    circle.style.animation = 'none'; // Animasyonu durdur
+                    circle.innerHTML = `<div class="winner">${winner}</div>`; // Kazanan kişiyi vurgula
+                }, 5000); // 5 saniye sonra kazananı göster
             } else {
                 document.getElementById('winner').innerText = "En az 2 kişi yazmalısın!";
             }
