@@ -140,7 +140,10 @@
 /* Ana İçerik */
 main {
     padding: 40px 0;
-    background-color: #fff;
+    display: flex;
+    justify-content: center; /* Yatayda ortalar */
+    align-items: center;     /* Dikeyde ortalar */
+    height: 100vh;           /* Sayfa yüksekliğini kapsar, böylece tam ortalar */
 }
 
 main section {
