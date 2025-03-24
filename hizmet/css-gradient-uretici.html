@@ -1,201 +1,97 @@
 <!DOCTYPE html>
-<html lang="tr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CSS Gradient Üretici aracı ile kolayca renk geçişleri oluşturabilirsiniz.">
-    <meta name="keywords" content="CSS, gradient, renk geçişi, linear gradient, radial gradient">
-    <meta name="author" content="Günlük Hesaplama Araçları">
-    <title>CSS Gradient Üretici</title>
-    <link rel="stylesheet" href="../styles.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #4a90e2;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        select,
-        input[type="color"],
-        input[type="range"],
-        button {
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            outline: none;
-            width: 100%;
-        }
-
-        button {
-            background-color: #4a90e2;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background-color: #357ab7;
-        }
-
-        #preview {
-            width: 100%;
-            height: 200px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        #cssOutput {
-            width: 100%;
-            height: 100px;
-            margin-top: 20px;
-            padding: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #f7f7f7;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            resize: none;
-            font-size: 0.9rem;
-            color: #333;
-        }
-
-        .seo-container {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .seo-item ul {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0;
-            text-align: left;
-        }
-
-        .seo-item ul li {
-            margin-bottom: 10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            margin-top: 40px;
-            color: #777;
-            font-size: 0.9rem;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <header>
-            <h1>CSS Gradient Üretici</h1>
-        </header>
-
-        <section class="main-content">
-            <h2>Renkleri Seç</h2>
-            <input type="color" id="color1" value="#ff0000">
-            <input type="color" id="color2" value="#0000ff">
-
-            <h3>Gradient Türünü Seç</h3>
-            <select id="type">
-                <option value="linear">Linear</option>
-                <option value="radial">Radial</option>
-            </select>
-
-            <h3>Gradient Yönü Seç</h3>
-            <input type="range" id="angle" min="0" max="360" value="90">
-            <label for="angle" id="angleLabel">90°</label>
-
-            <button onclick="generateGradient()">Gradient Üret</button>
-
-            <h3>Önizleme</h3>
-            <div id="preview"></div>
-
-            <h3>CSS Kodu</h3>
-            <textarea id="cssOutput" rows="4" cols="50" readonly></textarea>
-
-            <!-- SEO dostu açıklama -->
-            <div class="seo-container">
-                <p>
-                    CSS Gradient Üretici, web tasarımında kullanabileceğiniz renk geçişlerini hızlı bir şekilde oluşturmanıza olanak tanır. 
-                    Hem lineer (linear) hem de radyal (radial) gradientler üretebilir ve seçtiğiniz renklerle görsel açıdan şık geçişler elde edebilirsiniz.
-                </p>
-                <div class="seo-item">
-                    <h3>Nasıl Kullanılır?</h3>
-                        <p>İlk renk ve ikinci renk kutularını kullanarak renkleri seçin.</p>
-                        <p>Gradient türünü (lineer veya radyal) seçin.</p>
-                        <p>Gradientin yönünü belirlemek için kaydırıcıyı kullanın.</p>
-                        <p>“Gradient Üret” butonuna tıklayarak sonucu görsel ve CSS kodu olarak görüntüleyin.</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
-        </footer>
-    </div>
-
-    <script>
-        function generateGradient() {
-            const c1 = document.getElementById('color1').value;
-            const c2 = document.getElementById('color2').value;
-            const type = document.getElementById('type').value;
-            const angle = document.getElementById('angle').value;
-            
-            let css = '';
-            if (type === 'linear') {
-                css = `background: linear-gradient(${angle}deg, ${c1}, ${c2});`;
-            } else {
-                css = `background: radial-gradient(circle, ${c1}, ${c2});`;
-            }
-
-            document.getElementById('preview').style = css + "width:100%; height:200px; border-radius:8px;";
-            document.getElementById('cssOutput').value = css;
-            document.getElementById('angleLabel').textContent = `${angle}°`;
-        }
-
-        // Angle slider event listener
-        document.getElementById('angle').addEventListener('input', function() {
-            document.getElementById('angleLabel').textContent = `${this.value}°`;
-        });
-    </script>
-</body>
-
-</html>
+ <html lang="tr">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="CSS Gradient Üretici aracı ile kolayca renk geçişleri oluşturabilirsiniz.">
+     <meta name="keywords" content="CSS, gradient, renk geçişi, linear gradient, radial gradient">
+     <meta name="author" content="Günlük Hesaplama Araçları">
+     <title>CSS Gradient Üretici</title>
+     <link rel="stylesheet" href="../styles.css">
+ </head>
+ 
+ <body>
+     <header>
+         <div class="navbar">
+             <div class="logo">
+                 <h1>CSS Gradient Üretici</h1>
+             </div>
+         </div>
+     </header>
+ 
+     <section class="main-content">
+         <h2>Renkleri Seç</h2>
+         <input type="color" id="color1" value="#ff0000">
+         <input type="color" id="color2" value="#0000ff">
+         
+         <h3>Gradient Türünü Seç</h3>
+         <select id="type">
+             <option value="linear">Linear</option>
+             <option value="radial">Radial</option>
+         </select>
+         
+         <h3>Gradient Yönü Seç</h3>
+         <input type="range" id="angle" min="0" max="360" value="90">
+         <label for="angle" id="angleLabel">90°</label>
+         
+         <button onclick="generateGradient()">Gradient Üret</button>
+ 
+         <h3>Önizleme</h3>
+         <div id="preview" style="width: 100%; height: 150px; border: 1px solid #ccc;"></div>
+         
+         <h3>CSS Kodu</h3>
+         <textarea id="cssOutput" rows="6" cols="50" readonly></textarea>
+ 
+         <!-- SEO dostu açıklama -->
+         <div class="seo-container">
+             <p>
+                 CSS Gradient Üretici, web tasarımında kullanabileceğiniz renk geçişlerini hızlı bir şekilde oluşturmanıza olanak tanır. 
+                 Hem lineer (linear) hem de radyal (radial) gradientler üretebilir ve seçtiğiniz renklerle görsel açıdan şık geçişler elde edebilirsiniz.
+             </p>
+             <p>
+                 Bu araç, web sayfalarınızda kullanabileceğiniz CSS gradient kodlarını anında üretir. Kolayca renklerinizi seçin, gradient türünü ve yönünü belirleyin, ardından oluşturduğunuz kodu kopyalayarak projelerinizde kullanın.
+             </p>
+ 
+             <!-- Kullanım talimatları -->
+             <div class="seo-item">
+                 <h3>Nasıl Kullanılır?</h3>
+                     <p>İlk renk ve ikinci renk kutularını kullanarak renkleri seçin.</p>
+                     <p>Gradient türünü (lineer veya radyal) seçin.</p>
+                     <p>Gradientin yönünü belirlemek için kaydırıcıyı kullanın.</p>
+                     <p>“Gradient Üret” butonuna tıklayarak sonucu görsel ve CSS kodu olarak görüntüleyin.</p>
+             </div>
+         </div>
+     </section>
+ 
+     <footer>
+         <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+     </footer>
+ 
+     <script>
+         function generateGradient() {
+             const c1 = document.getElementById('color1').value;
+             const c2 = document.getElementById('color2').value;
+             const type = document.getElementById('type').value;
+             const angle = document.getElementById('angle').value;
+             
+             let css = '';
+             if (type === 'linear') {
+                 css = `background: linear-gradient(${angle}deg, ${c1}, ${c2});`;
+             } else {
+                 css = `background: radial-gradient(circle, ${c1}, ${c2});`;
+             }
+ 
+             document.getElementById('preview').style = css + "width:100%; height:150px; border:1px solid #ccc;";
+             document.getElementById('cssOutput').value = css;
+             document.getElementById('angleLabel').textContent = `${angle}°`;
+         }
+ 
+         // Angle slider event listener
+         document.getElementById('angle').addEventListener('input', function() {
+             document.getElementById('angleLabel').textContent = `${this.value}°`;
+         });
+     </script>
+ </body>
+ 
+ </html>
