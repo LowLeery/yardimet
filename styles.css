@@ -69,11 +69,53 @@
    padding: 10px;
  }
  
- 
+
+/* SEO bölümünün container'ı */
+.seo-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* SEO başlığı */
+.seo-container h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* SEO açıklaması */
+.seo-container p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #7f8c8d;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+/* SEO metni içindeki önemli kısımlar (örneğin "Fibonacci dizisi") */
+.seo-container .highlight {
+    color: #2980b9;
+    font-weight: 600;
+}
+
+
+
  @media (max-width: 600px) {
      .service-item {
          max-width: 90%;
      }
+
+     .seo-container {
+        padding: 15px;
+    }
+    .seo-container h2 {
+        font-size: 20px;
+    }
  }
  
  .service-item a {
