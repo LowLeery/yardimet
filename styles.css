@@ -131,7 +131,74 @@
  .service-item a:hover {
      background-color: #28a745;
  }
- 
+
+
+
+
+
+
+/* Ana İçerik */
+main {
+    padding: 40px 0;
+    background-color: #fff;
+}
+
+main section {
+    margin-bottom: 30px;
+}
+
+main section h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+main section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input,
+form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #555;
+}
+
+
+
+
+
+
+
+
+
  /* Footer kısmı */
  footer {
      background-color: #32CD32;
