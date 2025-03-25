@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Faktöriyel hesaplama aracı.">
+    <meta name="description" content="Faktöriyel hesaplama aracı. Kolayca faktöriyel hesaplamaları yapabilirsiniz.">
+    <meta name="keywords" content="faktöriyel hesaplama, matematik aracı, hızlı hesaplama, sayı hesaplama">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Faktöriyel Hesaplama</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        input[type="number"] {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -15,15 +95,33 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
         <input type="number" id="number" placeholder="Bir sayı girin">
         <button onclick="calculateFactorial()">Hesapla</button>
         <p id="result"></p>
+
+        <!-- SEO dostu açıklama -->
+        <div class="seo-container">
+            <p>
+                Faktöriyel Hesaplama aracı sayesinde istediğiniz sayının faktöriyelini kolayca hesaplayabilirsiniz. Bu araç, özellikle matematiksel hesaplamalar yaparken ihtiyacınız olan hızlı ve doğru sonuçları sağlar. Herhangi bir sayıyı girin, hemen faktöriyelini görün!
+            </p>
+            <p>
+                Hızlı bir hesaplama aracı arıyorsanız, Faktöriyel Hesaplama aracını deneyin. Sayıların faktöriyelini hesaplamak artık çok daha kolay!
+            </p>
+
+            <!-- Kullanım talimatları -->
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. Yukarıdaki alana bir sayı girin.</p>
+                <p>2. "Hesapla" butonuna tıklayın.</p>
+                <p>3. Faktöriyel sonucu hemen ekranda görüntülenir.</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -37,4 +135,5 @@
         }
     </script>
 </body>
+
 </html>
