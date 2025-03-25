@@ -1,12 +1,88 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Fiyat karşılaştırma aracını kullanarak alışveriş yapın.">
+    <meta name="description" content="Fiyat karşılaştırma aracını kullanarak ürünlerin fiyatlarını farklı mağazalarda karşılaştırın ve en uygun seçeneği bulun.">
+    <meta name="keywords" content="fiyat karşılaştırma, ürün fiyatları, en uygun fiyat, alışveriş, fiyat analiz, mağaza karşılaştırma, online alışveriş">
+    <meta name="author" content="Fiyat Karşılaştırma Aracı">
     <title>Fiyat Karşılaştırma Aracı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #2196F3;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .main-content button {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-content button:hover {
+            background-color: #1976D2;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -15,15 +91,34 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
         <input type="text" id="product-name" placeholder="Ürün Adı">
         <button onclick="comparePrices()">Karşılaştır</button>
         <p id="comparison-result"></p>
+
+        <!-- SEO Dostu İçerik -->
+        <div class="seo-container">
+            <p>
+                Fiyat karşılaştırma aracımız ile istediğiniz ürünün fiyatlarını farklı mağazalarda karşılaştırın ve en uygun seçeneği bulun.
+            </p>
+            <p>
+                Alışveriş yaparken, doğru fiyatı bulmak önemlidir. Fiyat karşılaştırması yaparak, bütçenize uygun ürünleri kolayca bulabilirsiniz.
+                EN ÖNEMLİ DETAY İSE BU MESAJI GÖRÜYORSANIZ ŞUANLIK BU SAYFA YAPIM AŞAMASINDADIR. ANLAYIŞINIZ İÇİN TEŞEKKÜRLER. YARDIM VE İÇERİKLERİMİZİ GELİŞTİRMEMİZE YARDIM ETMEK İÇİN BİZİMLE İLETİŞİM KURABİLİRSİNİZ.
+            </p>
+
+            <!-- Kullanım Talimatları -->
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. "Ürün Adı" alanına aradığınız ürünün ismini yazın.</p>
+                <p>2. "Karşılaştır" butonuna tıklayın.</p>
+                <p>3. En uygun fiyatı hemen görün!</p>
+            </div>
+        </div>
     </section>
-    
+
     <footer>
-        <p>&copy; 2025 Fiyat Karşılaştırma Aracı</p>
+        <p>&copy; 2025 Fiyat Karşılaştırma Aracı | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -40,4 +135,5 @@
         }
     </script>
 </body>
+
 </html>
