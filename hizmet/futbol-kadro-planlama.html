@@ -37,16 +37,28 @@
         }
 
         .player {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             background: white;
             color: black;
-            font-size: 14px;
+            font-size: 12px;
             text-align: center;
-            line-height: 40px;
+            line-height: 50px;
             border-radius: 50%;
             position: absolute;
             font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player input {
+            width: 40px;
+            height: 18px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 2px;
         }
 
         .team-info {
@@ -73,6 +85,7 @@
         .league-table th, .league-table td {
             border: 1px solid #ddd;
             padding: 10px;
+            text-align: center;
         }
 
         .league-table th {
@@ -123,8 +136,9 @@
             <option value="5-3-2">5-3-2</option>
         </select><br><br>
 
-        <button class="add-team-btn" onclick="generateFormation()">Kadro Oluştur</button>
+        <button class="add-team-btn" id="generateBtn" onclick="generateFormation()" disabled>Kadro Oluştur</button>
 
+        <h2 id="selectedTeamName"></h2>
         <div class="pitch" id="pitch"></div>
 
         <h2>Lig Tablosu</h2>
@@ -133,11 +147,11 @@
                 <tr>
                     <th>#</th>
                     <th>Takım</th>
-                    <th>Oynanan Maç</th>
-                    <th>Galibiyet</th>
-                    <th>Beraberlik</th>
-                    <th>Mağlubiyet</th>
-                    <th>Puan</th>
+                    <th>O</th>
+                    <th>G</th>
+                    <th>B</th>
+                    <th>M</th>
+                    <th>P</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -148,28 +162,31 @@
         <button class="add-team-btn" onclick="addTeam()">Takım Ekle</button>
     </section>
 
-    <footer>
-        <p>&copy; 2025 Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
-    </footer>
-
     <script>
         function generateFormation() {
             const pitch = document.getElementById('pitch');
             pitch.innerHTML = "";
             const formation = document.getElementById('formation').value.split('-').map(Number);
-            const playerCount = document.getElementById('playerCount').value;
-
+            const teamName = document.getElementById('teamName').value;
+            document.getElementById('selectedTeamName').innerText = teamName;
+            
             let y = 50;
             let playerNum = 1;
 
             // Kaleci
-            pitch.innerHTML += `<div class="player" style="top: 450px; left: 140px;">${playerNum++}</div>`;
+            pitch.innerHTML += `<div class="player" style="top: 450px; left: 140px;">
+                <input type="text" value="${playerNum++}" maxlength="2">
+                <input type="text" placeholder="İsim">
+            </div>`;
 
             formation.forEach(line => {
                 const spacing = 280 / (line + 1);
                 for (let i = 0; i < line; i++) {
                     const x = (i + 1) * spacing;
-                    pitch.innerHTML += `<div class="player" style="top: ${y}px; left: ${x}px;">${playerNum++}</div>`;
+                    pitch.innerHTML += `<div class="player" style="top: ${y}px; left: ${x}px;">
+                        <input type="text" value="${playerNum++}" maxlength="2">
+                        <input type="text" placeholder="İsim">
+                    </div>`;
                 }
                 y += 100;
             });
@@ -182,6 +199,7 @@
                 reader.onload = function (e) {
                     document.getElementById('teamPhoto').src = e.target.result;
                     document.getElementById('teamPhoto').style.display = "block";
+                    document.getElementById('generateBtn').disabled = false;
                 };
                 reader.readAsDataURL(file);
             }
@@ -201,11 +219,11 @@
             const newRow = `<tr>
                 <td>${rowCount}</td>
                 <td>${teamName}</td>
-                <td>0</td> <!-- Oynanan Maç -->
-                <td>0</td> <!-- Galibiyet -->
-                <td>0</td> <!-- Beraberlik -->
-                <td>0</td> <!-- Mağlubiyet -->
-                <td>0</td> <!-- Puan -->
+                <td><input type="number" value="0"></td>
+                <td><input type="number" value="0"></td>
+                <td><input type="number" value="0"></td>
+                <td><input type="number" value="0"></td>
+                <td>0</td>
             </tr>`;
 
             tableBody.innerHTML += newRow;
