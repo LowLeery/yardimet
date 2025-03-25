@@ -3,9 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Evcil hayvan yaş hesaplama aracı.">
+    <meta name="description" content="Evcil hayvan yaş hesaplama aracı ile köpek, kedi ve diğer hayvanlarınızın insan yaşını hesaplayın.">
+    <meta name="keywords" content="evcil hayvan yaş hesaplama, köpek yaşı hesaplama, kedi yaşı hesaplama, insan yaşına çevirme">
     <title>Evcil Hayvan Yaş Hesaplama</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 200px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -21,17 +106,39 @@
         <input type="number" id="petAge" placeholder="Yaş">
         <button onclick="calculatePetAge()">Hesapla</button>
         <p id="result"></p>
+
+        <div class="seo-container">
+    <p>
+        Evcil hayvanınızın yaşını insan yaşına çevirerek, onun hayat evrelerini daha iyi anlamanızı sağlayan bir araçtır.
+    </p>
+    <p>
+        Köpekler ve kediler için farklı yaş hesaplama yöntemleri vardır. Genel bir yöntem olarak, 1 köpek yılı 7 insan yılına eşdeğer kabul edilir.
+    </p>
+
+    <!-- Kullanım talimatları -->
+    <div class="seo-item">
+        <h3>Nasıl Kullanılır?</h3>
+        <p>Evcil hayvanınızın yaşını girin.</p>
+        <p>Hesapla butonuna tıklayın.</p>
+        <p>Sonuç olarak evcil hayvanınızın insan yaşına eşdeğer yaşı ekranda gözükecektir.</p>
+    </div>
+</div>
+
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
         function calculatePetAge() {
             const petAge = parseFloat(document.getElementById('petAge').value);
-            const humanAge = petAge * 7; // 1 yıl = 7 yıl insan yaşı
-            document.getElementById('result').textContent = `Evcil Hayvanınızın İnsan Yaşı: ${humanAge}`;
+            if (!isNaN(petAge) && petAge > 0) {
+                const humanAge = petAge * 7; // 1 yıl = 7 yıl insan yaşı
+                document.getElementById('result').textContent = `Evcil Hayvanınızın İnsan Yaşı: ${humanAge}`;
+            } else {
+                document.getElementById('result').textContent = "Lütfen geçerli bir yaş girin!";
+            }
         }
     </script>
 </body>
