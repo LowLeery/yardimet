@@ -4,9 +4,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Futbol Maçı Skor Tahmin Aracı">
+    <meta name="description" content="Futbol maçı skor tahmin aracı ile maç sonuçlarını tahmin edin ve analizlerinizi geliştirin.">
+    <meta name="keywords" content="futbol, maç tahmini, skor tahmini, futbol analiz, tahmin aracı">
+    <meta name="author" content="Futbol Tahmin Ekibi">
     <title>Futbol Maçı Skor Tahmini</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,7 +99,6 @@
     </header>
 
     <section class="main-content">
-        <h2>Maç Skorunu Tahmin Et</h2>
         <form id="matchForm">
             <label for="team1">Takım 1:</label>
             <input type="text" id="team1" required>
@@ -37,10 +116,30 @@
         </form>
 
         <div id="predictionResult"></div>
+
+        <!-- SEO Açıklaması -->
+        <div class="seo-container">
+            <p>
+                Futbol Maçı Skor Tahmin Aracı ile yaklaşan maçların skorlarını tahmin edebilir, analizlerinizi geliştirebilirsiniz.
+                Takım istatistikleri, oyuncu performansları ve geçmiş maç sonuçlarını dikkate alarak en doğru tahminleri yapabilirsiniz.
+            </p>
+            <p>
+                Futbol dünyasında daha isabetli tahminler yapmak için verileri analiz edin ve skor tahminlerinizi paylaşın.
+                Eğer bu sayfayı görüyorsanız, sayfamız hala yapım aşamasındadır. Geri bildirimleriniz bizim için çok değerli!
+            </p>
+
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. Takım adlarını girin.</p>
+                <p>2. Tahmini skoru belirleyin.</p>
+                <p>3. Tahmini gönder butonuna tıklayın ve sonucu görün!</p>
+            </div>
+        </div>
+
     </section>
 
     <footer>
-        <p>&copy; 2025 Futbol Tahmin Aracı</p>
+<p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
