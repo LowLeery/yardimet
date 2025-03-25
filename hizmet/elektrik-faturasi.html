@@ -1,12 +1,106 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Elektrik faturasını hesaplama aracı.">
+    <meta name="description" content="Elektrik faturası hesaplama aracı ile elektrik tüketiminizi ve faturanızın tahmini tutarını hesaplayın.">
+    <meta name="keywords" content="elektrik faturası hesaplama, kWh hesaplama, enerji maliyeti, elektrik tüketimi">
     <title>Elektrik Faturasını Hesapla</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* Input kutuları */
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Hesapla butonu */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Sonuç gösterme */
+        .result-container {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -15,25 +109,55 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
-        <input type="number" id="powerUsage" placeholder="Kullanılan Güç (kWh)">
-        <input type="number" id="unitCost" placeholder="Birim Fiyat (TL/kWh)">
+        <h2>Elektrik Faturası Hesaplama</h2>
+        <p>Elektrik tüketiminizi ve birim fiyatı girerek tahmini faturanızı hesaplayabilirsiniz.</p>
+
+        <label for="powerUsage">Kullanılan Güç (kWh):</label>
+        <input type="number" id="powerUsage" placeholder="Örneğin: 250">
+        
+        <label for="unitCost">Birim Fiyat (TL/kWh):</label>
+        <input type="number" id="unitCost" placeholder="Örneğin: 1.50">
+        
         <button onclick="calculateElectricBill()">Hesapla</button>
-        <p id="result"></p>
+        
+        <div class="result-container">
+            <p id="result"></p>
+        </div>
+
+        <!-- SEO dostu açıklama -->
+        <div class="seo-container">
+            <h3>Elektrik Faturası Hesaplama Aracı</h3>
+            <p>
+                Elektrik faturası hesaplama aracı, elektrik tüketiminizi kolayca hesaplamanızı sağlar. Kullanım miktarınızı (kWh) ve birim fiyatı girerek aylık elektrik faturanızın yaklaşık ne kadar geleceğini öğrenebilirsiniz.
+            </p>
+
+            <h3>Nasıl Kullanılır?</h3>
+            <p>Kullanılan elektrik miktarını (kWh) girin.</p>
+            <p>Elektrik birim fiyatını (TL/kWh) girin.</p>
+            <p>Hesapla butonuna tıklayın ve faturanızın tahmini tutarını öğrenin.</p>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Hesaplama Araçları</p>
+        <p>&copy; 2025 Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
         function calculateElectricBill() {
-            let powerUsage = document.getElementById('powerUsage').value;
-            let unitCost = document.getElementById('unitCost').value;
+            let powerUsage = parseFloat(document.getElementById('powerUsage').value);
+            let unitCost = parseFloat(document.getElementById('unitCost').value);
+
+            if (isNaN(powerUsage) || isNaN(unitCost) || powerUsage <= 0 || unitCost <= 0) {
+                document.getElementById('result').textContent = "Lütfen geçerli değerler girin!";
+                return;
+            }
+
             let bill = powerUsage * unitCost;
             document.getElementById('result').textContent = `Elektrik Faturası: ${bill.toFixed(2)} TL`;
         }
     </script>
 </body>
+
 </html>
