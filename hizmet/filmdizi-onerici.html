@@ -1,11 +1,84 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Film ve dizi önerici aracı ile her gün yeni film veya dizi önerileri alın. Keşfedin, izleyin, eğlenin!">
+    <meta name="keywords" content="film önerici, dizi önerici, film dizi öneri, eğlenceli film, yeni dizi, izlenecek film, film tavsiyesi">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Film/Dizi Önerici</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-content button:hover {
+            background-color: #45a049;
+        }
+
+        .main-content p {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -14,14 +87,32 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
         <button onclick="getMovieOrSeries()">Öneri Al</button>
         <p id="result"></p>
+
+        <!-- SEO Dostu İçerik -->
+        <div class="seo-container">
+            <p>
+                Film ve dizi önerileri ile izlemeye değer yeni içerikler keşfedin. Bugün hangi filmi veya diziyi izlesem diye düşünmeyin, Film/Dizi Önerici ile öneriler alabilirsiniz. Her gün yeni bir öneri, sizi bekliyor!
+            </p>
+            <p>
+                Hızlı ve kolay bir şekilde ilginizi çekebilecek dizi ve film önerilerini öğrenmek için bu aracı kullanın. Keşfedin, izleyin, eğlenin!
+            </p>
+
+            <!-- Kullanım Talimatları -->
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. "Öneri Al" butonuna tıklayın.</p>
+                <p>2. Rasgele bir film veya dizi önerisi alın.</p>
+                <p>3. Keyifli bir izleme deneyimi için önerilen içeriği keşfedin!</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -35,4 +126,5 @@
         }
     </script>
 </body>
+
 </html>
