@@ -1,12 +1,145 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ev taşıma sırasında unutulmaması gereken eşyalar için pratik bir checklist oluşturun.">
+    <meta name="keywords" content="ev taşıma, taşınma listesi, ev toplama, taşınma süreci, checklist">
     <title>Ev Taşıma Checklist</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 26px;
+            color: #333;
+        }
+
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #4CAF50;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+
+        /* SEO İçeriği */
+        .seo-container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .seo-container h3 {
+            color: #4CAF50;
+        }
+
+        .seo-container p {
+            font-size: 15px;
+            color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -14,25 +147,58 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
-        <input type="text" id="movingItem" placeholder="Taşımanız gereken eşya yazın">
+        <h2>Taşımanız Gereken Eşyalar</h2>
+        <input type="text" id="movingItem" placeholder="Eşyayı yazın ve ekleyin">
         <button onclick="addItem()">Listeye Ekle</button>
         <ul id="checklist"></ul>
+
+        <!-- SEO İçeriği -->
+        <div class="seo-container">
+            <h3>Ev Taşıma İçin Neden Checklist Kullanmalısınız?</h3>
+            <p>
+                Taşınma sürecinde eşyalarınızı düzenli bir şekilde paketlemek, yeni evinize geçtiğinizde eksiksiz bir şekilde yerleşmenizi sağlar. Bu nedenle bir **checklist** oluşturmak, taşınma stresini azaltır ve süreci daha verimli hale getirir.
+            </p>
+
+             <div class="seo-item">
+            <h3>Checklist Nasıl Kullanılır?</h3>
+            <p>✔️ Taşınacak eşyaları yukarıdaki kutuya yazıp "Listeye Ekle" butonuna basın.</p>
+            <p>✔️ Listenize eklediğiniz eşyaları taşıma gününe kadar kontrol edin.</p>
+            <p>✔️ Unutulan eşyalar olmaması için bu listeyi taşınma günü kullanın.</p>
+             </div>
+        </div>
+
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
         function addItem() {
-            let item = document.getElementById('movingItem').value;
+            let item = document.getElementById('movingItem').value.trim();
+            if (item === "") {
+                alert("Lütfen bir eşya adı girin!");
+                return;
+            }
+
             let li = document.createElement('li');
             li.textContent = item;
+
+            let deleteBtn = document.createElement('button');
+            deleteBtn.textContent = "Sil";
+            deleteBtn.classList.add("delete-btn");
+            deleteBtn.onclick = function () {
+                li.remove();
+            };
+
+            li.appendChild(deleteBtn);
             document.getElementById('checklist').appendChild(li);
             document.getElementById('movingItem').value = '';
         }
     </script>
+
 </body>
+
 </html>
