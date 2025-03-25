@@ -65,15 +65,6 @@
             margin: 20px;
         }
 
-        .team-photo {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid #4CAF50;
-            display: none;
-        }
-
         .league-table {
             width: 80%;
             margin: 20px auto;
@@ -104,7 +95,11 @@
             font-size: 16px;
         }
 
-        .add-team-btn:hover {
+        .add-team-btn:disabled {
+            background-color: #ccc;
+        }
+
+        .add-team-btn:hover:enabled {
             background-color: #388E3C;
         }
     </style>
@@ -118,11 +113,7 @@
     <section class="main-content">
         <div class="team-info">
             <label>Takım İsmi:</label>
-            <input type="text" id="teamName" placeholder="Takım Adını Girin"><br><br>
-
-            <label>Takım Fotoğrafı:</label>
-            <input type="file" id="teamPhotoInput"><br><br>
-            <img id="teamPhoto" class="team-photo" alt="Takım Fotoğrafı"><br><br>
+            <input type="text" id="teamName" placeholder="Takım Adını Girin" oninput="toggleGenerateButton()"><br><br>
         </div>
 
         <label>Takım Kişi Sayısı:</label>
@@ -163,6 +154,11 @@
     </section>
 
     <script>
+        function toggleGenerateButton() {
+            const teamName = document.getElementById('teamName').value.trim();
+            document.getElementById('generateBtn').disabled = (teamName === "");
+        }
+
         function generateFormation() {
             const pitch = document.getElementById('pitch');
             pitch.innerHTML = "";
@@ -191,19 +187,6 @@
                 y += 100;
             });
         }
-
-        document.getElementById('teamPhotoInput').addEventListener('change', function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('teamPhoto').src = e.target.result;
-                    document.getElementById('teamPhoto').style.display = "block";
-                    document.getElementById('generateBtn').disabled = false;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
 
         function addTeam() {
             const tableBody = document.querySelector("#leagueTable tbody");
