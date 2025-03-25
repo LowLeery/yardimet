@@ -4,16 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Futbol Takımı Kadro Planlayıcı">
+    <meta name="description" content="Futbol Takımı Kadro Planlayıcı ve Lig Tablosu">
+    <meta name="keywords" content="futbol, kadro, kadro kur, lig tablosu, ilk 11, kadro planlayıcı, futbol takımı">
     <title>Futbol Kadro Planlayıcı</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f7fc;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            font-size: 22px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
         .pitch {
-            width: 300px;
+            width: 320px;
             height: 500px;
             background: green;
             margin: 20px auto;
             position: relative;
+            border: 3px solid #fff;
+            border-radius: 10px;
         }
 
         .player {
@@ -21,25 +41,77 @@
             height: 40px;
             background: white;
             color: black;
-            font-size: 12px;
+            font-size: 14px;
             text-align: center;
             line-height: 40px;
             border-radius: 50%;
             position: absolute;
+            font-weight: bold;
+        }
+
+        .team-info {
+            margin: 20px;
+        }
+
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+            display: none;
+        }
+
+        .league-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .league-table th, .league-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .league-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .add-team-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .add-team-btn:hover {
+            background-color: #388E3C;
         }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="navbar">
-            <div class="logo">
-                <h1>Kadro Planlayıcı</h1>
-            </div>
-        </div>
+        <h1>Futbol Kadro Planlayıcı</h1>
     </header>
 
     <section class="main-content">
+        <div class="team-info">
+            <label>Takım İsmi:</label>
+            <input type="text" id="teamName" placeholder="Takım Adını Girin"><br><br>
+
+            <label>Takım Fotoğrafı:</label>
+            <input type="file" id="teamPhotoInput"><br><br>
+            <img id="teamPhoto" class="team-photo" alt="Takım Fotoğrafı"><br><br>
+        </div>
+
         <label>Takım Kişi Sayısı:</label>
         <input type="number" id="playerCount" value="11" min="5" max="11"><br><br>
 
@@ -51,13 +123,33 @@
             <option value="5-3-2">5-3-2</option>
         </select><br><br>
 
-        <button onclick="generateFormation()">Kadro Oluştur</button>
+        <button class="add-team-btn" onclick="generateFormation()">Kadro Oluştur</button>
 
         <div class="pitch" id="pitch"></div>
+
+        <h2>Lig Tablosu</h2>
+        <table class="league-table" id="leagueTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Takım</th>
+                    <th>Oynanan Maç</th>
+                    <th>Galibiyet</th>
+                    <th>Beraberlik</th>
+                    <th>Mağlubiyet</th>
+                    <th>Puan</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <label>Takım Adı:</label>
+        <input type="text" id="newTeamName" placeholder="Takım Ekle"><br><br>
+        <button class="add-team-btn" onclick="addTeam()">Takım Ekle</button>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -71,16 +163,53 @@
             let playerNum = 1;
 
             // Kaleci
-            pitch.innerHTML += `<div class="player" style="top: ${450}px; left: ${130}px;">${playerNum++}</div>`;
+            pitch.innerHTML += `<div class="player" style="top: 450px; left: 140px;">${playerNum++}</div>`;
 
             formation.forEach(line => {
-                const spacing = 250 / (line + 1);
+                const spacing = 280 / (line + 1);
                 for (let i = 0; i < line; i++) {
                     const x = (i + 1) * spacing;
                     pitch.innerHTML += `<div class="player" style="top: ${y}px; left: ${x}px;">${playerNum++}</div>`;
                 }
                 y += 100;
             });
+        }
+
+        document.getElementById('teamPhotoInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('teamPhoto').src = e.target.result;
+                    document.getElementById('teamPhoto').style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function addTeam() {
+            const tableBody = document.querySelector("#leagueTable tbody");
+            const teamName = document.getElementById('newTeamName').value.trim();
+
+            if (teamName === "") {
+                alert("Lütfen bir takım adı girin!");
+                return;
+            }
+
+            const rowCount = tableBody.rows.length + 1;
+
+            const newRow = `<tr>
+                <td>${rowCount}</td>
+                <td>${teamName}</td>
+                <td>0</td> <!-- Oynanan Maç -->
+                <td>0</td> <!-- Galibiyet -->
+                <td>0</td> <!-- Beraberlik -->
+                <td>0</td> <!-- Mağlubiyet -->
+                <td>0</td> <!-- Puan -->
+            </tr>`;
+
+            tableBody.innerHTML += newRow;
+            document.getElementById('newTeamName').value = "";
         }
     </script>
 </body>
