@@ -3,9 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mikrofon ile ortam gürültüsünü ölçün.">
+    <meta name="description" content="Mikrofon ile ortam gürültüsünü ölçün ve çevresel ses seviyesini kolayca takip edin. Gürültü seviyelerini ölçerek çevrenizdeki ses kirliliği hakkında bilgi edinin.">
+    <meta name="keywords" content="gürültü ölçer, mikrofon, ses seviyesi, çevresel gürültü, gürültü kirliliği, ses ölçümü">
+    <meta name="author" content="Gürültü Ölçer">
     <title>Gürültü Ölçer</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-content button:hover {
+            background-color: #388E3C;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,10 +82,26 @@
     <section class="main-content">
         <button onclick="start()">Gürültüyü Ölç</button>
         <p id="result"></p>
+
+        <!-- SEO Dostu İçerik -->
+        <div class="seo-container">
+            <div class="seo-item">
+                <h3>Gürültü Seviyesi</h3>
+                <p>Gürültü ölçer aracını kullanarak çevrenizdeki ses seviyesini ölçebilir ve ses kirliliği hakkında bilgi edinebilirsiniz.</p>
+            </div>
+            <div class="seo-item">
+                <h3>Mikrofon Kullanımı</h3>
+                <p>Uygulama, mikrofon aracılığıyla ortamınızdaki sesleri algılar ve gürültü seviyesini ölçer. Bu sayede çevresel ses kirliliği hakkında bilgi sahibi olabilirsiniz.</p>
+            </div>
+            <div class="seo-item">
+                <h3>Ses Kirliliği ve Sağlık</h3>
+                <p>Çevredeki gürültü seviyesi, sağlığınız üzerinde olumsuz etkilere yol açabilir. Gürültü kirliliği ile ilgili farkındalık oluşturmak, bu sorunla mücadelede önemli bir adımdır.</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
