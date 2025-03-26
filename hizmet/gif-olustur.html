@@ -23,6 +23,11 @@
             padding: 15px 0;
         }
 
+        .main-content {
+            padding: 20px;
+            min-height: 70vh;
+        }
+
         h2 {
             margin-top: 20px;
             color: #333;
@@ -55,6 +60,40 @@
             border: 2px solid #4CAF50;
             margin-top: 10px;
         }
+
+        .seo-container {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .seo-container h3 {
+            color: #4CAF50;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -64,32 +103,34 @@
     </header>
 
     <section class="main-content">
+        <h2>Online GIF Yap</h2>
         <input type="file" id="images" multiple accept="image/*">
         <br>
         <button onclick="createGIF()">GIF Oluştur</button>
         <div id="output"></div>
 
         <!-- SEO Dostu Açıklamalar -->
-    <div class="seo-container">
-        <p>
-            **GIF oluşturucu** ile hızlı ve kolay bir şekilde **online GIF yapabilirsiniz**. 
-            Resimlerinizi yükleyin ve saniyeler içinde eğlenceli GIF'ler oluşturun!
-        </p>
-        <p>
-            Sayfamız hala geliştirme aşamasında. Geri bildirimlerinizi bekliyoruz!
-        </p>
+        <div class="seo-container">
+            <p>
+                GIF oluşturucu ile hızlı ve kolay bir şekilde **online GIF yapabilirsiniz**. 
+                Resimlerinizi yükleyin ve saniyeler içinde eğlenceli GIF'ler oluşturun!
+            </p>
+            <p>
+                Sayfamız hala geliştirme aşamasında. Geri bildirimlerinizi bekliyoruz!
+            </p>
 
-        <div class="seo-item">
-            <h3>Nasıl Kullanılır?</h3>
-            <p>Oluşturmak istediğiniz GIF için resimleri yükleyin.</p>
-            <p>"GIF Oluştur" butonuna tıklayın.</p>
-            <p>Oluşturulan GIF'i bilgisayarınıza kaydedin.</p>
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>Oluşturmak istediğiniz GIF için resimleri yükleyin.</p>
+                <p>"GIF Oluştur" butonuna tıklayın.</p>
+                <p>Oluşturulan GIF'i bilgisayarınıza kaydedin.</p>
+            </div>
         </div>
-    </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a>
+        </p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.3.2/gifshot.min.js"></script>
