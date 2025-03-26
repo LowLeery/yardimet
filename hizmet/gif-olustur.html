@@ -4,52 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GIF Oluşturucu">
+    <meta name="description" content="GIF Yapma Aracı, Online GIF Dönüştürücü">
+    <meta name="keywords" content="GIF oluştur, online GIF yap, resimden GIF, hızlı GIF oluşturucu">
     <title>GIF Oluşturucu</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        #gif-preview {
+            max-width: 100%;
+            border: 2px solid #4CAF50;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <div class="navbar">
-            <div class="logo">
-                <h1>GIF Oluşturucu</h1>
-            </div>
-        </div>
+        <h1>GIF Oluşturucu</h1>
     </header>
 
     <section class="main-content">
-        <h2>Basit GIF Oluştur</h2>
         <input type="file" id="images" multiple accept="image/*">
+        <br>
         <button onclick="createGIF()">GIF Oluştur</button>
         <div id="output"></div>
+
+        <!-- SEO Dostu Açıklamalar -->
+    <div class="seo-container">
+        <p>
+            **GIF oluşturucu** ile hızlı ve kolay bir şekilde **online GIF yapabilirsiniz**. 
+            Resimlerinizi yükleyin ve saniyeler içinde eğlenceli GIF'ler oluşturun!
+        </p>
+        <p>
+            Sayfamız hala geliştirme aşamasında. Geri bildirimlerinizi bekliyoruz!
+        </p>
+
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>Oluşturmak istediğiniz GIF için resimleri yükleyin.</p>
+            <p>"GIF Oluştur" butonuna tıklayın.</p>
+            <p>Oluşturulan GIF'i bilgisayarınıza kaydedin.</p>
+        </div>
+    </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.3.2/gifshot.min.js"></script>
     <script>
         function createGIF() {
             const files = document.getElementById('images').files;
-            if (files.length < 1) {
-                alert("Lütfen en az 1 resim seçin.");
+            if (files.length < 2) {
+                alert("Lütfen en az 2 resim seçin.");
                 return;
             }
+
             const images = [];
+            let loaded = 0;
+
+            // Resimleri okuyup listeye ekliyoruz
             for (let i = 0; i < files.length; i++) {
-                const url = URL.createObjectURL(files[i]);
-                images.push(url);
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    images.push(event.target.result);
+                    loaded++;
+
+                    // Tüm resimler yüklendiğinde GIF oluştur
+                    if (loaded === files.length) {
+                        generateGIF(images);
+                    }
+                };
+                reader.readAsDataURL(files[i]);
             }
+        }
+
+        function generateGIF(images) {
             gifshot.createGIF({
                 images: images,
-                interval: 0.5,
+                interval: 0.5, // Her kare için 0.5 saniye
                 gifWidth: 300,
                 gifHeight: 300,
+                numFrames: images.length
             }, function(obj) {
                 if (!obj.error) {
-                    document.getElementById('output').innerHTML = '<img src="' + obj.image + '" />';
+                    document.getElementById('output').innerHTML = '<h3>Oluşturulan GIF:</h3><img id="gif-preview" src="' + obj.image + '" />';
+                } else {
+                    alert("GIF oluşturulurken bir hata meydana geldi.");
                 }
             });
         }
