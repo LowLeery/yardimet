@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hız dönüşümü aracı.">
     <title>Hız Dönüştür</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .main-content input,
+        .main-content select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .main-content button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-content button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -15,19 +95,41 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
-        <input type="number" id="speed" placeholder="Hız Girin (km/s)">
+        <h2>Hız Dönüşümü Yapın</h2>
+        <p>Girilen hız değerini, seçilen birime dönüştürmek için aşağıdaki bilgileri doldurun.</p>
+        
+        <input type="number" id="speed" placeholder="Hız Girin (km/s)" min="0">
         <select id="speedUnit">
             <option value="m/s">Metre/Saniye</option>
             <option value="mph">Mil/Saat</option>
         </select>
         <button onclick="convertSpeed()">Dönüştür</button>
+        
         <p id="result"></p>
+
+        <!-- SEO Dostu İçerik -->
+        <div class="seo-container">
+            <p>
+                Hız dönüşümü aracımız, km/s cinsinden girdiğiniz hız değerini, metre/saniye veya mil/saat gibi diğer birimlere dönüştürmenize yardımcı olur.
+            </p>
+            <p>
+                Bu araç, hız birimleri arasında dönüşüm yaparak ihtiyacınıza uygun verileri sunar.
+            </p>
+
+            <!-- Kullanım Talimatları -->
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. Hız değerinizi (km/s cinsinden) girin.</p>
+                <p>2. Dönüştürmek istediğiniz birimi seçin.</p>
+                <p>3. "Dönüştür" butonuna tıklayın ve sonucu görün!</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -35,6 +137,10 @@
             let speed = document.getElementById('speed').value;
             let unit = document.getElementById('speedUnit').value;
             let result;
+            if (speed === '' || isNaN(speed) || speed <= 0) {
+                document.getElementById('result').textContent = "Lütfen geçerli bir hız değeri girin!";
+                return;
+            }
             if (unit === "m/s") {
                 result = speed * 1000 / 3600; // km/s'den m/s'ye dönüşüm
             } else if (unit === "mph") {
@@ -44,4 +150,5 @@
         }
     </script>
 </body>
+
 </html>
