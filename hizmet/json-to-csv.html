@@ -4,12 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="JSON to CSV Dönüştürücü">
+    <meta name="description" content="JSON formatındaki veriyi CSV formatına dönüştüren kullanışlı bir araç.">
+    <meta name="keywords" content="JSON to CSV, JSON dönüştürücü, CSV oluşturucu, veri dönüştürme, JSON formatı">
     <title>JSON to CSV Dönüştürücü</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        textarea {
+            width: 80%;
+            max-width: 500px;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .output-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #csvOutput {
+            background: #fff;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -20,32 +109,69 @@
 
     <section class="main-content">
         <h2>JSON Verisi Girin</h2>
-        <textarea id="jsonInput" rows="10" cols="50" placeholder='[{"ad":"Ahmet","yas":25},{"ad":"Mehmet","yas":30}]'></textarea>
+        <textarea id="jsonInput" placeholder='[{"ad":"Ahmet","yas":25},{"ad":"Mehmet","yas":30}]'></textarea>
         <button onclick="convertToCSV()">Dönüştür</button>
-        <h3>CSV Çıktısı</h3>
-        <textarea id="csvOutput" rows="10" cols="50"></textarea>
+
+        <div class="output-container">
+            <h3>CSV Çıktısı</h3>
+            <textarea id="csvOutput" readonly></textarea>
+        </div>
+
+        <button onclick="downloadCSV()">CSV İndir</button>
+
+        <div class="seo-container">
+            <p>
+                JSON to CSV dönüştürücü, JSON formatındaki veriyi kolayca CSV formatına çevirmenizi sağlar. CSV formatı, Excel gibi programlarda veri analizine uygun bir formattır.
+            </p>
+            <p>
+                JSON verisini kutuya yapıştırıp "Dönüştür" butonuna basarak hızlıca CSV formatına çevirebilirsiniz.
+            </p>
+
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. JSON formatında verinizi yukarıdaki kutuya yapıştırın.</p>
+                <p>2. "Dönüştür" butonuna tıklayın.</p>
+                <p>3. Çıkan CSV verisini kopyalayabilir veya "CSV İndir" butonu ile bilgisayarınıza indirebilirsiniz.</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
         function convertToCSV() {
             try {
                 const json = JSON.parse(document.getElementById('jsonInput').value);
-                if (!Array.isArray(json)) throw "Geçerli bir dizi girin!";
+                if (!Array.isArray(json)) throw "Geçerli bir JSON dizisi girin!";
                 const headers = Object.keys(json[0]);
                 const csv = [
                     headers.join(","),
-                    ...json.map(row => headers.map(field => row[field]).join(","))
+                    ...json.map(row => headers.map(field => JSON.stringify(row[field] || "")).join(","))
                 ].join("\n");
                 document.getElementById('csvOutput').value = csv;
             } catch (e) {
                 alert("Hata: " + e);
             }
         }
+
+        function downloadCSV() {
+            const csvData = document.getElementById('csvOutput').value;
+            if (!csvData) {
+                alert("Önce JSON verisini CSV'ye dönüştürün!");
+                return;
+            }
+            const blob = new Blob([csvData], { type: "text/csv" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "data.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
     </script>
+
 </body>
 
 </html>
