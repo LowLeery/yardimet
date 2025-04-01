@@ -1,12 +1,93 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kıdem tazminatı hesaplama aracını kullanarak, çalıştığınız yıl sayısı ve maaşınız ile kıdem tazminatınızı kolayca hesaplayın.">
+    <meta name="keywords" content="kıdem tazminatı, hesaplama, tazminat hesapla, iş hukuku, çalıştığınız yıl sayısı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Kıdem Tazminatı Hesaplama</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -14,16 +95,29 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
+        <h2>Kıdem Tazminatınızı Hesaplayın</h2>
         <input type="number" id="yearsWorked" placeholder="Çalıştığınız yıl sayısı">
         <input type="number" id="monthlySalary" placeholder="Aylık maaşınız">
         <button onclick="calculateSeverancePay()">Hesapla</button>
         <p id="result"></p>
     </section>
 
+    <div class="seo-container">
+        <p>
+            Kıdem tazminatınızı hesaplamak için sadece çalıştığınız yıl sayısını ve maaşınızı girin. Bu basit araç, kıdem tazminatınızı hızlıca öğrenmenizi sağlar.
+        </p>
+        <div class="seo-item">
+            <h3>Nasıl Hesaplanır?</h3>
+            <p>1. Çalıştığınız yıl sayısını girin.</p>
+            <p>2. Aylık maaşınızı yazın.</p>
+            <p>3. "Hesapla" butonuna tıklayarak kıdem tazminatınızı öğrenin.</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -34,5 +128,7 @@
             document.getElementById('result').textContent = `Kıdem Tazminatınız: ${severancePay} TL`;
         }
     </script>
+
 </body>
+
 </html>
