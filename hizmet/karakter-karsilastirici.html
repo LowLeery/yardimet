@@ -4,12 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Karakter Karşılaştırıcı">
+    <meta name="description" content="Karakter karşılaştırıcı aracını kullanarak iki metni karakter bazında karşılaştırın ve farkları görün.">
+    <meta name="keywords" content="karakter karşılaştırıcı, metin karşılaştırma, metin farkı, karşılaştırma aracı, metin analiz">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Karakter Karşılaştırıcı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -26,8 +112,24 @@
         <pre id="result"></pre>
     </section>
 
+    <div class="seo-container">
+        <p>
+            Karakter karşılaştırıcı aracını kullanarak, iki farklı metni karşılaştırabilir ve aralarındaki farkları kolayca görebilirsiniz. Metinlerdeki her karakter farkı, sırasıyla size gösterilir.
+        </p>
+        <p>
+            Bu araç, yazılı içeriklerin karşılaştırılması, hata tespiti ve düzenleme süreçlerinde oldukça faydalıdır. Özellikle yazılı içeriklerdeki küçük farkları tespit etmek isteyen kullanıcılar için ideal bir çözümdür.
+        </p>
+
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>1. İki metni girin.</p>
+            <p>2. "Karşılaştır" butonuna tıklayın.</p>
+            <p>3. Farkları inceleyin!</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -46,6 +148,7 @@
             document.getElementById('result').innerText = output || 'Metinler aynı.';
         }
     </script>
+
 </body>
 
 </html>
