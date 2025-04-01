@@ -1,13 +1,99 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="İşlem hızı hesaplama aracı.">
+    <meta name="description" content="İşlem hızınızı hesaplayarak saniyede kaç işlem yaptığınızı öğrenin.">
+    <meta name="keywords" content="işlem hızı, hız hesaplama, işlem/saniye, performans ölçme, işlem gücü">
     <title>İşlem Hızı Hesapla</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .main-content input {
+            width: 80%;
+            max-width: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1e7e34;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #28a745;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -15,25 +101,51 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
+        <h2>İşlem Hızı Hesaplama</h2>
         <input type="number" id="operations" placeholder="Yapılan İşlem Sayısı">
         <input type="number" id="time" placeholder="Geçen Zaman (saniye)">
         <button onclick="calculateSpeed()">Hesapla</button>
         <p id="result"></p>
+
+        <div class="seo-container">
+            <p>
+                İşlem hızı hesaplama aracı, belirli bir zaman diliminde gerçekleştirilen işlemlerin hızını ölçerek saniyede kaç işlem yapıldığını hesaplar.
+            </p>
+            <p>
+                İşlem hızı, bilgisayarlar, programlar veya manuel süreçlerin performansını değerlendirmek için önemlidir.
+            </p>
+
+            <div class="seo-item">
+                <h3>Nasıl Kullanılır?</h3>
+                <p>1. Yapılan işlem sayısını girin.</p>
+                <p>2. İşlemlerin gerçekleştiği süreyi (saniye cinsinden) girin.</p>
+                <p>3. "Hesapla" butonuna tıklayın ve sonucu görün!</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
         function calculateSpeed() {
             let operations = document.getElementById('operations').value;
             let time = document.getElementById('time').value;
-            let speed = operations / time;
-            document.getElementById('result').textContent = `İşlem Hızı: ${speed} işlem/saniye`;
+            let result = document.getElementById('result');
+
+            if (!operations || !time || time <= 0) {
+                result.textContent = 'Lütfen geçerli değerler girin.';
+                return;
+            }
+
+            let speed = (operations / time).toFixed(2);
+            result.textContent = `İşlem Hızı: ${speed} işlem/saniye`;
         }
     </script>
+
 </body>
+
 </html>
