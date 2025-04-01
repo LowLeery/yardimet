@@ -1,22 +1,129 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kredi notu tahmin aracı.">
+    <meta name="keywords" content="kredi notu tahmin, kredi puanı, kredi hesaplama, finansal tahmin">
+    <meta name="author" content="Kredi Hesaplama Aracı">
     <title>Kredi Notu Tahmin Aracı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        section.main-content {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        p#result {
+            text-align: center;
+            font-size: 1.25rem;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
-            <div class="logo">
-                <h1>Kredi Notu Tahmin Aracı</h1>
-            </div>
+            <h1>Kredi Notu Tahmin Aracı</h1>
         </div>
     </header>
 
     <section class="main-content">
+        <h2>Kredi Notunuzu Tahmin Edin</h2>
         <label for="income">Aylık Gelir (TL):</label>
         <input type="number" id="income" placeholder="Gelir">
         <label for="debt">Mevcut Borç (TL):</label>
@@ -25,8 +132,21 @@
         <p id="result"></p>
     </section>
 
+    <section class="seo-container">
+        <h3>Nasıl Kullanılır?</h3>
+        <div class="seo-item">
+            <p><strong>Kredi Notu Tahmin:</strong> Kredi notu tahmin aracımız ile gelir ve borç bilginizi girerek tahmini kredi notunuzu öğrenin. Bu araç size finansal sağlığınızla ilgili fikir verebilir.</p>
+        </div>
+        <div class="seo-item">
+            <p><strong>Finansal Durum Analizi:</strong> Aylık gelir ve mevcut borç bilginizle kredi notunuzu tahmin edin. Kredi notu, kredi başvuruları ve finansal kararlar için önemlidir.</p>
+        </div>
+        <div class="seo-item">
+            <p><strong>Kredi Puanı Tahmini:</strong> Borç ve gelir dengenize göre kredi puanınızı tahmin ederek bankalarla iletişime geçmeden önce bir ön analiz yapın.</p>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Aracı | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -38,5 +158,7 @@
             document.getElementById('result').textContent = `Tahmini Kredi Notu: ${score}`;
         }
     </script>
+
 </body>
+
 </html>
