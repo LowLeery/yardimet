@@ -1,13 +1,61 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kredi hesaplama aracını kullanın.">
+    <meta name="description" content="Kredi hesaplama aracını kullanarak, kredi miktarı, vade ve faiz oranını girerek aylık ödeme miktarını kolayca hesaplayın.">
+    <meta name="keywords" content="kredi hesaplama, kredi faiz oranı, kredi vade, aylık ödeme, kredi aracı">
+    <meta name="author" content="Kredi Hesaplama Aracı">
     <title>Kredi Hesaplama</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -15,17 +63,32 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
+        <h2>Kredi Hesaplama Aracı</h2>
         <input type="number" id="loan-amount" placeholder="Kredi Miktarı (TL)">
         <input type="number" id="loan-duration" placeholder="Vade (ay)">
         <input type="number" id="interest-rate" placeholder="Faiz Oranı (%)">
         <button onclick="calculateLoan()">Hesapla</button>
         <p id="loan-result"></p>
     </section>
-    
+
+    <div class="seo-container">
+        <p>
+            Kredi hesaplama aracı ile kredi miktarını, vade süresini ve faiz oranını girerek aylık ödemenizi hesaplayabilirsiniz.
+            Bu araç, kredi başvurusu yapmadan önce bütçenizi planlamanıza yardımcı olacaktır.
+        </p>
+        <div class="seo-item">
+            <h3>Nasıl Hesaplanır?</h3>
+            <p>1. Kredi miktarını girin.</p>
+            <p>2. Kredi vadesini girin.</p>
+            <p>3. Faiz oranını yazın.</p>
+            <p>4. "Hesapla" butonuna basarak aylık ödeme miktarını öğrenin.</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Kredi Hesaplama Aracı</p>
+        <p>&copy; 2025 Kredi Hesaplama Aracı | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -41,5 +104,7 @@
             document.getElementById("loan-result").innerText = "Aylık Ödeme: " + monthlyPayment.toFixed(2) + " TL";
         }
     </script>
+
 </body>
+
 </html>
