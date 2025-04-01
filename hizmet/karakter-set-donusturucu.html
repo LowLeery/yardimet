@@ -4,12 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Karakter Seti Dönüştürücü (UTF-8 / ASCII)">
+    <meta name="description" content="Karakter Seti Dönüştürücü ile metinlerinizi UTF-8 ve ASCII formatları arasında kolayca dönüştürün.">
+    <meta name="keywords" content="karakter seti dönüştürücü, UTF-8, ASCII, metin dönüştürme, karakter kodlama, online araç">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Karakter Seti Dönüştürücü</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -24,11 +102,27 @@
         <button onclick="toAscii()">UTF-8 ➡ ASCII</button>
         <button onclick="toUtf()">ASCII ➡ UTF-8</button>
         <h3>Sonuç</h3>
-        <textarea id="output" rows="6" cols="50"></textarea>
+        <textarea id="output" rows="6" cols="50" readonly></textarea>
     </section>
 
+    <div class="seo-container">
+        <p>
+            Karakter Seti Dönüştürücü ile metinlerinizi kolayca UTF-8 ve ASCII formatları arasında dönüştürebilirsiniz. Bu araç, farklı platformlar arasında uyumsuzlukları gidermek veya metinlerinizi uygun bir karakter setine dönüştürmek için mükemmel bir çözümdür.
+        </p>
+        <p>
+            Özellikle web geliştirme, veri aktarımı veya metin düzenlemeleri yapanlar için oldukça kullanışlıdır. UTF-8 ve ASCII formatları arasındaki farkları daha iyi anlayarak verilerinizi doğru biçimde işleyebilirsiniz.
+        </p>
+
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>1. Dönüştürmek istediğiniz metni girin.</p>
+            <p>2. İstediğiniz dönüştürme yönünü seçin (UTF-8 ➡ ASCII veya ASCII ➡ UTF-8).</p>
+            <p>3. Sonuçları görün ve kullanın!</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -42,6 +136,7 @@
             document.getElementById('output').value = decodeURIComponent(escape(text));
         }
     </script>
+
 </body>
 
 </html>
