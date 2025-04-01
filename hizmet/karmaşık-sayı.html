@@ -1,13 +1,92 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Karmaşık sayı hesaplama aracı.">
+    <meta name="description" content="Karmaşık sayı hesaplamak için kolay ve hızlı bir araç. Gerçek ve sanal kısımları girerek karmaşık sayıyı hemen hesaplayın.">
+    <meta name="keywords" content="karmaşık sayı, sayı hesaplama, matematiksel hesaplama, karmaşık sayılar, online hesaplayıcı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Karmaşık Sayı Hesapla</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -15,16 +94,29 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
+        <h2>Karmaşık Sayıyı Hesaplamak İçin Gerçek ve Sanal Kısımları Girin</h2>
         <input type="number" id="real" placeholder="Gerçek Kısım">
         <input type="number" id="imaginary" placeholder="Sanal Kısım">
         <button onclick="calculateComplexNumber()">Hesapla</button>
         <p id="result"></p>
     </section>
 
+    <div class="seo-container">
+        <p>
+            Karmaşık sayılar, matematiksel analiz ve mühendislik alanlarında yaygın olarak kullanılan sayılardır. Bu araç, karmaşık sayıları hızlı ve kolay bir şekilde hesaplamanızı sağlar. Gerçek ve sanal kısımları girerek karmaşık sayıyı hesaplayabilir ve sonucunu hemen öğrenebilirsiniz.
+        </p>
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>1. Karmaşık sayının gerçek kısmını girin.</p>
+            <p>2. Karmaşık sayının sanal kısmını girin.</p>
+            <p>3. "Hesapla" butonuna tıklayın ve sonucu görüntüleyin.</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -35,5 +127,7 @@
             document.getElementById('result').textContent = `Karmaşık Sayı: ${complex}`;
         }
     </script>
+
 </body>
+
 </html>
