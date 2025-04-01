@@ -3,10 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalp atış hızı hesaplayıcı ile yaş ve dinlenme kalp atış hızı bilgileriyle hedef kalp atış hızınızı hesaplayın.">
+    <meta name="keywords" content="kalp atış hızı, hedef kalp atışı, fitness, kalp sağlığı, dinlenme kalp atış hızı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
     <title>Kalp Atış Hızı Hesaplayıcı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <div class="navbar">
             <div class="logo">
@@ -14,16 +99,33 @@
             </div>
         </div>
     </header>
-    
+
     <section class="main-content">
+        <h2>Hedef Kalp Atış Hızınızı Hesaplayın</h2>
         <input type="number" id="age" placeholder="Yaşınızı girin">
         <input type="number" id="restingHeartRate" placeholder="Dinlenme kalp atış hızınızı girin">
         <button onclick="calculateHeartRate()">Hesapla</button>
         <p id="result"></p>
     </section>
 
+    <div class="seo-container">
+        <p>
+            Kalp atış hızı hesaplayıcı ile yaşınızı ve dinlenme kalp atış hızınızı girerek, hedef kalp atış hızınızı kolayca hesaplayabilirsiniz. Hedef kalp atış hızı, egzersiz sırasında kalp hızınızın ne kadar olmasını hedeflemeniz gerektiğini belirler.
+        </p>
+        <p>
+            Bu araç, sağlıklı bir egzersiz programı oluşturmak, kardiyovasküler sağlığı iyileştirmek ve egzersizlerinizi daha verimli hale getirmek için faydalıdır.
+        </p>
+
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>1. Yaşınızı ve dinlenme kalp atış hızınızı girin.</p>
+            <p>2. "Hesapla" butonuna tıklayın.</p>
+            <p>3. Hedef kalp atış hızınızı öğrenin ve egzersizlerinizi buna göre düzenleyin!</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
@@ -37,5 +139,7 @@
             document.getElementById('result').textContent = `Hedef kalp atış hızınız: ${targetHeartRate.toFixed(2)} bpm`;
         }
     </script>
+
 </body>
+
 </html>
