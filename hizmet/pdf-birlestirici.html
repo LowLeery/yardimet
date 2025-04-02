@@ -89,9 +89,12 @@
 
     <section class="main-content">
         <h2>PDF Dosyalarınızı Birleştirin</h2>
-        <input type="file" id="pdfInput" multiple>
+        <input type="file" id="pdfInput" multiple accept=".pdf">
         <button onclick="mergePDFs()">Birleştir</button>
         <p id="result"></p>
+        <a id="downloadLink" href="#" style="display:none;" download="merged.pdf">
+            <button>İndir</button>
+        </a>
 
         <!-- SEO Container Başlangıcı -->
         <div class="seo-container">
@@ -113,9 +116,35 @@
         <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html" style="color: white;">Hakkında</a> | <a href="/iletisim.html" style="color: white;">İletişim</a> | <a href="/kvkk.html" style="color: white;">KVKK</a></p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script>
-        function mergePDFs() {
-            // Bu özellik, front-end'de PDF birleştirici için harici kütüphaneler gerektirir.
+        async function mergePDFs() {
+            const files = document.getElementById('pdfInput').files;
+            if (files.length === 0) {
+                alert("Lütfen birden fazla PDF dosyası seçin.");
+                return;
+            }
+
+            const pdfDocs = [];
+            for (const file of files) {
+                const pdfData = await file.arrayBuffer();
+                const pdfDoc = await PDFLib.PDFDocument.load(pdfData);
+                pdfDocs.push(pdfDoc);
+            }
+
+            const mergedPdf = await PDFLib.PDFDocument.create();
+            for (const pdfDoc of pdfDocs) {
+                const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPages().map(page => page.getIndex()));
+                copiedPages.forEach(page => mergedPdf.addPage(page));
+            }
+
+            const mergedPdfBytes = await mergedPdf.save();
+            const mergedPdfBlob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = URL.createObjectURL(mergedPdfBlob);
+            downloadLink.style.display = 'inline-block';
+
             document.getElementById('result').textContent = "PDF'ler birleştirildi!";
         }
     </script>
