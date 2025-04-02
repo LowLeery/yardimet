@@ -4,9 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Markdown to HTML Dönüştürücü">
+    <meta name="description" content="Markdown metnini HTML'ye dönüştürmek için kolay ve hızlı bir araç.">
+    <meta name="keywords" content="Markdown, HTML Dönüştürücü, Markdown to HTML, online Markdown">
     <title>Markdown to HTML Dönüştürücü</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 90%;
+            max-width: 600px;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin: auto;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #htmlOutput {
+            font-size: 16px;
+            text-align: left;
+            padding: 15px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+            min-height: 100px;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background-color: #007BFF;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,27 +109,63 @@
 
     <section class="main-content">
         <h2>Markdown'ı HTML'ye Dönüştür</h2>
-        <textarea id="markdownInput" placeholder="Markdown metni girin..." rows="10"></textarea>
+        <p>Markdown metni girin, anında HTML çıktısını görün!</p>
+
+        <textarea id="markdownInput" placeholder="Markdown metni girin..." oninput="convertMarkdown()"></textarea>
         <button onclick="convertMarkdown()">Dönüştür</button>
+        <button class="copy-btn" onclick="copyToClipboard()">Kopyala</button>
+
         <h3>HTML Çıktısı:</h3>
-        <div id="htmlOutput" style="border:1px solid #ccc; padding:10px;"></div>
+        <div id="htmlOutput"></div>
+
+            <div class="seo-container">
+        <p>
+            Markdown to HTML dönüştürücü aracımız, Markdown formatındaki metinlerinizi anında HTML'e çevirmenizi sağlar.
+        </p>
+        <p>
+            Bu araç sayesinde Markdown formatında yazılmış metinleri HTML formatına kolayca dönüştürebilirsiniz.
+        </p>
+
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>1. Markdown metninizi metin kutusuna yazın.</p>
+            <p>2. "Dönüştür" butonuna tıklayın.</p>
+            <p>3. Aşağıda HTML çıktısını görün!</p>
+        </div>
+    </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
         function convertMarkdown() {
             let md = document.getElementById("markdownInput").value;
             let html = md
-                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
-                .replace(/\*(.*)\*/gim, '<i>$1</i>')
-                .replace(/\n$/gim, '<br />');
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>') // H3
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>') // H2
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>') // H1
+                .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // Kalın
+                .replace(/\*(.*)\*/gim, '<i>$1</i>') // İtalik
+                .replace(/`(.*?)`/gim, '<code>$1</code>') // Inline Code
+                .replace(/\n\-\s(.*$)/gim, '<ul><li>$1</li></ul>') // Liste
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>') // Link
+                .replace(/\n/gim, '<br />'); // Satır atlama
+
+            // Liste düzeltme (birden fazla öğeyi tek listeye dönüştürme)
+            html = html.replace(/<\/ul><ul>/gim, '');
+
             document.getElementById("htmlOutput").innerHTML = html;
+        }
+
+        function copyToClipboard() {
+            let resultText = document.getElementById("htmlOutput").innerHTML;
+            navigator.clipboard.writeText(resultText).then(() => {
+                alert("HTML kopyalandı!");
+            }).catch(err => {
+                console.error("Kopyalama hatası:", err);
+            });
         }
     </script>
 </body>
