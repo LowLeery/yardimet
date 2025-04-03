@@ -4,40 +4,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PDF'den Görsel Çıkarma Aracı">
-    <title>PDF'den Görsel Çıkarma</title>
+    <meta name="description" content="PDF dosyanızdan kolayca görselleri çıkarın ve indirin. Hızlı, ücretsiz ve kullanıcı dostu PDF görsel çıkarma aracı!">
+    <meta name="keywords" content="PDF, görsel çıkarma, resim kaydetme, PDF'den görsel alma, ücretsiz PDF aracı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>PDF'den Görsel Çıkarma Aracı</title>
     <link rel="stylesheet" href="../styles.css">
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+        }
+
+        input[type="file"] {
+            margin: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 200px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <div class="navbar">
-            <div class="logo">
-                <h1>PDF'den Görsel Çıkar</h1>
-            </div>
-        </div>
+        <h1>PDF'den Görsel Çıkarma Aracı</h1>
     </header>
 
-    <section class="main-content">
+    <section>
         <h2>PDF Yükleyin ve Görselleri Çıkarın</h2>
         <input type="file" id="pdfFile" accept="application/pdf">
         <button onclick="extractImages()">Görselleri Çıkar</button>
-        <div id="imagesOutput"></div>
+        <div id="imagesOutput" class="image-container"></div>
     </section>
 
+    <!-- SEO İçeriği -->
+    <div class="seo-container">
+        <h3>PDF'den Görsel Çıkarma Nasıl Yapılır?</h3>
+        <p>PDF dosyanızdaki görselleri kaydetmek için hızlı ve pratik bir yöntem mi arıyorsunuz? PDF Görsel Çıkarma Aracı sayesinde tek tıklamayla PDF'deki resimleri alabilirsiniz.</p>
+        <h4>Kullanım Adımları:</h4>
+        <p>📌 PDF dosyanızı yükleyin</p>
+        <p>📌 "Görselleri Çıkar" butonuna basın</p>
+        <p>📌 Çıkarılan resimleri görüntüleyin ve indirin</p>
+        <p>📌 İşlem tamam! 🎉</p>
+    </div>
+
     <footer>
-        <p>&copy; 2025 PDF Görsel Çıkarma Aracı</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a>
+        </p>
     </footer>
 
     <script>
-        function extractImages() {
+        async function extractImages() {
             const file = document.getElementById('pdfFile').files[0];
             if (!file) {
                 alert('Lütfen bir PDF dosyası seçin.');
                 return;
             }
-            // PDF.js veya benzeri bir kütüphane ile görselleri çıkarabilirsiniz.
-            alert('Bu özellik henüz geliştirilmemiştir.');
+
+            const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(file);
+
+            fileReader.onload = async function () {
+                const pdfData = new Uint8Array(fileReader.result);
+                const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+                const imagesOutput = document.getElementById('imagesOutput');
+                imagesOutput.innerHTML = ''; // Önceki görselleri temizle
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const operatorList = await page.getOperatorList();
+                    const images = [];
+
+                    for (let i = 0; i < operatorList.fnArray.length; i++) {
+                        if (operatorList.fnArray[i] === pdfjsLib.OPS.paintImageXObject) {
+                            const objId = operatorList.argsArray[i][0];
+                            const img = await page.objs.get(objId);
+
+                            if (img) {
+                                const canvas = document.createElement('canvas');
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                const ctx = canvas.getContext('2d');
+                                const imageData = new ImageData(img.data, img.width, img.height);
+                                ctx.putImageData(imageData, 0, 0);
+
+                                const imgElement = document.createElement('img');
+                                imgElement.src = canvas.toDataURL();
+                                images.push(imgElement);
+                            }
+                        }
+                    }
+
+                    images.forEach(imgElement => {
+                        imagesOutput.appendChild(imgElement);
+                    });
+                }
+            };
         }
     </script>
 </body>
