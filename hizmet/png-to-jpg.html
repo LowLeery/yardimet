@@ -7,6 +7,95 @@
     <meta name="description" content="PNG to JPG Çevirici">
     <title>PNG to JPG Çevirici</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,8 +115,24 @@
         <canvas id="canvas" style="display:none;"></canvas>
     </section>
 
+    <!-- SEO Container -->
+    <div class="seo-container">
+        <p>
+            Open Graph (OG) etiketleri, sosyal medya platformları ve diğer web siteleri tarafından içeriklerin 
+            daha zengin bir şekilde önizlenmesini sağlamak için kullanılır. Bu araç, verilen URL'nin OG etiketlerini 
+            simüle eder ve görüntüler.
+        </p>
+        <div class="seo-item">
+            <h3>Nasıl Çalışır?</h3>
+            <p>1. Bir URL girin.</p>
+            <p>2. Görüntüle (Simülasyon) butonuna tıklayın.</p>
+            <p>3. Sayfa, Open Graph etiketlerini simüle ederek gösterecektir.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
     </footer>
 
     <script>
