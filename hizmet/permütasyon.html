@@ -1,36 +1,123 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permütasyon Hesaplama</title>
+    <meta name="description" content="Permütasyon hesaplama aracı ile n ve r değerlerini girerek sonucu anında öğrenin.">
+    <meta name="keywords" content="Permütasyon, Kombinasyon, Matematik, Olasılık, Hesaplama">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Permütasyon Hesaplama - n ve r için Anında Sonuç</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
     <header>
-        <div class="navbar">
-            <div class="logo">
-                <h1>Permütasyon Hesaplama</h1>
-            </div>
-        </div>
+        <h1>Permütasyon Hesaplama</h1>
     </header>
 
     <section class="content">
         <form id="permutation-form">
             <label for="n">Toplam Eleman (n):</label>
-            <input type="number" id="n" required><br><br>
+            <input type="number" id="n" required><br>
 
             <label for="r">Seçilen Eleman (r):</label>
-            <input type="number" id="r" required><br><br>
+            <input type="number" id="r" required><br>
 
             <button type="submit">Hesapla</button>
         </form>
 
         <div id="result"></div>
+
+        <!-- SEO İçeriği -->
+        <div class="seo-container">
+            <h3>Permütasyon Nedir ve Nasıl Hesaplanır?</h3>
+            <p class="seo-item">Permütasyon, belirli bir kümedeki elemanların sıralı dizilimlerini hesaplamaya yarar.</p>
+            <p class="seo-item">Formül: P(n, r) = n! / (n - r)! şeklindedir.</p>
+            <p class="seo-item">Bu araç sayesinde permütasyon hesaplama işlemini hızlıca yapabilirsiniz.</p>
+        </div>
     </section>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a>
+        </p>
     </footer>
+
     <script>
         document.getElementById('permutation-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -56,4 +143,5 @@
         }
     </script>
 </body>
+
 </html>
