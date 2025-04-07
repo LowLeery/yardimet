@@ -1,11 +1,103 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Regl takip aracını kullanarak regl döngünüzü kolayca hesaplayabilir ve takip edebilirsiniz.">
+    <meta name="keywords" content="regl takip, regl hesaplama, regl dönemi, adet dönemi, döngü hesaplama, kadın sağlığı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    
     <title>Regl Takip Aracı</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Genel sayfa stili */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1E1E1E;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #3D5AFE;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* Ana içerik */
+        .content {
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #252525;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+
+        label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #333;
+            color: white;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #3D5AFE;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2C3EB5;
+        }
+
+        /* Sonuç */
+        #regl-result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFEB3B;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -14,8 +106,11 @@
             </div>
         </div>
     </header>
-    
+
     <section class="content">
+        <h2>Regl Döngünüzü Hesaplayın</h2>
+        <p>Son regl tarihinizi ve döngü sürenizi girerek bir sonraki regl tarihinizi hesaplayın.</p>
+        
         <form id="regl-form">
             <label for="last-period">Son Regl Tarihiniz:</label>
             <input type="date" id="last-period" required><br><br>
@@ -29,10 +124,26 @@
         <div id="regl-result"></div>
     </section>
 
+    <!-- SEO Açıklamaları -->
+    <div class="seo-container">
+        <p>
+            Regl takip aracı, kadın sağlığını takip etmek ve düzenli adet döngüsü hakkında bilgi edinmek için 
+            harika bir araçtır. Son regl tarihinizi ve döngü sürenizi girerek bir sonraki regl tarihinizi kolayca 
+            hesaplayabilirsiniz.
+        </p>
+        <div class="seo-item">
+            <h3>Nasıl Çalışır?</h3>
+            <p>1. Son regl tarihinizi girin.</p>
+            <p>2. Döngü sürenizi (gün) girin.</p>
+            <p>3. "Hesapla" butonuna tıklayın.</p>
+            <p>4. Bir sonraki regl tarihiniz ekranda görünecektir.</p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Günlük Hesaplama Araçları</p>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html" style="color: white;">Hakkında</a> | <a href="/iletisim.html" style="color: white;">İletişim</a> | <a href="/kvkk.html" style="color: white;">KVKK</a></p>
     </footer>
-    
+
     <script>
         document.getElementById('regl-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -47,4 +158,5 @@
         });
     </script>
 </body>
+
 </html>
