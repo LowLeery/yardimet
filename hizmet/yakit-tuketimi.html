@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Araç yakıt tüketimini hesaplayın, yakıt maliyetini ve tüketim oranını öğrenin.">
+    <meta name="keywords" content="yakıt tüketimi hesaplama, araç yakıt maliyeti, yakıt hesaplama, araç tüketim">
+    <title>Araç Yakıt Tüketimi Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .fuel-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .fuel-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .results-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .car-container {
+            margin-top: 20px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .car-container i {
+            font-size: 4rem;
+            color: #32CD32;
+        }
+
+        .fuel-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .fuel-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .fuel-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .fuel-info li {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Araç Yakıt Tüketimi Hesaplama</h2>
+            <div class="fuel-container">
+                <div class="fuel-form">
+                    <div class="car-container">
+                        <i class="fas fa-car"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="vehicleType">Araç Tipi:</label>
+                        <select id="vehicleType">
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="hatchback">Hatchback</option>
+                            <option value="pickup">Pickup</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="distance">Mesafe (km):</label>
+                        <input type="number" id="distance" min="1" placeholder="Mesafeyi girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="fuelPrice">Yakıt Fiyatı (TL/Litre):</label>
+                        <input type="number" id="fuelPrice" min="0" step="0.01" placeholder="Yakıt fiyatını girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="fuelConsumption">Yakıt Tüketimi (Litre/100km):</label>
+                        <input type="number" id="fuelConsumption" min="0" step="0.1" placeholder="100km'deki yakıt tüketimini girin">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-section">
+                        <h3>Hesaplama Sonuçları</h3>
+                        <div class="result-item">
+                            <div class="result-label">Toplam Yakıt Tüketimi:</div>
+                            <div class="result-value" id="totalConsumptionResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Toplam Yakıt Maliyeti:</div>
+                            <div class="result-value" id="totalCostResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Kilometre Maliyeti:</div>
+                            <div class="result-value" id="kmCostResult">-</div>
+                        </div>
+                    </div>
+
+                    <div class="fuel-info">
+                        <h3>Yakıt Tasarrufu İpuçları:</h3>
+                        <ul id="fuelInfoList">
+                            <li>Düzenli araç bakımı yaptırın</li>
+                            <li>Lastik basınçlarını kontrol edin</li>
+                            <li>Gereksiz ağırlıklardan kurtulun</li>
+                            <li>Sabit hızda sürün</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const vehicleType = document.getElementById('vehicleType');
+        const distance = document.getElementById('distance');
+        const fuelPrice = document.getElementById('fuelPrice');
+        const fuelConsumption = document.getElementById('fuelConsumption');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+
+        // Ortalama tüketim değerleri (Litre/100km)
+        const consumptionValues = {
+            sedan: 7.5,
+            suv: 9.0,
+            hatchback: 6.5,
+            pickup: 10.0
+        };
+
+        // Hesaplama yap
+        function calculateFuel() {
+            const dist = parseFloat(distance.value);
+            const price = parseFloat(fuelPrice.value);
+            const consumption = parseFloat(fuelConsumption.value) || consumptionValues[vehicleType.value];
+
+            if (isNaN(dist) || isNaN(price) || dist <= 0 || price <= 0) {
+                showStatus('Lütfen geçerli değerler girin!', true);
+                return;
+            }
+
+            // Toplam yakıt tüketimi (litre)
+            const totalConsumption = (dist * consumption) / 100;
+            
+            // Toplam maliyet (TL)
+            const totalCost = totalConsumption * price;
+            
+            // Kilometre maliyeti (TL/km)
+            const kmCost = totalCost / dist;
+
+            // Sonuçları göster
+            document.getElementById('totalConsumptionResult').textContent = 
+                `${totalConsumption.toFixed(2)} litre`;
+            
+            document.getElementById('totalCostResult').textContent = 
+                `${totalCost.toFixed(2)} TL`;
+            
+            document.getElementById('kmCostResult').textContent = 
+                `${kmCost.toFixed(2)} TL/km`;
+
+            showStatus('Hesaplama tamamlandı!', false);
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            distance.value = '';
+            fuelPrice.value = '';
+            fuelConsumption.value = '';
+            document.getElementById('totalConsumptionResult').textContent = '-';
+            document.getElementById('totalCostResult').textContent = '-';
+            document.getElementById('kmCostResult').textContent = '-';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        calculateBtn.addEventListener('click', calculateFuel);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+</html>

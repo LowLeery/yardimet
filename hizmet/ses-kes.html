@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ses dosyalarını kesin. MP3, WAV ve diğer ses formatlarını düzenleyin.">
+    <meta name="keywords" content="ses kesme, mp3 kesme, wav kesme, ses düzenleme">
+    <title>Ses Kesici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .audio-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .audio-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #32CD32;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input:hover {
+            background: #f8f9fa;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .range-container {
+            margin: 20px 0;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .range-input {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .time-display {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .cut-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .cut-btn:hover {
+            background: #28a745;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .download-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Ses Kesici</h2>
+            <div class="audio-container">
+                <div class="audio-form">
+                    <div class="form-group">
+                        <label>Ses Dosyası Yükleyin</label>
+                        <div class="file-input" id="fileInput">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Ses dosyasını sürükleyip bırakın veya tıklayarak seçin</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <audio id="audioPlayer" class="audio-player" controls></audio>
+                    </div>
+
+                    <div class="range-container">
+                        <div class="range-labels">
+                            <span>Başlangıç</span>
+                            <span>Bitiş</span>
+                        </div>
+                        <input type="range" id="startRange" class="range-input" min="0" max="100" value="0">
+                        <input type="range" id="endRange" class="range-input" min="0" max="100" value="100">
+                        <div class="time-display">
+                            <span id="startTime">0:00</span> - <span id="endTime">0:00</span>
+                        </div>
+                    </div>
+
+                    <button class="cut-btn" onclick="cutAudio()">Sesi Kes</button>
+                </div>
+
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>Kesilmiş Ses</h3>
+                    <audio id="resultAudio" class="audio-player" controls></audio>
+                    <button class="download-btn" onclick="downloadAudio()">Sesi İndir</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const startRange = document.getElementById('startRange');
+        const endRange = document.getElementById('endRange');
+        const startTime = document.getElementById('startTime');
+        const endTime = document.getElementById('endTime');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultAudio = document.getElementById('resultAudio');
+
+        let audioContext;
+        let audioBuffer;
+        let audioSource;
+
+        // Sürükle-bırak işlemleri
+        fileInput.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#28a745';
+        });
+
+        fileInput.addEventListener('dragleave', () => {
+            fileInput.style.borderColor = '#32CD32';
+        });
+
+        fileInput.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#32CD32';
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        fileInput.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'audio/*';
+            input.onchange = (e) => handleFile(e.target.files[0]);
+            input.click();
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('audio/')) {
+                alert('Lütfen bir ses dosyası seçin!');
+                return;
+            }
+
+            const url = URL.createObjectURL(file);
+            audioPlayer.src = url;
+            audioPlayer.onloadedmetadata = () => {
+                endRange.max = audioPlayer.duration;
+                endRange.value = audioPlayer.duration;
+                updateTimeDisplay();
+            };
+        }
+
+        function updateTimeDisplay() {
+            const start = formatTime(startRange.value);
+            const end = formatTime(endRange.value);
+            startTime.textContent = start;
+            endTime.textContent = end;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        startRange.addEventListener('input', () => {
+            if (parseFloat(startRange.value) >= parseFloat(endRange.value)) {
+                startRange.value = parseFloat(endRange.value) - 0.1;
+            }
+            updateTimeDisplay();
+        });
+
+        endRange.addEventListener('input', () => {
+            if (parseFloat(endRange.value) <= parseFloat(startRange.value)) {
+                endRange.value = parseFloat(startRange.value) + 0.1;
+            }
+            updateTimeDisplay();
+        });
+
+        function cutAudio() {
+            if (!audioPlayer.src) {
+                alert('Lütfen önce bir ses dosyası yükleyin!');
+                return;
+            }
+
+            const start = parseFloat(startRange.value);
+            const end = parseFloat(endRange.value);
+
+            // Ses dosyasını kesme işlemi
+            const audio = new Audio(audioPlayer.src);
+            const duration = end - start;
+            
+            // Kesilmiş sesi oynat
+            audio.currentTime = start;
+            audio.play();
+            setTimeout(() => {
+                audio.pause();
+            }, duration * 1000);
+
+            // Kesilmiş sesi indirilebilir hale getir
+            resultAudio.src = audioPlayer.src;
+            resultContainer.style.display = 'block';
+        }
+
+        function downloadAudio() {
+            const link = document.createElement('a');
+            link.href = resultAudio.src;
+            link.download = 'kesilmis-ses.mp3';
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Open Graph etiketlerinizi test edin. Sosyal medya paylaşımlarınızın nasıl görüneceğini önizleyin ve hataları tespit edin.">
+    <meta name="keywords" content="Open Graph, sosyal medya paylaşımı, meta etiketleri, Facebook paylaşımı, Twitter kartları">
+    <title>Open Graph Debug Tool | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 500px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        pre {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #007bff;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .debug-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .preview-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .preview-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .preview-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+
+        .preview-tab.active {
+            background: #32CD32;
+            color: white;
+        }
+
+        .preview-content {
+            display: none;
+        }
+
+        .preview-content.active {
+            display: block;
+        }
+
+        .facebook-preview {
+            max-width: 500px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .facebook-image {
+            width: 100%;
+            height: 250px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .facebook-content {
+            padding: 15px;
+        }
+
+        .facebook-url {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .facebook-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a0dab;
+        }
+
+        .facebook-description {
+            color: #545454;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .twitter-preview {
+            max-width: 500px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .twitter-image {
+            width: 100%;
+            height: 250px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .twitter-content {
+            padding: 15px;
+        }
+
+        .twitter-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .twitter-description {
+            color: #545454;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .twitter-url {
+            color: #1da1f2;
+            font-size: 0.8rem;
+        }
+
+        .check-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .check-btn:hover {
+            background: #28a745;
+        }
+
+        .error-list {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3f3;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .error-item {
+            color: #f44336;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Open Graph Debug Tool</h2>
+            <div class="debug-container">
+                <div class="debug-form">
+                    <div class="form-group">
+                        <label for="pageUrl">Sayfa URL'si</label>
+                        <input type="url" id="pageUrl" placeholder="https://example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ogTitle">og:title</label>
+                        <input type="text" id="ogTitle" placeholder="Sayfa başlığı">
+                    </div>
+                    <div class="form-group">
+                        <label for="ogDescription">og:description</label>
+                        <input type="text" id="ogDescription" placeholder="Sayfa açıklaması">
+                    </div>
+                    <div class="form-group">
+                        <label for="ogImage">og:image</label>
+                        <input type="url" id="ogImage" placeholder="Görsel URL'si">
+                    </div>
+                    <button class="check-btn" onclick="checkOpenGraph()">Open Graph Etiketlerini Kontrol Et</button>
+                    <div class="error-list" id="errorList"></div>
+                </div>
+                <div class="preview-container">
+                    <div class="preview-tabs">
+                        <div class="preview-tab active" onclick="showPreview('facebook')">Facebook</div>
+                        <div class="preview-tab" onclick="showPreview('twitter')">Twitter</div>
+                    </div>
+                    <div class="preview-content active" id="facebookPreview">
+                        <div class="facebook-preview">
+                            <div class="facebook-image" id="facebookImage">
+                                Görsel yükleniyor...
+                            </div>
+                            <div class="facebook-content">
+                                <div class="facebook-url" id="facebookUrl"></div>
+                                <div class="facebook-title" id="facebookTitle"></div>
+                                <div class="facebook-description" id="facebookDescription"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-content" id="twitterPreview">
+                        <div class="twitter-preview">
+                            <div class="twitter-image" id="twitterImage">
+                                Görsel yükleniyor...
+                            </div>
+                            <div class="twitter-content">
+                                <div class="twitter-title" id="twitterTitle"></div>
+                                <div class="twitter-description" id="twitterDescription"></div>
+                                <div class="twitter-url" id="twitterUrl"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPreview(platform) {
+            document.querySelectorAll('.preview-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.preview-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`.preview-tab[onclick="showPreview('${platform}')"]`).classList.add('active');
+            document.getElementById(`${platform}Preview`).classList.add('active');
+        }
+
+        function checkOpenGraph() {
+            const url = document.getElementById('pageUrl').value;
+            const title = document.getElementById('ogTitle').value;
+            const description = document.getElementById('ogDescription').value;
+            const image = document.getElementById('ogImage').value;
+
+            const errors = [];
+            if (!url) errors.push('Sayfa URL\'si gereklidir.');
+            if (!title) errors.push('og:title etiketi gereklidir.');
+            if (!description) errors.push('og:description etiketi gereklidir.');
+            if (!image) errors.push('og:image etiketi gereklidir.');
+
+            const errorList = document.getElementById('errorList');
+            if (errors.length > 0) {
+                errorList.innerHTML = errors.map(error => `<div class="error-item">${error}</div>`).join('');
+                errorList.style.display = 'block';
+            } else {
+                errorList.style.display = 'none';
+                updatePreviews(url, title, description, image);
+            }
+        }
+
+        function updatePreviews(url, title, description, image) {
+            // Facebook Preview
+            document.getElementById('facebookUrl').textContent = url;
+            document.getElementById('facebookTitle').textContent = title;
+            document.getElementById('facebookDescription').textContent = description;
+            document.getElementById('facebookImage').style.backgroundImage = `url(${image})`;
+
+            // Twitter Preview
+            document.getElementById('twitterTitle').textContent = title;
+            document.getElementById('twitterDescription').textContent = description;
+            document.getElementById('twitterUrl').textContent = url;
+            document.getElementById('twitterImage').style.backgroundImage = `url(${image})`;
+        }
+    </script>
+</body>
+
+</html>

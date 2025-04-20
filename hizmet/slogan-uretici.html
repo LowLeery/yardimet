@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Slogan üretici - Etkileyici sloganlar oluşturun">
+    <meta name="keywords" content="slogan üretici, slogan oluşturucu, slogan generator, etkileyici sloganlar">
+    <title>Slogan Üretici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .slogan-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .controls-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .output-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-height: 400px;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .slogan-display {
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 2rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slogan-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .refresh-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .slogan-history {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .history-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-item {
+            padding: 0.75rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item button {
+            padding: 0.25rem 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .slogan-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-section {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Slogan Üretici</h1>
+        
+        <div class="slogan-container">
+            <div class="controls-section">
+                <div class="input-group">
+                    <label for="keyword">Anahtar Kelime</label>
+                    <input type="text" id="keyword" placeholder="Örn: Teknoloji, Sağlık, Eğitim">
+                </div>
+                
+                <div class="input-group">
+                    <label for="tone">Ton</label>
+                    <select id="tone">
+                        <option value="professional">Profesyonel</option>
+                        <option value="casual">Günlük</option>
+                        <option value="humorous">Mizahi</option>
+                        <option value="inspirational">İlham Verici</option>
+                        <option value="emotional">Duygusal</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="length">Uzunluk</label>
+                    <select id="length">
+                        <option value="short">Kısa (3-5 kelime)</option>
+                        <option value="medium">Orta (6-8 kelime)</option>
+                        <option value="long">Uzun (9+ kelime)</option>
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rhyme" checked>
+                    <label for="rhyme">Kafiye Kullan</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="alliteration" checked>
+                    <label for="alliteration">Aliterasyon Kullan</label>
+                </div>
+                
+                <button class="btn" id="generateBtn">Slogan Oluştur</button>
+            </div>
+            
+            <div class="output-section">
+                <div class="slogan-display" id="slogan">
+                    <div class="tooltip" id="tooltip">Kopyalandı!</div>
+                </div>
+                
+                <div class="slogan-actions">
+                    <button class="action-btn copy-btn" id="copyBtn">Kopyala</button>
+                    <button class="action-btn refresh-btn" id="refreshBtn">Yenile</button>
+                </div>
+                
+                <div class="slogan-history">
+                    <div class="history-title">Geçmiş Sloganlar</div>
+                    <ul class="history-list" id="historyList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const professionalWords = [
+            "Mükemmel", "Kaliteli", "Profesyonel", "Güvenilir", "İnovatif",
+            "Çözüm", "Başarı", "Hedef", "Performans", "Verimlilik"
+        ];
+        
+        const casualWords = [
+            "Harika", "Süper", "Muhteşem", "Eğlenceli", "Kolay",
+            "Pratik", "Hızlı", "Keyifli", "Rahat", "Şık"
+        ];
+        
+        const humorousWords = [
+            "Eğlence", "Kahkaha", "Mizah", "Neşe", "Gülümseme",
+            "Şaka", "Espri", "Komik", "Eğlenceli", "Güldürü"
+        ];
+        
+        const inspirationalWords = [
+            "Hayal", "Başarı", "İlham", "Güç", "Cesaret",
+            "Azim", "Kararlılık", "Umut", "Değişim", "Gelişim"
+        ];
+        
+        const emotionalWords = [
+            "Sevgi", "Mutluluk", "Huzur", "Güven", "Samimiyet",
+            "Duygu", "Kalp", "İçten", "Sıcak", "Dostluk"
+        ];
+        
+        const rhymeWords = {
+            "a": ["başarı", "mutluluk", "güven", "huzur", "başlangıç"],
+            "e": ["gelecek", "başarı", "mutluluk", "güven", "huzur"],
+            "i": ["başarı", "mutluluk", "güven", "huzur", "başlangıç"],
+            "o": ["başarı", "mutluluk", "güven", "huzur", "başlangıç"],
+            "u": ["başarı", "mutluluk", "güven", "huzur", "başlangıç"]
+        };
+        
+        const sloganDisplay = document.getElementById('slogan');
+        const tooltip = document.getElementById('tooltip');
+        const historyList = document.getElementById('historyList');
+        
+        function getRandomWord(words) {
+            return words[Math.floor(Math.random() * words.length)];
+        }
+        
+        function generateSlogan() {
+            const keyword = document.getElementById('keyword').value.trim();
+            const tone = document.getElementById('tone').value;
+            const length = document.getElementById('length').value;
+            const useRhyme = document.getElementById('rhyme').checked;
+            const useAlliteration = document.getElementById('alliteration').checked;
+            
+            if (!keyword) {
+                alert('Lütfen bir anahtar kelime girin!');
+                return;
+            }
+            
+            let words = [];
+            let toneWords = [];
+            
+            switch (tone) {
+                case 'professional':
+                    toneWords = professionalWords;
+                    break;
+                case 'casual':
+                    toneWords = casualWords;
+                    break;
+                case 'humorous':
+                    toneWords = humorousWords;
+                    break;
+                case 'inspirational':
+                    toneWords = inspirationalWords;
+                    break;
+                case 'emotional':
+                    toneWords = emotionalWords;
+                    break;
+            }
+            
+            let sloganLength;
+            switch (length) {
+                case 'short':
+                    sloganLength = Math.floor(Math.random() * 3) + 3;
+                    break;
+                case 'medium':
+                    sloganLength = Math.floor(Math.random() * 3) + 6;
+                    break;
+                case 'long':
+                    sloganLength = Math.floor(Math.random() * 4) + 9;
+                    break;
+            }
+            
+            // Anahtar kelimeyi ekle
+            words.push(keyword);
+            
+            // Ton kelimelerini ekle
+            while (words.length < sloganLength) {
+                const word = getRandomWord(toneWords);
+                if (!words.includes(word)) {
+                    words.push(word);
+                }
+            }
+            
+            // Kafiye kullan
+            if (useRhyme) {
+                const lastWord = words[words.length - 1];
+                const lastLetter = lastWord[lastWord.length - 1];
+                if (rhymeWords[lastLetter]) {
+                    const rhymeWord = getRandomWord(rhymeWords[lastLetter]);
+                    words.push(rhymeWord);
+                }
+            }
+            
+            // Aliterasyon kullan
+            if (useAlliteration) {
+                const firstLetter = keyword[0];
+                words = words.map(word => {
+                    if (Math.random() > 0.5) {
+                        return firstLetter + word.slice(1);
+                    }
+                    return word;
+                });
+            }
+            
+            // Kelimeleri karıştır
+            words = words.sort(() => Math.random() - 0.5);
+            
+            const slogan = words.join(' ');
+            sloganDisplay.textContent = slogan;
+            
+            // Geçmişe ekle
+            addToHistory(slogan);
+        }
+        
+        function addToHistory(slogan) {
+            const li = document.createElement('li');
+            li.className = 'history-item';
+            li.innerHTML = `
+                <span>${slogan}</span>
+                <button onclick="copyToClipboard('${slogan}')">Kopyala</button>
+            `;
+            historyList.insertBefore(li, historyList.firstChild);
+            
+            // En fazla 10 öğe tut
+            if (historyList.children.length > 10) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        }
+        
+        // Event listeners
+        document.getElementById('generateBtn').addEventListener('click', generateSlogan);
+        document.getElementById('refreshBtn').addEventListener('click', generateSlogan);
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            copyToClipboard(sloganDisplay.textContent);
+        });
+        
+        // Sayfa yüklendiğinde otomatik oluştur
+        generateSlogan();
+    </script>
+</body>
+
+</html>

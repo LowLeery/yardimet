@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basit zaman çizelgeleri oluşturun. Projeleriniz, etkinlikleriniz veya planlarınız için görsel zaman çizelgeleri hazırlayın.">
+    <meta name="keywords" content="zaman çizelgesi, timeline, proje planlama, etkinlik planlama, görsel zaman çizelgesi">
+    <title>Basit Zaman Çizelgesi Yapıcı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #32CD32;
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            width: calc(50% - 30px);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #32CD32;
+            border-radius: 50%;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            color: #666;
+        }
+
+        .add-event-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .add-event-btn:hover {
+            background: #28a745;
+        }
+
+        .event-form {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #32CD32;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+            }
+
+            .timeline-item::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Basit Zaman Çizelgesi Yapıcı</h2>
+            <div class="timeline-container">
+                <div class="timeline" id="timeline">
+                    <!-- Timeline items will be added here -->
+                </div>
+                <button class="add-event-btn" onclick="showEventForm()">Yeni Etkinlik Ekle</button>
+                <div class="event-form" id="eventForm">
+                    <div class="form-group">
+                        <label for="eventDate">Tarih</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTitle">Başlık</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Açıklama</label>
+                        <textarea id="eventDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="cancel-btn" onclick="hideEventForm()">İptal</button>
+                        <button class="save-btn" onclick="addEvent()">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showEventForm() {
+            document.getElementById('eventForm').style.display = 'block';
+        }
+
+        function hideEventForm() {
+            document.getElementById('eventForm').style.display = 'none';
+            document.getElementById('eventForm').reset();
+        }
+
+        function addEvent() {
+            const date = document.getElementById('eventDate').value;
+            const title = document.getElementById('eventTitle').value;
+            const description = document.getElementById('eventDescription').value;
+
+            if (!date || !title) {
+                alert('Lütfen tarih ve başlık alanlarını doldurun.');
+                return;
+            }
+
+            const timeline = document.getElementById('timeline');
+            const eventDiv = document.createElement('div');
+            eventDiv.className = 'timeline-item';
+            eventDiv.innerHTML = `
+                <div class="timeline-content">
+                    <div class="timeline-date">${formatDate(date)}</div>
+                    <div class="timeline-title">${title}</div>
+                    <div class="timeline-description">${description}</div>
+                </div>
+            `;
+
+            timeline.appendChild(eventDiv);
+            hideEventForm();
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('tr-TR', options);
+        }
+    </script>
+</body>
+
+</html>

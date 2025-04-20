@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resimlere filigran ekleyin. Fotoğraflarınızı koruyun ve özelleştirin.">
+    <meta name="keywords" content="resim filigran, fotoğraf filigran, resim koruma">
+    <title>Resim Filigran Ekleme | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .image-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .image-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #32CD32;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input:hover {
+            background: #f8f9fa;
+        }
+
+        .image-preview {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .watermark-settings {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .watermark-settings label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .watermark-settings input[type="text"],
+        .watermark-settings input[type="color"],
+        .watermark-settings input[type="range"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .watermark-settings select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .position-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .position-btn {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .position-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .position-btn.selected {
+            background: #32CD32;
+            color: white;
+            border-color: #32CD32;
+        }
+
+        .add-watermark-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .add-watermark-btn:hover {
+            background: #28a745;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .download-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Resim Filigran Ekleme</h2>
+            <div class="image-container">
+                <div class="image-form">
+                    <div class="form-group">
+                        <label>Resim Yükleyin</label>
+                        <div class="file-input" id="fileInput">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Resmi sürükleyip bırakın veya tıklayarak seçin</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="image-preview" id="imagePreview">
+                            <img id="previewImage" src="" alt="Önizleme">
+                        </div>
+                    </div>
+
+                    <div class="watermark-settings">
+                        <label>Filigran Metni</label>
+                        <input type="text" id="watermarkText" placeholder="Filigran metnini girin">
+
+                        <label>Filigran Rengi</label>
+                        <input type="color" id="watermarkColor" value="#000000">
+
+                        <label>Filigran Opaklığı</label>
+                        <input type="range" id="watermarkOpacity" min="0" max="100" value="50">
+
+                        <label>Filigran Boyutu</label>
+                        <input type="range" id="watermarkSize" min="10" max="100" value="30">
+
+                        <label>Filigran Konumu</label>
+                        <div class="position-grid">
+                            <div class="position-btn" data-position="top-left">↖</div>
+                            <div class="position-btn" data-position="top-center">↑</div>
+                            <div class="position-btn" data-position="top-right">↗</div>
+                            <div class="position-btn" data-position="middle-left">←</div>
+                            <div class="position-btn" data-position="middle-center">●</div>
+                            <div class="position-btn" data-position="middle-right">→</div>
+                            <div class="position-btn" data-position="bottom-left">↙</div>
+                            <div class="position-btn" data-position="bottom-center">↓</div>
+                            <div class="position-btn" data-position="bottom-right">↘</div>
+                        </div>
+
+                        <label>Filigran Döndürme</label>
+                        <input type="range" id="watermarkRotation" min="0" max="360" value="0">
+                    </div>
+
+                    <button class="add-watermark-btn" onclick="addWatermark()">Filigran Ekle</button>
+                </div>
+
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>Filigranlı Resim</h3>
+                    <img id="resultImage" class="image-preview" src="" alt="Sonuç">
+                    <button class="download-btn" onclick="downloadImage()">Resmi İndir</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const previewImage = document.getElementById('previewImage');
+        const watermarkText = document.getElementById('watermarkText');
+        const watermarkColor = document.getElementById('watermarkColor');
+        const watermarkOpacity = document.getElementById('watermarkOpacity');
+        const watermarkSize = document.getElementById('watermarkSize');
+        const watermarkRotation = document.getElementById('watermarkRotation');
+        const positionBtns = document.querySelectorAll('.position-btn');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultImage = document.getElementById('resultImage');
+
+        let selectedPosition = 'middle-center';
+
+        // Sürükle-bırak işlemleri
+        fileInput.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#28a745';
+        });
+
+        fileInput.addEventListener('dragleave', () => {
+            fileInput.style.borderColor = '#32CD32';
+        });
+
+        fileInput.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#32CD32';
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        fileInput.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => handleFile(e.target.files[0]);
+            input.click();
+        });
+
+        // Konum seçimi
+        positionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                positionBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedPosition = btn.dataset.position;
+            });
+        });
+
+        // İlk konumu seçili yap
+        positionBtns[4].classList.add('selected');
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Lütfen bir resim dosyası seçin!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addWatermark() {
+            if (!previewImage.src) {
+                alert('Lütfen önce bir resim yükleyin!');
+                return;
+            }
+
+            if (!watermarkText.value) {
+                alert('Lütfen filigran metnini girin!');
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                
+                // Resmi çiz
+                ctx.drawImage(img, 0, 0);
+                
+                // Filigran ayarları
+                ctx.font = `${watermarkSize.value}px Arial`;
+                ctx.fillStyle = watermarkColor.value;
+                ctx.globalAlpha = watermarkOpacity.value / 100;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Döndürme
+                ctx.translate(canvas.width/2, canvas.height/2);
+                ctx.rotate(watermarkRotation.value * Math.PI / 180);
+                ctx.translate(-canvas.width/2, -canvas.height/2);
+                
+                // Konum hesaplama
+                let x, y;
+                switch(selectedPosition) {
+                    case 'top-left': x = 50; y = 50; break;
+                    case 'top-center': x = canvas.width/2; y = 50; break;
+                    case 'top-right': x = canvas.width-50; y = 50; break;
+                    case 'middle-left': x = 50; y = canvas.height/2; break;
+                    case 'middle-center': x = canvas.width/2; y = canvas.height/2; break;
+                    case 'middle-right': x = canvas.width-50; y = canvas.height/2; break;
+                    case 'bottom-left': x = 50; y = canvas.height-50; break;
+                    case 'bottom-center': x = canvas.width/2; y = canvas.height-50; break;
+                    case 'bottom-right': x = canvas.width-50; y = canvas.height-50; break;
+                }
+                
+                // Filigranı çiz
+                ctx.fillText(watermarkText.value, x, y);
+                
+                // Sonucu göster
+                resultImage.src = canvas.toDataURL('image/png');
+                resultContainer.style.display = 'block';
+            };
+            
+            img.src = previewImage.src;
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.href = resultImage.src;
+            link.download = 'filigranli-resim.png';
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

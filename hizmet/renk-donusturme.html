@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Renk dönüştürme aracı - HEX, RGB, HSL ve CMYK renk kodları arasında kolayca dönüşüm yapın">
+    <meta name="keywords" content="renk dönüştürme, HEX, RGB, HSL, CMYK, renk kodu">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Renk Dönüştürme | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .result-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Renk Dönüştürme</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Renk Seçimi</h2>
+                <form id="colorForm">
+                    <div class="input-group">
+                        <label for="colorType">Renk Formatı</label>
+                        <select id="colorType" required>
+                            <option value="hex">HEX</option>
+                            <option value="rgb">RGB</option>
+                            <option value="hsl">HSL</option>
+                            <option value="cmyk">CMYK</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group" id="hexInput">
+                        <label for="hexValue">HEX Kodu</label>
+                        <input type="text" id="hexValue" placeholder="#000000" pattern="^#[0-9A-Fa-f]{6}$">
+                    </div>
+                    
+                    <div class="input-group" id="rgbInput" style="display: none;">
+                        <label for="rgbValue">RGB Değerleri</label>
+                        <input type="text" id="rgbValue" placeholder="rgb(0, 0, 0)">
+                    </div>
+                    
+                    <div class="input-group" id="hslInput" style="display: none;">
+                        <label for="hslValue">HSL Değerleri</label>
+                        <input type="text" id="hslValue" placeholder="hsl(0, 0%, 0%)">
+                    </div>
+                    
+                    <div class="input-group" id="cmykInput" style="display: none;">
+                        <label for="cmykValue">CMYK Değerleri</label>
+                        <input type="text" id="cmykValue" placeholder="cmyk(0%, 0%, 0%, 0%)">
+                    </div>
+                    
+                    <div class="color-preview" id="colorPreview"></div>
+                    
+                    <button type="submit" class="btn">Dönüştür</button>
+                </form>
+            </div>
+            
+            <div class="result-section">
+                <h2>Dönüşüm Sonuçları</h2>
+                <div class="result-card">
+                    <h3>HEX</h3>
+                    <p id="hexResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>RGB</h3>
+                    <p id="rgbResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>HSL</h3>
+                    <p id="hslResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>CMYK</h3>
+                    <p id="cmykResult">-</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Renk Dönüştürme Hakkında</h2>
+            <p>Bu araç, farklı renk formatları arasında kolayca dönüşüm yapmanızı sağlar. HEX, RGB, HSL ve CMYK renk kodlarını birbirine dönüştürebilirsiniz.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Renk Formatları</h3>
+                    <ul>
+                        <li>HEX: #RRGGBB formatında 6 haneli kod</li>
+                        <li>RGB: Kırmızı, Yeşil, Mavi değerleri (0-255)</li>
+                        <li>HSL: Renk, Doygunluk, Parlaklık değerleri</li>
+                        <li>CMYK: Camgöbeği, Macenta, Sarı, Siyah değerleri</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Kullanım Alanları</h3>
+                    <ul>
+                        <li>Web tasarımı</li>
+                        <li>Grafik tasarım</li>
+                        <li>Baskı işleri</li>
+                        <li>Dijital sanat</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('colorType').addEventListener('change', function() {
+            const type = this.value;
+            document.getElementById('hexInput').style.display = type === 'hex' ? 'block' : 'none';
+            document.getElementById('rgbInput').style.display = type === 'rgb' ? 'block' : 'none';
+            document.getElementById('hslInput').style.display = type === 'hsl' ? 'block' : 'none';
+            document.getElementById('cmykInput').style.display = type === 'cmyk' ? 'block' : 'none';
+        });
+
+        document.getElementById('colorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const type = document.getElementById('colorType').value;
+            let colorValue;
+            
+            switch(type) {
+                case 'hex':
+                    colorValue = document.getElementById('hexValue').value;
+                    break;
+                case 'rgb':
+                    colorValue = document.getElementById('rgbValue').value;
+                    break;
+                case 'hsl':
+                    colorValue = document.getElementById('hslValue').value;
+                    break;
+                case 'cmyk':
+                    colorValue = document.getElementById('cmykValue').value;
+                    break;
+            }
+            
+            // Renk önizlemesini güncelle
+            document.getElementById('colorPreview').style.backgroundColor = colorValue;
+            
+            // Dönüşüm sonuçlarını göster
+            document.getElementById('hexResult').textContent = colorValue;
+            document.getElementById('rgbResult').textContent = colorValue;
+            document.getElementById('hslResult').textContent = colorValue;
+            document.getElementById('cmykResult').textContent = colorValue;
+        });
+    </script>
+</body>
+
+</html>

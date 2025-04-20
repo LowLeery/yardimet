@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tatil giderlerinizi hesaplayın. Ulaşım, konaklama, yeme-içme ve aktivite giderlerinizi kolayca planlayın.">
+    <meta name="keywords" content="tatil gideri hesaplama, seyahat bütçesi, tatil maliyeti, seyahat planlama, tatil bütçesi">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Tatil Gideri Hesaplayıcı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33,150,243,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Tatil Gideri Hesaplayıcı</h2>
+                <form id="holidayCostForm">
+                    <div class="form-group">
+                        <label for="transportation">Ulaşım Gideri (TL)</label>
+                        <input type="number" id="transportation" name="transportation" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="accommodation">Konaklama Gideri (TL)</label>
+                        <input type="number" id="accommodation" name="accommodation" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="food">Yeme-İçme Gideri (TL)</label>
+                        <input type="number" id="food" name="food" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="activities">Aktivite Gideri (TL)</label>
+                        <input type="number" id="activities" name="activities" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="days">Tatil Süresi (Gün)</label>
+                        <input type="number" id="days" name="days" min="1" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Tatil Gideri Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="totalCost">-</div>
+                    <div class="result-unit">TL</div>
+                    <div class="result-description" id="resultDescription">
+                        Tatil gideri sonucu için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Tatil Gideri Hesaplama Hakkında</h2>
+            <p>Tatil gideri hesaplama aracı, tatilinizin toplam maliyetini hesaplamanıza yardımcı olur. Ulaşım, konaklama, yeme-içme ve aktivite giderlerinizi kolayca planlayabilirsiniz.</p>
+            
+            <h3>Gider Faktörleri</h3>
+            <ul>
+                <li>Ulaşım Giderleri</li>
+                <li>Konaklama Giderleri</li>
+                <li>Yeme-İçme Giderleri</li>
+                <li>Aktivite Giderleri</li>
+                <li>Günlük Ortalama Gider</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Bütçe Planlayıcı</h3>
+                    <p>Aylık bütçenizi planlayın</p>
+                    <a href="aylik-butce.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Toplam Maliyet</h3>
+                    <p>Toplam maliyet hesaplamaları yapın</p>
+                    <a href="toplam-maliyet.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Birim Fiyat</h3>
+                    <p>Birim fiyat hesaplamaları yapın</p>
+                    <a href="birim-fiyat.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('holidayCostForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const transportation = parseFloat(document.getElementById('transportation').value);
+            const accommodation = parseFloat(document.getElementById('accommodation').value);
+            const food = parseFloat(document.getElementById('food').value);
+            const activities = parseFloat(document.getElementById('activities').value);
+            const days = parseFloat(document.getElementById('days').value);
+            
+            // Toplam gider hesaplama
+            const totalCost = transportation + accommodation + food + activities;
+            
+            // Günlük ortalama gider hesaplama
+            const dailyAverage = totalCost / days;
+            
+            const resultDiv = document.getElementById('result');
+            const totalCostDiv = document.getElementById('totalCost');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            totalCostDiv.textContent = totalCost.toFixed(2);
+            
+            let description = `Gider Detayları:\n\n`;
+            description += `Ulaşım Gideri: ${transportation.toFixed(2)} TL\n`;
+            description += `Konaklama Gideri: ${accommodation.toFixed(2)} TL\n`;
+            description += `Yeme-İçme Gideri: ${food.toFixed(2)} TL\n`;
+            description += `Aktivite Gideri: ${activities.toFixed(2)} TL\n`;
+            description += `Tatil Süresi: ${days} gün\n`;
+            description += `Toplam Gider: ${totalCost.toFixed(2)} TL\n`;
+            description += `Günlük Ortalama: ${dailyAverage.toFixed(2)} TL/gün`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html> 

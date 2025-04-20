@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Video dosyalarını birleştirin. MP4, AVI ve diğer video formatlarını tek bir dosyada birleştirin.">
+    <meta name="keywords" content="video birleştirme, mp4 birleştirme, video düzenleme">
+    <title>Video Birleştirici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .video-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #32CD32;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input:hover {
+            background: #f8f9fa;
+        }
+
+        .video-preview {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .video-list {
+            margin-top: 20px;
+        }
+
+        .video-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .video-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .video-item .info {
+            flex: 1;
+        }
+
+        .video-item .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .merge-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .merge-btn:hover {
+            background: #28a745;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .download-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #28a745;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Video Birleştirici</h2>
+            <div class="video-container">
+                <div class="video-form">
+                    <div class="form-group">
+                        <label>Video Dosyaları Yükleyin</label>
+                        <div class="file-input" id="fileInput">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Video dosyalarını sürükleyip bırakın veya tıklayarak seçin</p>
+                        </div>
+                    </div>
+
+                    <div class="video-list" id="videoList"></div>
+
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar">
+                            <div class="progress" id="progressBar"></div>
+                        </div>
+                        <p id="progressText">Birleştiriliyor...</p>
+                    </div>
+
+                    <button class="merge-btn" onclick="mergeVideos()">Videoları Birleştir</button>
+                </div>
+
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>Birleştirilmiş Video</h3>
+                    <video id="resultVideo" class="video-preview" controls></video>
+                    <button class="download-btn" onclick="downloadVideo()">Videoyu İndir</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const videoList = document.getElementById('videoList');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultVideo = document.getElementById('resultVideo');
+
+        let videos = [];
+
+        // Sürükle-bırak işlemleri
+        fileInput.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#28a745';
+        });
+
+        fileInput.addEventListener('dragleave', () => {
+            fileInput.style.borderColor = '#32CD32';
+        });
+
+        fileInput.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#32CD32';
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'video/*';
+            input.multiple = true;
+            input.onchange = (e) => handleFiles(e.target.files);
+            input.click();
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.type.startsWith('video/')) {
+                    const video = {
+                        file: file,
+                        url: URL.createObjectURL(file)
+                    };
+                    videos.push(video);
+                    addVideoToList(video);
+                }
+            }
+        }
+
+        function addVideoToList(video) {
+            const videoItem = document.createElement('div');
+            videoItem.className = 'video-item';
+            
+            const thumbnail = document.createElement('img');
+            thumbnail.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%2332CD32" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>';
+            
+            const info = document.createElement('div');
+            info.className = 'info';
+            info.innerHTML = `
+                <div>${video.file.name}</div>
+                <div>${formatFileSize(video.file.size)}</div>
+            `;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = () => {
+                videoList.removeChild(videoItem);
+                videos = videos.filter(v => v !== video);
+                URL.revokeObjectURL(video.url);
+            };
+            
+            videoItem.appendChild(thumbnail);
+            videoItem.appendChild(info);
+            videoItem.appendChild(removeBtn);
+            videoList.appendChild(videoItem);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function mergeVideos() {
+            if (videos.length < 2) {
+                alert('Lütfen en az 2 video yükleyin!');
+                return;
+            }
+
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            progressText.textContent = 'Birleştiriliyor...';
+
+            // Video birleştirme işlemi simülasyonu
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    progressText.textContent = 'Birleştirme tamamlandı!';
+                    
+                    // Sonucu göster
+                    resultVideo.src = videos[0].url; // Demo amaçlı ilk videoyu göster
+                    resultContainer.style.display = 'block';
+                }
+            }, 200);
+        }
+
+        function downloadVideo() {
+            const link = document.createElement('a');
+            link.href = resultVideo.src;
+            link.download = 'birlestirilmis-video.mp4';
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

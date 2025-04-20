@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PDF dosyalarından metin çıkarın. Hızlı ve kolay PDF'den metin çıkarma aracı.">
+    <meta name="keywords" content="pdf metin çıkarma, pdf to txt, pdf dönüştürme, metin çıkarma">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>PDF to TXT Extractor | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+        }
+
+        .main-content {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+            padding: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        pre {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .extractor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .extractor-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .upload-section {
+            margin: 20px 0;
+            padding: 30px;
+            border: 2px dashed #32CD32;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .upload-section:hover {
+            background: #f8f9fa;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .option-group {
+            margin: 10px 0;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .option-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .result-section {
+            margin-top: 30px;
+        }
+
+        .text-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: 'Roboto', monospace;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>PDF to TXT Extractor</h2>
+            <div class="extractor-container">
+                <div class="extractor-form">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-file-pdf upload-icon"></i>
+                        <p>PDF dosyasını sürükleyip bırakın veya tıklayarak seçin</p>
+                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                    </div>
+
+                    <div class="options">
+                        <div class="option-group">
+                            <label>
+                                <input type="checkbox" id="preserveFormatting" checked>
+                                Biçimlendirmeyi Koru
+                            </label>
+                        </div>
+                        <div class="option-group">
+                            <label>
+                                <input type="checkbox" id="extractImages" checked>
+                                Görselleri Çıkar
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+
+                    <div class="result-section">
+                        <div class="text-result" id="textResult"></div>
+                        <div class="action-buttons">
+                            <button class="action-btn" id="copyBtn">
+                                <i class="fas fa-copy"></i> Metni Kopyala
+                            </button>
+                            <button class="action-btn" id="downloadBtn">
+                                <i class="fas fa-download"></i> TXT Olarak İndir
+                            </button>
+                            <button class="action-btn" id="clearBtn">
+                                <i class="fas fa-trash"></i> Temizle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // PDF.js'i başlat
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+        const preserveFormatting = document.getElementById('preserveFormatting');
+        const extractImages = document.getElementById('extractImages');
+        const textResult = document.getElementById('textResult');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const progress = document.getElementById('progress');
+
+        // Dosya yükleme işlemleri
+        uploadSection.addEventListener('click', () => fileInput.click());
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#28a745';
+        });
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.style.borderColor = '#32CD32';
+        });
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#32CD32';
+            handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        // PDF'den metin çıkarma
+        async function extractTextFromPDF(pdfData) {
+            try {
+                const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+                let extractedText = '';
+                const totalPages = pdf.numPages;
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    extractedText += pageText + '\n\n';
+                    
+                    // İlerleme durumunu güncelle
+                    progress.style.width = `${(i / totalPages) * 100}%`;
+                }
+
+                return extractedText;
+            } catch (err) {
+                console.error('PDF işleme hatası:', err);
+                throw new Error('PDF işlenirken bir hata oluştu!');
+            }
+        }
+
+        // Dosya işleme
+        async function handleFile(file) {
+            if (!file) {
+                showStatus('Lütfen bir PDF dosyası seçin!', true);
+                return;
+            }
+
+            if (!file.type.includes('pdf')) {
+                showStatus('Lütfen geçerli bir PDF dosyası seçin!', true);
+                return;
+            }
+
+            status.textContent = 'PDF işleniyor...';
+            progress.style.width = '10%';
+
+            try {
+                const fileData = await file.arrayBuffer();
+                const extractedText = await extractTextFromPDF(fileData);
+                textResult.textContent = extractedText;
+                showStatus('Metin başarıyla çıkarıldı!', false);
+            } catch (err) {
+                console.error('Dosya işleme hatası:', err);
+                showStatus(err.message || 'Dosya işlenirken bir hata oluştu!', true);
+                progress.style.width = '0%';
+            }
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Metni kopyala
+        copyBtn.addEventListener('click', () => {
+            const text = textResult.textContent;
+            if (text) {
+                navigator.clipboard.writeText(text)
+                    .then(() => showStatus('Metin kopyalandı!', false))
+                    .catch(() => showStatus('Kopyalama başarısız!', true));
+            }
+        });
+
+        // TXT dosyası olarak indir
+        downloadBtn.addEventListener('click', () => {
+            const text = textResult.textContent;
+            if (text) {
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'extracted-text.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        });
+
+        // Sonuçları temizle
+        clearBtn.addEventListener('click', () => {
+            textResult.textContent = '';
+            fileInput.value = '';
+            progress.style.width = '0%';
+            showStatus('Alanlar temizlendi!', false);
+        });
+    </script>
+</body>
+
+</html>

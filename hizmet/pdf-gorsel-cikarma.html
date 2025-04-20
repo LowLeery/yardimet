@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PDF dosyalarından görselleri çıkarın. Hızlı ve kolay PDF görsel çıkarma aracı.">
+    <meta name="keywords" content="pdf görsel çıkarma, pdf image extractor, pdf to image">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>PDF'den Görsel Çıkarma Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+        }
+
+        input[type="file"] {
+            margin: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 200px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .extractor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .extractor-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .upload-section {
+            margin: 20px 0;
+            padding: 30px;
+            border: 2px dashed #32CD32;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .upload-section:hover {
+            background: #f8f9fa;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .options-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .option-group select, .option-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .image-preview {
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .preview-item {
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .preview-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-actions button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .preview-actions button:hover {
+            color: #32CD32;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>PDF'den Görsel Çıkarma Aracı</h2>
+            <div class="extractor-container">
+                <div class="extractor-form">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-file-pdf upload-icon"></i>
+                        <p>PDF dosyasını sürükleyip bırakın veya tıklayarak seçin</p>
+                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                    </div>
+
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label for="format">Görsel Formatı:</label>
+                            <select id="format">
+                                <option value="png">PNG</option>
+                                <option value="jpeg">JPEG</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="quality">Kalite (JPEG için):</label>
+                            <input type="range" id="quality" min="1" max="100" value="90">
+                            <span id="qualityValue">90%</span>
+                        </div>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+
+                    <div class="image-preview" id="imagePreview"></div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="extractBtn" disabled>
+                            <i class="fas fa-image"></i> Görselleri Çıkar
+                        </button>
+                        <button class="action-btn" id="downloadAllBtn" disabled>
+                            <i class="fas fa-download"></i> Tümünü İndir
+                        </button>
+                        <button class="action-btn" id="clearBtn" disabled>
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // PDF.js worker'ı ayarla
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+        const formatSelect = document.getElementById('format');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const imagePreview = document.getElementById('imagePreview');
+        const extractBtn = document.getElementById('extractBtn');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const progress = document.getElementById('progress');
+
+        let pdfDoc = null;
+        let images = [];
+
+        // Kalite değerini güncelle
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = qualitySlider.value + '%';
+        });
+
+        // Dosya yükleme işlemleri
+        uploadSection.addEventListener('click', () => fileInput.click());
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#28a745';
+        });
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.style.borderColor = '#32CD32';
+        });
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#32CD32';
+            handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        // PDF dosyasını işle
+        async function handleFile(file) {
+            if (file && file.type === 'application/pdf') {
+                try {
+                    showStatus('PDF yükleniyor...', false);
+                    progress.style.width = '10%';
+
+                    const arrayBuffer = await file.arrayBuffer();
+                    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    
+                    showStatus('PDF başarıyla yüklendi!', false);
+                    progress.style.width = '0%';
+                    extractBtn.disabled = false;
+                    clearBtn.disabled = false;
+                } catch (err) {
+                    console.error('PDF yükleme hatası:', err);
+                    showStatus('PDF yükleme işlemi başarısız oldu!', true);
+                }
+            }
+        }
+
+        // Görselleri çıkar
+        async function extractImages() {
+            if (!pdfDoc) return;
+
+            try {
+                showStatus('Görseller çıkarılıyor...', false);
+                progress.style.width = '10%';
+                images = [];
+                imagePreview.innerHTML = '';
+
+                const format = formatSelect.value;
+                const quality = qualitySlider.value / 100;
+
+                for (let i = 1; i <= pdfDoc.numPages; i++) {
+                    const page = await pdfDoc.getPage(i);
+                    const viewport = page.getViewport({ scale: 2.0 });
+
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    await page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    }).promise;
+
+                    const imageData = canvas.toDataURL(`image/${format}`, quality);
+                    images.push(imageData);
+
+                    // Önizleme ekle
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${imageData}" alt="Görsel ${i}">
+                        <div class="preview-actions">
+                            <button onclick="downloadImage(${i - 1})">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button onclick="copyImage(${i - 1})">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    `;
+                    imagePreview.appendChild(previewItem);
+
+                    progress.style.width = `${(i / pdfDoc.numPages) * 90}%`;
+                }
+
+                progress.style.width = '100%';
+                showStatus('Görseller başarıyla çıkarıldı!', false);
+                downloadAllBtn.disabled = false;
+            } catch (err) {
+                console.error('Görsel çıkarma hatası:', err);
+                showStatus('Görsel çıkarma işlemi başarısız oldu!', true);
+                progress.style.width = '0%';
+            }
+        }
+
+        // Tek bir görseli indir
+        function downloadImage(index) {
+            const link = document.createElement('a');
+            link.href = images[index];
+            link.download = `gorsel_${index + 1}.${formatSelect.value}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Tüm görselleri indir
+        function downloadAllImages() {
+            images.forEach((image, index) => {
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = `gorsel_${index + 1}.${formatSelect.value}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+
+        // Görseli panoya kopyala
+        async function copyImage(index) {
+            try {
+                const response = await fetch(images[index]);
+                const blob = await response.blob();
+                await navigator.clipboard.write([
+                    new ClipboardItem({
+                        [blob.type]: blob
+                    })
+                ]);
+                showStatus('Görsel panoya kopyalandı!', false);
+            } catch (err) {
+                console.error('Kopyalama hatası:', err);
+                showStatus('Görsel kopyalanamadı!', true);
+            }
+        }
+
+        // Tüm verileri temizle
+        function clearData() {
+            pdfDoc = null;
+            images = [];
+            imagePreview.innerHTML = '';
+            extractBtn.disabled = true;
+            downloadAllBtn.disabled = true;
+            clearBtn.disabled = true;
+            progress.style.width = '0%';
+            showStatus('Tüm veriler temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        extractBtn.addEventListener('click', extractImages);
+        downloadAllBtn.addEventListener('click', downloadAllImages);
+        clearBtn.addEventListener('click', clearData);
+    </script>
+</body>
+
+</html>

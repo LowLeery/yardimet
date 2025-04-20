@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Uyku kalitenizi analiz edin ve iyileştirin. Uyku düzeninizi takip edin ve daha kaliteli bir uyku için öneriler alın.">
+    <meta name="keywords" content="uyku kalitesi analizi, uyku takibi, uyku düzeni, uyku sağlığı, uyku hesaplama">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Uyku Kalitesi Analiz Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33,150,243,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Uyku Kalitesi Analiz Aracı</h2>
+                <form id="sleepQualityForm">
+                    <div class="form-group">
+                        <label for="sleepDuration">Uyku Süresi (saat)</label>
+                        <input type="number" id="sleepDuration" name="sleepDuration" step="0.5" min="3" max="12" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sleepQuality">Uyku Kalitesi</label>
+                        <select id="sleepQuality" name="sleepQuality" required>
+                            <option value="1">Çok Kötü</option>
+                            <option value="2">Kötü</option>
+                            <option value="3">Orta</option>
+                            <option value="4">İyi</option>
+                            <option value="5">Çok İyi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wakeUpFeeling">Uyanma Hissi</label>
+                        <select id="wakeUpFeeling" name="wakeUpFeeling" required>
+                            <option value="1">Çok Yorgun</option>
+                            <option value="2">Yorgun</option>
+                            <option value="3">Normal</option>
+                            <option value="4">Dinç</option>
+                            <option value="5">Çok Dinç</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sleepInterruptions">Uyku Kesintileri (sayı)</label>
+                        <input type="number" id="sleepInterruptions" name="sleepInterruptions" min="0" max="10" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Analiz Et</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Analiz Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="sleepScore">-</div>
+                    <div class="result-unit">Uyku Puanı</div>
+                    <div class="result-description" id="resultDescription">
+                        Uyku kalitesi analizi için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Uyku Kalitesi Hakkında</h2>
+            <p>Uyku kalitesi, genel sağlığınız ve yaşam kaliteniz için çok önemlidir. Bu analiz aracı, uyku düzeninizi değerlendirmenize ve iyileştirmenize yardımcı olur.</p>
+            
+            <h3>İyi Uyku İçin Öneriler</h3>
+            <ul>
+                <li>Düzenli bir uyku programı oluşturun</li>
+                <li>Yatak odanızı karanlık, serin ve sessiz tutun</li>
+                <li>Yatmadan önce elektronik cihazlardan uzak durun</li>
+                <li>Kafein ve alkol tüketimini sınırlayın</li>
+                <li>Düzenli egzersiz yapın</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Vücut Kitle İndeksi</h3>
+                    <p>Vücut kitle indeksinizi hesaplayın</p>
+                    <a href="vki.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Kalp Atış Hızı</h3>
+                    <p>Kalp atış hızınızı hesaplayın</p>
+                    <a href="kalp-atis-hizi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Stres Seviyesi</h3>
+                    <p>Stres seviyenizi ölçün</p>
+                    <a href="stres-seviyesi.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('sleepQualityForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sleepDuration = parseFloat(document.getElementById('sleepDuration').value);
+            const sleepQuality = parseInt(document.getElementById('sleepQuality').value);
+            const wakeUpFeeling = parseInt(document.getElementById('wakeUpFeeling').value);
+            const sleepInterruptions = parseInt(document.getElementById('sleepInterruptions').value);
+            
+            // Uyku puanı hesaplama (100 üzerinden)
+            let sleepScore = 0;
+            
+            // Uyku süresi puanı (maksimum 40 puan)
+            if (sleepDuration >= 7 && sleepDuration <= 9) {
+                sleepScore += 40;
+            } else if (sleepDuration >= 6 && sleepDuration <= 10) {
+                sleepScore += 30;
+            } else if (sleepDuration >= 5 && sleepDuration <= 11) {
+                sleepScore += 20;
+            } else {
+                sleepScore += 10;
+            }
+            
+            // Uyku kalitesi puanı (maksimum 20 puan)
+            sleepScore += (sleepQuality - 1) * 5;
+            
+            // Uyanma hissi puanı (maksimum 20 puan)
+            sleepScore += (wakeUpFeeling - 1) * 5;
+            
+            // Uyku kesintileri puanı (maksimum 20 puan)
+            if (sleepInterruptions === 0) {
+                sleepScore += 20;
+            } else if (sleepInterruptions <= 2) {
+                sleepScore += 15;
+            } else if (sleepInterruptions <= 4) {
+                sleepScore += 10;
+            } else {
+                sleepScore += 5;
+            }
+            
+            const resultDiv = document.getElementById('result');
+            const sleepScoreDiv = document.getElementById('sleepScore');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            sleepScoreDiv.textContent = sleepScore;
+            
+            let description = `Uyku Analizi Sonuçları:\n\n`;
+            description += `Uyku Süresi: ${sleepDuration} saat\n`;
+            description += `Uyku Kalitesi: ${sleepQuality}/5\n`;
+            description += `Uyanma Hissi: ${wakeUpFeeling}/5\n`;
+            description += `Uyku Kesintileri: ${sleepInterruptions} kez\n\n`;
+            
+            if (sleepScore >= 80) {
+                description += `Mükemmel! Uyku kaliteniz çok iyi. Bu düzeni korumaya devam edin.`;
+            } else if (sleepScore >= 60) {
+                description += `İyi! Uyku kaliteniz yeterli, ancak bazı iyileştirmeler yapabilirsiniz.`;
+            } else if (sleepScore >= 40) {
+                description += `Orta! Uyku kalitenizde iyileştirme yapılması gerekiyor.`;
+            } else {
+                description += `Düşük! Uyku kalitenizde önemli sorunlar var. Uyku düzeninizi gözden geçirmeniz önerilir.`;
+            }
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

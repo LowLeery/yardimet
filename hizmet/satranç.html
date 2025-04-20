@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satranç Oyunu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #32CD32; /* Yeşil arka plan */
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .navbar .logo h1 {
+            color: white;
+            margin-right: 20px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+            text-align: center;
+        }
+
+        #chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            gap: 0;
+            margin: 20px auto;
+        }
+
+        #chess-board div {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #chess-board .black {
+            background-color: #6b4f3a;
+        }
+
+        #chess-board .white {
+            background-color: #e1cda9;
+        }
+
+        .piece {
+            width: 50px;
+            height: 50px;
+        }
+
+        footer {
+            background-color: #32CD32;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Satranç Oyunu</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h2>İki oyunculu Satranç</h2>
+        <div id="chess-board" class="game-board"></div>
+        <button onclick="startGame()">Oyunu Başlat</button>
+    </div>
+
+    <footer>
+        <p>© 2025 Satranç Oyunu. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        // Satranç tahtasını oluşturma
+        const board = document.getElementById('chess-board');
+        let pieces = ['♜', '♞', '♝', '♛', '♚', '♟'];
+        let whitePieces = pieces.map(piece => piece.charCodeAt(0) + 1); // Beyaz taşları ASCII olarak düzenledik
+        let blackPieces = pieces; // Siyah taşlar standart
+        let gameStarted = false;
+
+        function createBoard() {
+            for (let i = 0; i < 64; i++) {
+                let square = document.createElement('div');
+                let row = Math.floor(i / 8);
+                let col = i % 8;
+                square.classList.add((row + col) % 2 === 0 ? 'white' : 'black');
+                board.appendChild(square);
+
+                if (row === 1) square.textContent = String.fromCharCode(9817); // Beyaz piyon
+                if (row === 6) square.textContent = String.fromCharCode(9823); // Siyah piyon
+
+                // Taş yerleştirme
+                if (row === 0 || row === 7) {
+                    let piece = '';
+                    if (col === 0 || col === 7) piece = pieces[0]; // Rook
+                    else if (col === 1 || col === 6) piece = pieces[1]; // Knight
+                    else if (col === 2 || col === 5) piece = pieces[2]; // Bishop
+                    else if (col === 3) piece = pieces[3]; // Queen
+                    else piece = pieces[4]; // King
+
+                    square.textContent = (row === 0 ? piece : piece.charCodeAt(0) + 1);
+                }
+            }
+        }
+
+        function startGame() {
+            if (!gameStarted) {
+                createBoard();
+                gameStarted = true;
+            }
+        }
+    </script>
+</body>
+</html>

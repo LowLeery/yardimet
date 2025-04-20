@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Podcast dinleme alışkanlığınızı takip edin, notlar alın ve bölümleri yönetin.">
+    <meta name="keywords" content="podcast takip, podcast notları, podcast dinleme, podcast yönetimi">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+
+    <title>Podcast Dinleme ve Not Alma Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Genel sayfa stili */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1E1E1E;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #3D5AFE;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* Ana içerik */
+        .main-content {
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #3D5AFE;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #2C3EB5;
+        }
+
+        /* Notlar listesi */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .note-card {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: left;
+            box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+            font-size: 16px;
+            position: relative;
+        }
+
+        .delete-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: none;
+            border: none;
+            color: red;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            color: darkred;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .podcast-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .podcast-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .podcast-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .podcast-stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .stat-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .episode-list {
+            margin-top: 30px;
+        }
+
+        .episode-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .episode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .episode-title {
+            margin: 0;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .episode-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .episode-notes {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .episode-notes p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .podcast-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .podcast-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .podcast-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .podcast-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .category-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .category-tag {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .progress-section {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #32CD32;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Podcast Dinleme ve Not Alma Aracı</h2>
+            <div class="podcast-container">
+                <div class="podcast-form">
+                    <div class="podcast-inputs">
+                        <div class="input-group">
+                            <label for="podcastName">Podcast Adı:</label>
+                            <input type="text" id="podcastName" placeholder="Podcast adını girin">
+                        </div>
+                        <div class="input-group">
+                            <label for="episodeTitle">Bölüm Başlığı:</label>
+                            <input type="text" id="episodeTitle" placeholder="Bölüm başlığını girin">
+                        </div>
+                        <div class="input-group">
+                            <label for="episodeDate">Yayın Tarihi:</label>
+                            <input type="date" id="episodeDate">
+                        </div>
+                        <div class="input-group">
+                            <label for="episodeDuration">Süre (dakika):</label>
+                            <input type="number" id="episodeDuration" placeholder="Bölüm süresi">
+                        </div>
+                        <div class="input-group">
+                            <label for="episodeCategory">Kategori:</label>
+                            <select id="episodeCategory">
+                                <option value="teknoloji">Teknoloji</option>
+                                <option value="bilim">Bilim</option>
+                                <option value="iş">İş</option>
+                                <option value="eğitim">Eğitim</option>
+                                <option value="eğlence">Eğlence</option>
+                                <option value="diğer">Diğer</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="episodeNotes">Notlar:</label>
+                            <textarea id="episodeNotes" placeholder="Bölüm hakkında notlarınızı yazın..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="addEpisodeBtn">
+                            <i class="fas fa-plus"></i> Bölüm Ekle
+                        </button>
+                        <button class="action-btn" id="updateNotesBtn">
+                            <i class="fas fa-edit"></i> Notları Güncelle
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="podcast-stats">
+                        <h3>Dinleme İstatistikleri</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h3>Toplam Bölüm</h3>
+                                <p id="totalEpisodes">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Toplam Süre</h3>
+                                <p id="totalDuration">0 dk</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Ortalama Süre</h3>
+                                <p id="averageDuration">0 dk</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Not Sayısı</h3>
+                                <p id="totalNotes">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="episode-list" id="episodeList">
+                        <!-- Bölümler buraya dinamik olarak eklenecek -->
+                    </div>
+
+                    <div class="podcast-tips">
+                        <h3>Podcast Dinleme İpuçları:</h3>
+                        <ul>
+                            <li>Düzenli dinleme alışkanlığı edinin</li>
+                            <li>Önemli noktaları not alın</li>
+                            <li>Farklı kategorilerde podcastler dinleyin</li>
+                            <li>Dinlerken aktif not alın</li>
+                            <li>İlginç bulduğunuz bölümleri işaretleyin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        let episodes = [];
+
+        // Bölüm ekle
+        function addEpisode() {
+            const podcastName = document.getElementById('podcastName').value.trim();
+            const episodeTitle = document.getElementById('episodeTitle').value.trim();
+            const episodeDate = document.getElementById('episodeDate').value;
+            const episodeDuration = parseInt(document.getElementById('episodeDuration').value);
+            const episodeCategory = document.getElementById('episodeCategory').value;
+            const episodeNotes = document.getElementById('episodeNotes').value.trim();
+
+            if (!podcastName || !episodeTitle || !episodeDate || isNaN(episodeDuration)) {
+                alert('Lütfen tüm alanları doldurun!');
+                return;
+            }
+
+            const episode = {
+                id: Date.now(),
+                podcastName,
+                episodeTitle,
+                episodeDate,
+                episodeDuration,
+                episodeCategory,
+                episodeNotes,
+                addedDate: new Date()
+            };
+
+            episodes.push(episode);
+            updateEpisodeList();
+            updateStats();
+            clearInputs();
+        }
+
+        // Notları güncelle
+        function updateNotes() {
+            const episodeTitle = document.getElementById('episodeTitle').value.trim();
+            const newNotes = document.getElementById('episodeNotes').value.trim();
+
+            if (!episodeTitle || !newNotes) {
+                alert('Lütfen bölüm başlığı ve notları girin!');
+                return;
+            }
+
+            const episode = episodes.find(e => e.episodeTitle === episodeTitle);
+            if (episode) {
+                episode.episodeNotes = newNotes;
+                updateEpisodeList();
+                updateStats();
+            } else {
+                alert('Bölüm bulunamadı!');
+            }
+        }
+
+        // Bölüm listesini güncelle
+        function updateEpisodeList() {
+            const episodeList = document.getElementById('episodeList');
+            episodeList.innerHTML = '';
+
+            episodes.forEach(episode => {
+                const card = document.createElement('div');
+                card.className = 'episode-card';
+                card.innerHTML = `
+                    <div class="episode-header">
+                        <h3 class="episode-title">${episode.episodeTitle}</h3>
+                        <span class="episode-date">${new Date(episode.episodeDate).toLocaleDateString()}</span>
+                    </div>
+                    <p><strong>Podcast:</strong> ${episode.podcastName}</p>
+                    <p><strong>Süre:</strong> ${episode.episodeDuration} dakika</p>
+                    <div class="category-tags">
+                        <span class="category-tag">${episode.episodeCategory}</span>
+                    </div>
+                    <div class="episode-notes">
+                        <p>${episode.episodeNotes}</p>
+                    </div>
+                `;
+                episodeList.appendChild(card);
+            });
+        }
+
+        // İstatistikleri güncelle
+        function updateStats() {
+            const totalEpisodes = episodes.length;
+            const totalDuration = episodes.reduce((sum, episode) => sum + episode.episodeDuration, 0);
+            const averageDuration = totalEpisodes > 0 ? totalDuration / totalEpisodes : 0;
+            const totalNotes = episodes.filter(episode => episode.episodeNotes.trim() !== '').length;
+
+            document.getElementById('totalEpisodes').textContent = totalEpisodes;
+            document.getElementById('totalDuration').textContent = `${totalDuration} dk`;
+            document.getElementById('averageDuration').textContent = `${Math.round(averageDuration)} dk`;
+            document.getElementById('totalNotes').textContent = totalNotes;
+        }
+
+        // Alanları temizle
+        function clearInputs() {
+            document.getElementById('podcastName').value = '';
+            document.getElementById('episodeTitle').value = '';
+            document.getElementById('episodeDate').value = '';
+            document.getElementById('episodeDuration').value = '';
+            document.getElementById('episodeNotes').value = '';
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('addEpisodeBtn').addEventListener('click', addEpisode);
+        document.getElementById('updateNotesBtn').addEventListener('click', updateNotes);
+        document.getElementById('clearBtn').addEventListener('click', clearInputs);
+    </script>
+</body>
+
+</html>

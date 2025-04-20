@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PDF dosyalarını birleştirin. Hızlı ve kolay PDF birleştirme aracı.">
+    <meta name="keywords" content="pdf birleştirme, pdf merge, pdf combine">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Basit PDF Birleştirici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .merger-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .merger-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .upload-section {
+            margin: 20px 0;
+            padding: 30px;
+            border: 2px dashed #32CD32;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .upload-section:hover {
+            background: #f8f9fa;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .file-list {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: move;
+        }
+
+        .file-item:hover {
+            background: #e9ecef;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-icon {
+            color: #dc3545;
+            font-size: 1.2rem;
+        }
+
+        .file-name {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .file-size {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+
+        .remove-btn:hover {
+            color: #c82333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+
+        .drag-handle {
+            cursor: move;
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .ghost {
+            opacity: 0.5;
+            background: #e9ecef;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Basit PDF Birleştirici</h2>
+            <div class="merger-container">
+                <div class="merger-form">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-file-pdf upload-icon"></i>
+                        <p>PDF dosyalarını sürükleyip bırakın veya tıklayarak seçin</p>
+                        <input type="file" id="fileInput" accept=".pdf" multiple style="display: none;">
+                    </div>
+
+                    <p class="info-text">
+                        <i class="fas fa-info-circle"></i>
+                        Dosyaları sürükleyerek sıralamayı değiştirebilirsiniz.
+                    </p>
+
+                    <div class="status" id="status"></div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+
+                    <ul class="file-list" id="fileList"></ul>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="mergeBtn" disabled>
+                            <i class="fas fa-object-group"></i> PDF'leri Birleştir
+                        </button>
+                        <button class="action-btn" id="clearBtn" disabled>
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const mergeBtn = document.getElementById('mergeBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const progress = document.getElementById('progress');
+
+        let files = [];
+
+        // Sürükle & Bırak sıralama
+        new Sortable(fileList, {
+            animation: 150,
+            ghostClass: 'ghost',
+            handle: '.drag-handle',
+            onEnd: function(evt) {
+                const oldIndex = evt.oldIndex;
+                const newIndex = evt.newIndex;
+                const item = files.splice(oldIndex, 1)[0];
+                files.splice(newIndex, 0, item);
+            }
+        });
+
+        // Dosya yükleme işlemleri
+        uploadSection.addEventListener('click', () => fileInput.click());
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#28a745';
+        });
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.style.borderColor = '#32CD32';
+        });
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#32CD32';
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        // Dosyaları işle
+        function handleFiles(fileList) {
+            for (let file of fileList) {
+                if (file.type === 'application/pdf') {
+                    if (!files.some(f => f.name === file.name)) {
+                        files.push(file);
+                        addFileToList(file);
+                    }
+                }
+            }
+            updateButtons();
+        }
+
+        // Dosyayı listeye ekle
+        function addFileToList(file) {
+            const li = document.createElement('li');
+            li.className = 'file-item';
+            li.innerHTML = `
+                <div class="file-info">
+                    <i class="fas fa-grip-vertical drag-handle"></i>
+                    <i class="fas fa-file-pdf file-icon"></i>
+                    <span class="file-name">${file.name}</span>
+                    <span class="file-size">(${formatFileSize(file.size)})</span>
+                </div>
+                <button class="remove-btn" onclick="removeFile('${file.name}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            fileList.appendChild(li);
+        }
+
+        // Dosya boyutunu formatla
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Dosyayı kaldır
+        function removeFile(fileName) {
+            files = files.filter(f => f.name !== fileName);
+            fileList.innerHTML = '';
+            files.forEach(file => addFileToList(file));
+            updateButtons();
+        }
+
+        // Butonları güncelle
+        function updateButtons() {
+            mergeBtn.disabled = files.length < 2;
+            clearBtn.disabled = files.length === 0;
+        }
+
+        // PDF'leri birleştir
+        async function mergePDFs() {
+            if (files.length < 2) return;
+
+            try {
+                showStatus('PDF\'ler birleştiriliyor...', false);
+                progress.style.width = '10%';
+
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileArrayBuffer = await file.arrayBuffer();
+                    const pdf = await PDFLib.PDFDocument.load(fileArrayBuffer);
+                    const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    pages.forEach(page => mergedPdf.addPage(page));
+                    
+                    progress.style.width = `${((i + 1) / files.length) * 90}%`;
+                }
+
+                const mergedPdfFile = await mergedPdf.save();
+                progress.style.width = '100%';
+
+                // Birleştirilmiş PDF'yi indir
+                const blob = new Blob([mergedPdfFile], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'merged.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showStatus('PDF\'ler başarıyla birleştirildi!', false);
+            } catch (err) {
+                console.error('PDF birleştirme hatası:', err);
+                showStatus('PDF birleştirme işlemi başarısız oldu!', true);
+                progress.style.width = '0%';
+            }
+        }
+
+        // Tüm dosyaları temizle
+        function clearFiles() {
+            files = [];
+            fileList.innerHTML = '';
+            updateButtons();
+            progress.style.width = '0%';
+            showStatus('Tüm dosyalar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        mergeBtn.addEventListener('click', mergePDFs);
+        clearBtn.addEventListener('click', clearFiles);
+    </script>
+</body>
+
+</html>

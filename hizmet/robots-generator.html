@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Robots.txt dosyası oluşturun. Web sitenizin hangi bölümlerinin arama motorları tarafından taranmasını istediğinizi belirtin.">
+    <meta name="keywords" content="robots.txt, SEO, arama motoru, site indeksleme">
+    <title>Robots.txt Generator | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .robots-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .robots-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-code {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+
+        .copy-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #28a745;
+        }
+
+        .generate-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .generate-btn:hover {
+            background: #28a745;
+        }
+
+        .bot-options {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .bot-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #32CD32;
+            background: white;
+            color: #32CD32;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bot-option.active {
+            background: #32CD32;
+            color: white;
+        }
+
+        .path-options {
+            margin-top: 20px;
+        }
+
+        .path-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .path-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .path-option label {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Robots.txt Generator</h2>
+            <div class="robots-container">
+                <div class="robots-form">
+                    <div class="bot-options">
+                        <div class="bot-option active" onclick="setBotType('all')">Tüm Botlar</div>
+                        <div class="bot-option" onclick="setBotType('google')">Google Bot</div>
+                        <div class="bot-option" onclick="setBotType('bing')">Bing Bot</div>
+                    </div>
+
+                    <div class="path-options">
+                        <div class="path-option">
+                            <input type="checkbox" id="admin" checked>
+                            <label for="admin">/admin/</label>
+                        </div>
+                        <div class="path-option">
+                            <input type="checkbox" id="cgi-bin" checked>
+                            <label for="cgi-bin">/cgi-bin/</label>
+                        </div>
+                        <div class="path-option">
+                            <input type="checkbox" id="tmp" checked>
+                            <label for="tmp">/tmp/</label>
+                        </div>
+                        <div class="path-option">
+                            <input type="checkbox" id="private" checked>
+                            <label for="private">/private/</label>
+                        </div>
+                        <div class="path-option">
+                            <input type="checkbox" id="images" checked>
+                            <label for="images">/images/</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customPaths">Özel Yollar (İsteğe Bağlı)</label>
+                        <textarea id="customPaths" placeholder="Her satıra bir yol girin"></textarea>
+                    </div>
+
+                    <button class="generate-btn" onclick="generateRobotsTxt()">Robots.txt Oluştur</button>
+                </div>
+
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>Oluşturulan Robots.txt</h3>
+                    <div class="result-code" id="resultCode"></div>
+                    <button class="copy-btn" onclick="copyToClipboard()">Kodu Kopyala</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentBotType = 'all';
+
+        function setBotType(type) {
+            currentBotType = type;
+            document.querySelectorAll('.bot-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.bot-option[onclick="setBotType('${type}')"]`).classList.add('active');
+        }
+
+        function generateRobotsTxt() {
+            let robotsTxt = '';
+            
+            // Bot tipine göre User-agent belirleme
+            switch(currentBotType) {
+                case 'all':
+                    robotsTxt += 'User-agent: *\n';
+                    break;
+                case 'google':
+                    robotsTxt += 'User-agent: Googlebot\n';
+                    break;
+                case 'bing':
+                    robotsTxt += 'User-agent: Bingbot\n';
+                    break;
+            }
+
+            // Seçili yolları ekleme
+            const paths = [
+                { id: 'admin', path: '/admin/' },
+                { id: 'cgi-bin', path: '/cgi-bin/' },
+                { id: 'tmp', path: '/tmp/' },
+                { id: 'private', path: '/private/' },
+                { id: 'images', path: '/images/' }
+            ];
+
+            paths.forEach(path => {
+                if (document.getElementById(path.id).checked) {
+                    robotsTxt += `Disallow: ${path.path}\n`;
+                }
+            });
+
+            // Özel yolları ekleme
+            const customPaths = document.getElementById('customPaths').value.split('\n').filter(path => path.trim());
+            if (customPaths.length > 0) {
+                customPaths.forEach(path => {
+                    robotsTxt += `Disallow: ${path}\n`;
+                });
+            }
+
+            document.getElementById('resultCode').textContent = robotsTxt;
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+
+        function copyToClipboard() {
+            const resultCode = document.getElementById('resultCode');
+            navigator.clipboard.writeText(resultCode.textContent).then(() => {
+                alert('Robots.txt kodu kopyalandı!');
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zihin haritası oluşturucu - Fikirlerinizi görselleştirin">
+    <meta name="keywords" content="zihin haritası, mind map, fikir haritası, görsel düşünme, beyin fırtınası">
+    <title>Zihin Haritası Oluşturucu | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .mindmap-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .controls-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .canvas-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .node {
+            position: absolute;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            cursor: move;
+            min-width: 150px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .node:hover {
+            transform: scale(1.05);
+        }
+
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: var(--secondary-color);
+            transform-origin: 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .mindmap-container {
+                grid-template-columns: 1fr;
+        }
+
+            .controls-section {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Zihin Haritası Oluşturucu</h1>
+        
+        <div class="mindmap-container">
+            <div class="controls-section">
+                <div class="input-group">
+                    <label for="nodeText">Düğüm Metni</label>
+                    <textarea id="nodeText" placeholder="Düğüm için metin girin"></textarea>
+            </div>
+            
+                <div class="input-group">
+                    <label>Renk Seçin</label>
+            <div class="color-picker">
+                        <div class="color-option selected" style="background: #4a6bff" data-color="#4a6bff"></div>
+                        <div class="color-option" style="background: #28a745" data-color="#28a745"></div>
+                        <div class="color-option" style="background: #dc3545" data-color="#dc3545"></div>
+                        <div class="color-option" style="background: #ffc107" data-color="#ffc107"></div>
+                        <div class="color-option" style="background: #17a2b8" data-color="#17a2b8"></div>
+                    </div>
+            </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" id="addNodeBtn">Düğüm Ekle</button>
+                    <button class="btn btn-secondary" id="clearBtn">Temizle</button>
+        </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" id="saveBtn">Kaydet</button>
+                    <button class="btn btn-secondary" id="loadBtn">Yükle</button>
+            </div>
+            </div>
+            
+            <div class="canvas-section" id="canvas">
+                <!-- Zihin haritası burada oluşturulacak -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        class MindMap {
+            constructor(container) {
+                this.container = container;
+                this.nodes = [];
+                this.connections = [];
+                this.selectedColor = '#4a6bff';
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                document.getElementById('addNodeBtn').addEventListener('click', () => this.addNode());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clear());
+                document.getElementById('saveBtn').addEventListener('click', () => this.save());
+                document.getElementById('loadBtn').addEventListener('click', () => this.load());
+                
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        this.selectedColor = option.dataset.color;
+                    });
+                });
+            }
+
+            addNode() {
+                const text = document.getElementById('nodeText').value.trim();
+                if (!text) return;
+            
+            const node = document.createElement('div');
+            node.className = 'node';
+                node.style.backgroundColor = this.selectedColor;
+                node.style.color = 'white';
+            node.textContent = text;
+                
+                // Rastgele pozisyon
+                const containerRect = this.container.getBoundingClientRect();
+                const x = Math.random() * (containerRect.width - 200);
+                const y = Math.random() * (containerRect.height - 100);
+                
+                node.style.left = `${x}px`;
+                node.style.top = `${y}px`;
+                
+                this.container.appendChild(node);
+                this.nodes.push(node);
+                
+                // Sürükleme işlevselliği
+                this.makeDraggable(node);
+                
+                // Bağlantıları güncelle
+                this.updateConnections();
+            }
+
+            makeDraggable(node) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                
+                node.onmousedown = dragMouseDown;
+
+                function dragMouseDown(e) {
+                    e.preventDefault();
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    document.onmouseup = closeDragElement;
+                    document.onmousemove = elementDrag;
+        }
+
+                function elementDrag(e) {
+                    e.preventDefault();
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    
+                    node.style.top = (node.offsetTop - pos2) + "px";
+                    node.style.left = (node.offsetLeft - pos1) + "px";
+                    
+                    // Bağlantıları güncelle
+                    this.updateConnections();
+            }
+            
+                function closeDragElement() {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+            }
+            }
+
+            updateConnections() {
+                // Mevcut bağlantıları temizle
+                this.connections.forEach(conn => conn.remove());
+                this.connections = [];
+
+                // Yeni bağlantıları oluştur
+                for (let i = 0; i < this.nodes.length - 1; i++) {
+                    const node1 = this.nodes[i];
+                    const node2 = this.nodes[i + 1];
+                    
+                    const conn = document.createElement('div');
+                    conn.className = 'connection';
+                    
+                    const rect1 = node1.getBoundingClientRect();
+                    const rect2 = node2.getBoundingClientRect();
+                    
+                    const x1 = rect1.left + rect1.width / 2;
+                    const y1 = rect1.top + rect1.height / 2;
+                    const x2 = rect2.left + rect2.width / 2;
+                    const y2 = rect2.top + rect2.height / 2;
+                    
+                    const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                    
+                    conn.style.width = `${length}px`;
+                    conn.style.left = `${x1}px`;
+                    conn.style.top = `${y1}px`;
+                    conn.style.transform = `rotate(${angle}deg)`;
+                    
+                    this.container.appendChild(conn);
+                    this.connections.push(conn);
+                }
+            }
+
+            clear() {
+                this.nodes.forEach(node => node.remove());
+                this.connections.forEach(conn => conn.remove());
+                this.nodes = [];
+                this.connections = [];
+            }
+
+            save() {
+                const data = {
+                    nodes: this.nodes.map(node => ({
+                text: node.textContent,
+                        color: node.style.backgroundColor,
+                        left: node.style.left,
+                        top: node.style.top
+                    }))
+                };
+                
+                localStorage.setItem('mindmap', JSON.stringify(data));
+                alert('Zihin haritası kaydedildi!');
+        }
+
+            load() {
+                const data = JSON.parse(localStorage.getItem('mindmap'));
+                if (!data) {
+                    alert('Kayıtlı zihin haritası bulunamadı!');
+                    return;
+                }
+                
+                this.clear();
+                
+                data.nodes.forEach(nodeData => {
+                    const node = document.createElement('div');
+                    node.className = 'node';
+                    node.textContent = nodeData.text;
+                    node.style.backgroundColor = nodeData.color;
+                    node.style.left = nodeData.left;
+                    node.style.top = nodeData.top;
+                    
+                    this.container.appendChild(node);
+                    this.nodes.push(node);
+                    this.makeDraggable(node);
+                });
+                
+                this.updateConnections();
+            }
+        }
+
+        // Uygulamayı başlat
+        const mindmap = new MindMap(document.getElementById('canvas'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Düzenli ifadeleri (regex) test edin, öğrenin ve uygulayın. Regex desenlerini anında kontrol edin.">
+    <meta name="keywords" content="regex tester, düzenli ifade testi, regex öğrenme, regex desenleri, regex kontrol">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Basit Regex Tester | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Genel sayfa stili */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1E1E1E;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #3D5AFE;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* Ana içerik */
+        .main-content {
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #252525;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #333;
+            color: white;
+            outline: none;
+            resize: none;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            background-color: #333;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #3D5AFE;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2C3EB5;
+        }
+
+        /* Regex test sonucu */
+        #regexResult {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .tester-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tester-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tester-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tester-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #32CD32;
+        }
+
+        .regex-flags {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .flag-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .flag-checkbox input {
+            margin: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .result-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .matches-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .match-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .match-item.highlight {
+            background: #e8f5e9;
+            border-left: 3px solid #32CD32;
+        }
+
+        .tester-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .tester-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .tester-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .tester-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .regex-examples {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .example-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .example-card h4 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .example-card pre {
+            margin: 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 3px;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .example-card p {
+            margin: 10px 0 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Basit Regex Tester</h2>
+            <div class="tester-container">
+                <div class="tester-form">
+                    <div class="tester-info">
+                        <p>Bu araç, düzenli ifadeleri (regex) test etmenize ve öğrenmenize yardımcı olur. Regex desenlerini anında kontrol edebilir ve sonuçları görebilirsiniz.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="regexPattern">Regex Deseni:</label>
+                        <input type="text" id="regexPattern" placeholder="Regex desenini buraya yazın...">
+                    </div>
+
+                    <div class="regex-flags">
+                        <label class="flag-checkbox">
+                            <input type="checkbox" id="flagI" checked> i (Büyük/küçük harf duyarsız)
+                        </label>
+                        <label class="flag-checkbox">
+                            <input type="checkbox" id="flagG"> g (Global eşleşme)
+                        </label>
+                        <label class="flag-checkbox">
+                            <input type="checkbox" id="flagM"> m (Çok satırlı eşleşme)
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="testText">Test Metni:</label>
+                        <textarea id="testText" placeholder="Test etmek istediğiniz metni buraya yazın..."></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="testBtn">
+                            <i class="fas fa-check"></i> Test Et
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-container">
+                        <h3>Test Sonuçları</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h3>Eşleşme Sayısı</h3>
+                                <p id="matchCount">0</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Geçerli Desen</h3>
+                                <p id="patternValid">Evet</p>
+                            </div>
+                        </div>
+
+                        <div class="matches-container">
+                            <h3>Eşleşmeler:</h3>
+                            <div id="matchesList"></div>
+                        </div>
+                    </div>
+
+                    <div class="regex-examples">
+                        <h3>Yaygın Regex Örnekleri:</h3>
+                        <div class="example-card">
+                            <h4>E-posta Adresi</h4>
+                            <pre>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</pre>
+                            <p>Geçerli e-posta adreslerini doğrular</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>Telefon Numarası</h4>
+                            <pre>^(\+90|0)?[0-9]{10}$</pre>
+                            <p>Türkiye telefon numaralarını doğrular</p>
+                        </div>
+                        <div class="example-card">
+                            <h4>URL</h4>
+                            <pre>^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$</pre>
+                            <p>Geçerli URL'leri doğrular</p>
+                        </div>
+                    </div>
+
+                    <div class="tester-tips">
+                        <h3>Regex İpuçları:</h3>
+                        <ul>
+                            <li>^ işareti satır başını, $ işareti satır sonunu belirtir</li>
+                            <li>[] içindeki karakterlerden herhangi biriyle eşleşir</li>
+                            <li>* işareti önceki karakterin 0 veya daha fazla tekrarını belirtir</li>
+                            <li>+ işareti önceki karakterin 1 veya daha fazla tekrarını belirtir</li>
+                            <li>? işareti önceki karakterin 0 veya 1 tekrarını belirtir</li>
+                            <li>\d herhangi bir rakamla eşleşir</li>
+                            <li>\w herhangi bir kelime karakteriyle eşleşir</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Regex test fonksiyonu
+        function testRegex() {
+            const pattern = document.getElementById('regexPattern').value;
+            const text = document.getElementById('testText').value;
+            const flags = getFlags();
+            
+            try {
+                const regex = new RegExp(pattern, flags);
+                const matches = text.match(regex);
+                
+                // Sonuçları güncelle
+                document.getElementById('matchCount').textContent = matches ? matches.length : 0;
+                document.getElementById('patternValid').textContent = 'Evet';
+                
+                // Eşleşmeleri göster
+                const matchesList = document.getElementById('matchesList');
+                matchesList.innerHTML = '';
+                
+                if (matches) {
+                    matches.forEach(match => {
+                        const matchItem = document.createElement('div');
+                        matchItem.className = 'match-item highlight';
+                        matchItem.textContent = match;
+                        matchesList.appendChild(matchItem);
+                    });
+                }
+            } catch (error) {
+                document.getElementById('matchCount').textContent = '0';
+                document.getElementById('patternValid').textContent = 'Hayır';
+                document.getElementById('matchesList').innerHTML = 
+                    '<div class="match-item">Geçersiz regex deseni</div>';
+            }
+        }
+
+        // Flag'leri al
+        function getFlags() {
+            let flags = '';
+            if (document.getElementById('flagI').checked) flags += 'i';
+            if (document.getElementById('flagG').checked) flags += 'g';
+            if (document.getElementById('flagM').checked) flags += 'm';
+            return flags;
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('testBtn').addEventListener('click', testRegex);
+        
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('regexPattern').value = '';
+            document.getElementById('testText').value = '';
+            document.getElementById('matchCount').textContent = '0';
+            document.getElementById('patternValid').textContent = 'Evet';
+            document.getElementById('matchesList').innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>

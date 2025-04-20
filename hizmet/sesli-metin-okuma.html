@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metinlerinizi sesli olarak dinleyin. Yazıları konuşmaya dönüştürün.">
+    <meta name="keywords" content="metin okuma, text to speech, sesli okuma">
+    <title>Sesli Metin Okuma Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .reader-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .reader-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .control-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .control-group h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .voice-select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .slider-container {
+            margin: 10px 0;
+        }
+
+        .slider-container label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            -webkit-appearance: none;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #32CD32;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
+        }
+
+        .status {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+
+        .word-highlight {
+            background: #e8f5e9;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Sesli Metin Okuma Aracı</h2>
+            <div class="reader-container">
+                <div class="reader-form">
+                    <textarea class="text-input" id="textInput" placeholder="Sesli okunmasını istediğiniz metni buraya yazın veya yapıştırın..."></textarea>
+
+                    <div class="controls">
+                        <div class="control-group">
+                            <h3>Ses Ayarları</h3>
+                            <select class="voice-select" id="voiceSelect">
+                                <option value="">Ses seçin...</option>
+                            </select>
+                            <div class="slider-container">
+                                <label>Hız</label>
+                                <input type="range" class="slider" id="rateSlider" min="0.5" max="2" step="0.1" value="1">
+                                <span id="rateValue">1x</span>
+                            </div>
+                            <div class="slider-container">
+                                <label>Ses Tonu</label>
+                                <input type="range" class="slider" id="pitchSlider" min="0.5" max="2" step="0.1" value="1">
+                                <span id="pitchValue">1x</span>
+                            </div>
+                            <div class="slider-container">
+                                <label>Ses Seviyesi</label>
+                                <input type="range" class="slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                                <span id="volumeValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="playBtn">
+                            <i class="fas fa-play"></i> Okumaya Başla
+                        </button>
+                        <button class="action-btn" id="pauseBtn" disabled>
+                            <i class="fas fa-pause"></i> Duraklat
+                        </button>
+                        <button class="action-btn" id="stopBtn" disabled>
+                            <i class="fas fa-stop"></i> Durdur
+                        </button>
+                        <button class="action-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> MP3 Olarak İndir
+                        </button>
+                    </div>
+
+                    <div class="status" id="status">Metin bekleniyor...</div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const rateSlider = document.getElementById('rateSlider');
+        const pitchSlider = document.getElementById('pitchSlider');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const rateValue = document.getElementById('rateValue');
+        const pitchValue = document.getElementById('pitchValue');
+        const volumeValue = document.getElementById('volumeValue');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const status = document.getElementById('status');
+        const progress = document.getElementById('progress');
+
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        let voices = [];
+        let isPlaying = false;
+        let isPaused = false;
+
+        // Sesleri yükle
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '';
+            
+            voices.forEach((voice, i) => {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        // Ses yükleme olayını dinle
+        speechSynthesis.onvoiceschanged = loadVoices;
+
+        // Slider değerlerini güncelle
+        rateSlider.addEventListener('input', () => {
+            rateValue.textContent = `${rateSlider.value}x`;
+        });
+
+        pitchSlider.addEventListener('input', () => {
+            pitchValue.textContent = `${pitchSlider.value}x`;
+        });
+
+        volumeSlider.addEventListener('input', () => {
+            volumeValue.textContent = `${Math.round(volumeSlider.value * 100)}%`;
+        });
+
+        // Okuma işlemini başlat
+        function startSpeaking() {
+            if (!textInput.value) {
+                alert('Lütfen okunacak bir metin girin!');
+                return;
+            }
+
+            if (isPaused) {
+                speechSynthesis.resume();
+                isPaused = false;
+                playBtn.innerHTML = '<i class="fas fa-pause"></i> Duraklat';
+                return;
+            }
+
+            if (currentUtterance) {
+                speechSynthesis.cancel();
+            }
+
+            const utterance = new SpeechSynthesisUtterance(textInput.value);
+            
+            if (voiceSelect.value) {
+                utterance.voice = voices[voiceSelect.value];
+            }
+            
+            utterance.rate = parseFloat(rateSlider.value);
+            utterance.pitch = parseFloat(pitchSlider.value);
+            utterance.volume = parseFloat(volumeSlider.value);
+
+            utterance.onstart = () => {
+                isPlaying = true;
+                playBtn.innerHTML = '<i class="fas fa-pause"></i> Duraklat';
+                pauseBtn.disabled = false;
+                stopBtn.disabled = false;
+                status.textContent = 'Metin okunuyor...';
+            };
+
+            utterance.onend = () => {
+                isPlaying = false;
+                playBtn.innerHTML = '<i class="fas fa-play"></i> Okumaya Başla';
+                pauseBtn.disabled = true;
+                stopBtn.disabled = true;
+                status.textContent = 'Okuma tamamlandı';
+                progress.style.width = '100%';
+            };
+
+            utterance.onpause = () => {
+                isPaused = true;
+                playBtn.innerHTML = '<i class="fas fa-play"></i> Devam Et';
+            };
+
+            utterance.onboundary = (event) => {
+                const text = textInput.value;
+                const wordStart = event.charIndex;
+                let wordEnd = text.indexOf(' ', wordStart);
+                if (wordEnd === -1) wordEnd = text.length;
+
+                const progressPercent = (wordStart / text.length) * 100;
+                progress.style.width = `${progressPercent}%`;
+            };
+
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        // Okumayı duraklat
+        function pauseSpeaking() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.pause();
+                isPaused = true;
+                playBtn.innerHTML = '<i class="fas fa-play"></i> Devam Et';
+            }
+        }
+
+        // Okumayı durdur
+        function stopSpeaking() {
+            speechSynthesis.cancel();
+            isPlaying = false;
+            isPaused = false;
+            playBtn.innerHTML = '<i class="fas fa-play"></i> Okumaya Başla';
+            pauseBtn.disabled = true;
+            stopBtn.disabled = true;
+            status.textContent = 'Okuma durduruldu';
+            progress.style.width = '0%';
+        }
+
+        // MP3 olarak kaydet
+        async function downloadAudio() {
+            if (!textInput.value) {
+                alert('Lütfen bir metin girin!');
+                return;
+            }
+
+            status.textContent = 'MP3 oluşturuluyor...';
+            progress.style.width = '30%';
+
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                const utterance = new SpeechSynthesisUtterance(textInput.value);
+                utterance.voice = voices[voiceSelect.value];
+                utterance.rate = parseFloat(rateSlider.value);
+                utterance.pitch = parseFloat(pitchSlider.value);
+                utterance.volume = parseFloat(volumeSlider.value);
+                
+                const audioBlob = await new Promise((resolve) => {
+                    const chunks = [];
+                    const mediaRecorder = new MediaRecorder(audioContext.createMediaStreamDestination().stream);
+                    
+                    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+                    mediaRecorder.onstop = () => resolve(new Blob(chunks, { type: 'audio/mp3' }));
+                    
+                    mediaRecorder.start();
+                    speechSynthesis.speak(utterance);
+                    
+                    utterance.onend = () => {
+                        mediaRecorder.stop();
+                        progress.style.width = '100%';
+                        status.textContent = 'MP3 oluşturuldu';
+                    };
+                });
+                
+                const url = URL.createObjectURL(audioBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sesli-metin.mp3';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                console.error('MP3 oluşturma hatası:', err);
+                status.textContent = 'MP3 oluşturulurken bir hata oluştu!';
+                progress.style.width = '0%';
+            }
+        }
+
+        // Olay dinleyicileri
+        playBtn.addEventListener('click', startSpeaking);
+        pauseBtn.addEventListener('click', pauseSpeaking);
+        stopBtn.addEventListener('click', stopSpeaking);
+        downloadBtn.addEventListener('click', downloadAudio);
+
+        // Sayfa yüklendiğinde sesleri yükle
+        window.addEventListener('load', loadVoices);
+    </script>
+</body>
+
+</html>

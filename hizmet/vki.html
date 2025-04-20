@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vücut kitle indeksi hesaplama aracı ile ideal kilonuzu öğrenin. BMI hesaplama, ideal kilo hesaplama ve sağlıklı kilo aralığı belirleme.">
+    <meta name="keywords" content="vücut kitle indeksi, bmi hesaplama, ideal kilo hesaplama, kilo kontrolü, sağlıklı kilo, bmi değeri">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Vücut Kitle İndeksi Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9482719326732079" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33,150,243,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .ad-container {
+            margin: 30px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .social-share {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-share button {
+            background: #f8f9fa;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-share button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Vücut Kitle İndeksi Hesaplama</h2>
+                <form id="bmiForm">
+                    <div class="form-group">
+                        <label for="weight">Kilonuz (kg)</label>
+                        <input type="number" id="weight" name="weight" placeholder="Örnek: 70" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Boyunuz (cm)</label>
+                        <input type="number" id="height" name="height" placeholder="Örnek: 175" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuç</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="resultValue">0</div>
+                    <div class="result-unit" id="resultUnit">kg/m²</div>
+                    <div class="result-description" id="resultDescription">
+                        Vücut kitle indeksi hesaplaması için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Vücut Kitle İndeksi Hakkında</h2>
+            <p>Vücut kitle indeksi (VKİ), bir kişinin kilosunun boyuna göre uygun olup olmadığını gösteren bir ölçüttür. VKİ değeri, kişinin kilosunun (kg), boyunun (metre) karesine bölünmesiyle hesaplanır.</p>
+            
+            <h3>VKİ Kategorileri</h3>
+            <ul>
+                <li><strong>18.5 altı:</strong> Zayıf</li>
+                <li><strong>18.5 - 24.9:</strong> Normal</li>
+                <li><strong>25 - 29.9:</strong> Fazla kilolu</li>
+                <li><strong>30 - 34.9:</strong> 1. derece obez</li>
+                <li><strong>35 - 39.9:</strong> 2. derece obez</li>
+                <li><strong>40 ve üzeri:</strong> 3. derece obez (morbid obez)</li>
+            </ul>
+
+            <h3>Sağlıklı Yaşam Önerileri</h3>
+            <ul>
+                <li>Düzenli fiziksel aktivite yapın</li>
+                <li>Dengeli ve sağlıklı beslenin</li>
+                <li>Yeterli su tüketin</li>
+                <li>Düzenli uyku uyuyun</li>
+                <li>Stres yönetimini öğrenin</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Kalori Hesaplama</h3>
+                    <p>Günlük kalori ihtiyacınızı hesaplayın</p>
+                    <a href="kalori-hesapla.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Hedef Kilo Hesaplama</h3>
+                    <p>Hedef kilonuzu belirleyin</p>
+                    <a href="hedef-kilo.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Su Tüketimi Takibi</h3>
+                    <p>Günlük su tüketiminizi takip edin</p>
+                    <a href="su-tuketimi.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; // cm'yi metreye çevir
+            
+            const bmi = weight / (height * height);
+            let category = '';
+            let description = '';
+            
+            if (bmi < 18.5) {
+                category = 'Zayıf';
+                description = 'Vücut kitle indeksiniz normalin altında. Sağlıklı bir şekilde kilo almanız önerilir.';
+            } else if (bmi < 25) {
+                category = 'Normal';
+                description = 'Vücut kitle indeksiniz normal aralıkta. Sağlıklı yaşam alışkanlıklarınızı sürdürün.';
+            } else if (bmi < 30) {
+                category = 'Fazla Kilolu';
+                description = 'Vücut kitle indeksiniz normalin üzerinde. Sağlıklı beslenme ve düzenli egzersiz önerilir.';
+            } else if (bmi < 35) {
+                category = '1. Derece Obez';
+                description = 'Vücut kitle indeksiniz obezite sınırında. Bir sağlık uzmanına danışmanız önerilir.';
+            } else if (bmi < 40) {
+                category = '2. Derece Obez';
+                description = 'Vücut kitle indeksiniz yüksek obezite sınırında. Mutlaka bir sağlık uzmanına danışın.';
+            } else {
+                category = '3. Derece Obez';
+                description = 'Vücut kitle indeksiniz çok yüksek. Acilen bir sağlık uzmanına danışmanız önerilir.';
+            }
+            
+            const resultValue = document.getElementById('resultValue');
+            const resultUnit = document.getElementById('resultUnit');
+            const resultDescription = document.getElementById('resultDescription');
+            const resultDiv = document.getElementById('result');
+            
+            resultValue.textContent = bmi.toFixed(1);
+            resultUnit.textContent = 'kg/m²';
+            resultDescription.textContent = `${category}\n\n${description}`;
+            resultDiv.style.display = 'block';
+        });
+
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent("Vücut Kitle İndeksimi hesapladım! Siz de hesaplayın:");
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareOnWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent("Vücut Kitle İndeksimi hesapladım! Siz de hesaplayın:");
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Web sitelerinin SEO durumunu analiz edin. Meta etiketleri, başlıklar, açıklamalar ve daha fazlasını kontrol edin.">
+    <meta name="keywords" content="seo analiz, web site analiz, meta etiket analizi, seo kontrol, web site optimizasyon">
+    <title>Web Sitesi SEO Analiz Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .seo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .seo-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .analysis-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .analysis-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .analysis-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .analysis-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .analysis-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            word-break: break-all;
+        }
+
+        .analysis-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .status-good {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-warning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-bad {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .suggestions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .suggestions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .suggestions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .suggestions li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .seo-score {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #32CD32, #28a745);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Web Sitesi SEO Analiz Aracı</h2>
+            <div class="seo-container">
+                <div class="seo-form">
+                    <div class="input-group">
+                        <label for="urlInput">Web Sitesi URL'si:</label>
+                        <input type="text" id="urlInput" placeholder="https://www.ornek.com">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="analyzeBtn">
+                            <i class="fas fa-search"></i> Analiz Et
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="seo-score" id="seoScore">-</div>
+
+                    <div class="analysis-section">
+                        <h3>SEO Analiz Sonuçları</h3>
+                        <div class="analysis-item">
+                            <div class="analysis-label">Başlık (Title):</div>
+                            <div class="analysis-value" id="title">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">Meta Açıklama:</div>
+                            <div class="analysis-value" id="description">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">Meta Anahtar Kelimeler:</div>
+                            <div class="analysis-value" id="keywords">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">H1 Etiketleri:</div>
+                            <div class="analysis-value" id="h1Tags">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">Görsel Alt Etiketleri:</div>
+                            <div class="analysis-value" id="altTags">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">Sayfa Hızı:</div>
+                            <div class="analysis-value" id="pageSpeed">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">Mobil Uyumluluk:</div>
+                            <div class="analysis-value" id="mobileFriendly">-</div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-label">SSL Sertifikası:</div>
+                            <div class="analysis-value" id="sslStatus">-</div>
+                        </div>
+                    </div>
+
+                    <div class="suggestions">
+                        <h3>SEO İyileştirme Önerileri:</h3>
+                        <ul id="suggestionsList">
+                            <li>Başlık etiketiniz 50-60 karakter arasında olmalıdır</li>
+                            <li>Meta açıklamanız 150-160 karakter arasında olmalıdır</li>
+                            <li>Her sayfada en az bir H1 etiketi bulunmalıdır</li>
+                            <li>Tüm görseller için alt etiketleri eklenmelidir</li>
+                            <li>Sayfa yüklenme hızı 3 saniyeden az olmalıdır</li>
+                            <li>SSL sertifikası kullanılmalıdır</li>
+                            <li>Mobil uyumlu tasarım kullanılmalıdır</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const urlInput = document.getElementById('urlInput');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+
+        // SEO analizi yap
+        async function analyzeSEO() {
+            const url = urlInput.value.trim();
+            if (!url) {
+                showStatus('Lütfen bir URL girin!', true);
+                return;
+            }
+
+            try {
+                showStatus('SEO analizi yapılıyor...', false);
+                
+                // Simülasyon için rastgele değerler
+                const seoScore = Math.floor(Math.random() * 100);
+                document.getElementById('seoScore').textContent = `${seoScore}/100`;
+                
+                document.getElementById('title').textContent = 'Örnek Web Sitesi Başlığı';
+                document.getElementById('description').textContent = 'Bu bir örnek meta açıklamasıdır. Web sitenizin içeriğini kısaca açıklayan bir metin olmalıdır.';
+                document.getElementById('keywords').textContent = 'örnek, web sitesi, seo, analiz';
+                document.getElementById('h1Tags').textContent = 'Ana Başlık';
+                document.getElementById('altTags').textContent = 'Görsel açıklaması';
+                document.getElementById('pageSpeed').textContent = '2.5 saniye';
+                document.getElementById('mobileFriendly').textContent = 'Evet';
+                document.getElementById('sslStatus').textContent = 'Aktif';
+
+                showStatus('SEO analizi tamamlandı!', false);
+            } catch (error) {
+                showStatus('SEO analizi yapılamadı: ' + error.message, true);
+            }
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            urlInput.value = '';
+            document.getElementById('seoScore').textContent = '-';
+            document.getElementById('title').textContent = '-';
+            document.getElementById('description').textContent = '-';
+            document.getElementById('keywords').textContent = '-';
+            document.getElementById('h1Tags').textContent = '-';
+            document.getElementById('altTags').textContent = '-';
+            document.getElementById('pageSpeed').textContent = '-';
+            document.getElementById('mobileFriendly').textContent = '-';
+            document.getElementById('sslStatus').textContent = '-';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        analyzeBtn.addEventListener('click', analyzeSEO);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Matematiksel ortalama hesaplamaları yapın. Sayı dizilerinin aritmetik, geometrik ve harmonik ortalamasını hesaplayın.">
+    <meta name="keywords" content="matematiksel ortalama, aritmetik ortalama, geometrik ortalama, harmonik ortalama, istatistik">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Matematiksel Ortalama Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #9C27B0;
+            --secondary-color: #7B1FA2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Matematiksel Ortalama Hesaplama</h2>
+                <form id="averageForm">
+                    <div class="form-group">
+                        <label for="numbers">Sayıları girin (virgülle ayırın)</label>
+                        <textarea id="numbers" name="numbers" placeholder="Örnek: 5, 10, 15, 20" required></textarea>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuçlar</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-group">
+                        <div class="result-label">Aritmetik Ortalama</div>
+                        <div class="result-value" id="arithmeticMean">-</div>
+                    </div>
+                    <div class="result-group">
+                        <div class="result-label">Geometrik Ortalama</div>
+                        <div class="result-value" id="geometricMean">-</div>
+                    </div>
+                    <div class="result-group">
+                        <div class="result-label">Harmonik Ortalama</div>
+                        <div class="result-value" id="harmonicMean">-</div>
+                    </div>
+                    <div class="result-description" id="resultDescription">
+                        Sonuçlar için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Matematiksel Ortalama Hakkında</h2>
+            <p>Matematiksel ortalama, bir sayı dizisinin merkezi eğilimini gösteren önemli bir istatistiksel ölçüttür. Farklı ortalama türleri farklı amaçlar için kullanılır.</p>
+            
+            <h3>Ortalama Türleri</h3>
+            <ul>
+                <li>Aritmetik Ortalama: Sayıların toplamının sayı adedine bölünmesiyle bulunur</li>
+                <li>Geometrik Ortalama: Sayıların çarpımının n. dereceden kökü alınarak bulunur</li>
+                <li>Harmonik Ortalama: Sayıların terslerinin aritmetik ortalamasının tersi alınarak bulunur</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Faktöriyel</h3>
+                    <p>Sayıların faktöriyelini hesaplayın</p>
+                    <a href="faktoriyel.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>İçsel Çarpan</h3>
+                    <p>Sayıların içsel çarpanlarını hesaplayın</p>
+                    <a href="içsel-çarpan.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Karmaşık Sayı</h3>
+                    <p>Karmaşık sayı hesaplamaları yapın</p>
+                    <a href="karmaşık-sayı.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateArithmeticMean(numbers) {
+            const sum = numbers.reduce((a, b) => a + b, 0);
+            return sum / numbers.length;
+        }
+
+        function calculateGeometricMean(numbers) {
+            const product = numbers.reduce((a, b) => a * b, 1);
+            return Math.pow(product, 1 / numbers.length);
+        }
+
+        function calculateHarmonicMean(numbers) {
+            const sumOfReciprocals = numbers.reduce((a, b) => a + 1/b, 0);
+            return numbers.length / sumOfReciprocals;
+        }
+
+        document.getElementById('averageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const numbersInput = document.getElementById('numbers').value;
+            const numbers = numbersInput.split(',')
+                .map(num => parseFloat(num.trim()))
+                .filter(num => !isNaN(num));
+            
+            if (numbers.length === 0) {
+                alert('Lütfen geçerli sayılar girin!');
+                return;
+            }
+            
+            const arithmeticMean = calculateArithmeticMean(numbers);
+            const geometricMean = calculateGeometricMean(numbers);
+            const harmonicMean = calculateHarmonicMean(numbers);
+            
+            document.getElementById('arithmeticMean').textContent = arithmeticMean.toFixed(4);
+            document.getElementById('geometricMean').textContent = geometricMean.toFixed(4);
+            document.getElementById('harmonicMean').textContent = harmonicMean.toFixed(4);
+            
+            let description = `İşlem Detayları:\n\n`;
+            description += `Girilen Sayılar: ${numbers.join(', ')}\n`;
+            description += `Sayı Adedi: ${numbers.length}\n`;
+            description += `Aritmetik Ortalama: ${arithmeticMean.toFixed(4)}\n`;
+            description += `Geometrik Ortalama: ${geometricMean.toFixed(4)}\n`;
+            description += `Harmonik Ortalama: ${harmonicMean.toFixed(4)}`;
+            
+            document.getElementById('resultDescription').textContent = description;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

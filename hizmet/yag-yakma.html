@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Farklı aktivitelerde yakılan kalori ve yağ miktarını hesaplayın.">
+    <meta name="keywords" content="yağ yakma hesaplama, kalori hesaplama, egzersiz kalori, aktivite kalori">
+    <title>Yağ Yakma Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .burn-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .burn-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group select,
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .results-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .burn-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .burn-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .burn-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .burn-info li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .burn-icon {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .burn-icon i {
+            font-size: 4rem;
+            color: #32CD32;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #32CD32, #28a745);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Yağ Yakma Hesaplama</h2>
+            <div class="burn-container">
+                <div class="burn-form">
+                    <div class="burn-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="activityType">Aktivite Türü:</label>
+                        <select id="activityType">
+                            <option value="walking">Yürüyüş</option>
+                            <option value="running">Koşu</option>
+                            <option value="cycling">Bisiklet</option>
+                            <option value="swimming">Yüzme</option>
+                            <option value="dancing">Dans</option>
+                            <option value="yoga">Yoga</option>
+                            <option value="weightlifting">Ağırlık Kaldırma</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="weight">Kilonuz (kg):</label>
+                        <input type="number" id="weight" min="30" max="200" placeholder="Kilonuzu girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="duration">Süre (dakika):</label>
+                        <input type="number" id="duration" min="1" max="300" placeholder="Aktivite süresini girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="intensity">Yoğunluk:</label>
+                        <select id="intensity">
+                            <option value="low">Düşük</option>
+                            <option value="medium">Orta</option>
+                            <option value="high">Yüksek</option>
+                        </select>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress" id="burnProgress" style="width: 0%"></div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-section">
+                        <h3>Hesaplama Sonuçları</h3>
+                        <div class="result-item">
+                            <div class="result-label">Yakılan Kalori:</div>
+                            <div class="result-value" id="caloriesResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Yakılan Yağ (gram):</div>
+                            <div class="result-value" id="fatResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Eşdeğer Yürüme Mesafesi (km):</div>
+                            <div class="result-value" id="distanceResult">-</div>
+                        </div>
+                    </div>
+
+                    <div class="burn-info">
+                        <h3>Yağ Yakma İpuçları:</h3>
+                        <ul id="burnInfoList">
+                            <li>Düzenli egzersiz yapın (haftada en az 3-4 gün)</li>
+                            <li>Yüksek yoğunluklu interval antrenmanları deneyin</li>
+                            <li>Kardiyo ve direnç egzersizlerini birleştirin</li>
+                            <li>Yeterli su tüketin ve dengeli beslenin</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const activityType = document.getElementById('activityType');
+        const weight = document.getElementById('weight');
+        const duration = document.getElementById('duration');
+        const intensity = document.getElementById('intensity');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const burnProgress = document.getElementById('burnProgress');
+
+        // Aktivite MET değerleri (Metabolic Equivalent of Task)
+        const metValues = {
+            walking: { low: 2.5, medium: 3.5, high: 4.5 },
+            running: { low: 6, medium: 8, high: 10 },
+            cycling: { low: 4, medium: 6, high: 8 },
+            swimming: { low: 5, medium: 7, high: 9 },
+            dancing: { low: 3, medium: 5, high: 7 },
+            yoga: { low: 2, medium: 3, high: 4 },
+            weightlifting: { low: 3, medium: 5, high: 7 }
+        };
+
+        // Kalori hesaplama fonksiyonu
+        function calculateCalories(weight, duration, met) {
+            return (weight * duration * met) / 60;
+        }
+
+        // Yağ hesaplama fonksiyonu (1 gram yağ = 9 kalori)
+        function calculateFat(calories) {
+            return calories / 9;
+        }
+
+        // Mesafe hesaplama fonksiyonu (ortalama yürüme hızı: 5 km/s)
+        function calculateDistance(calories) {
+            return (calories / 100) * 1.5;
+        }
+
+        // Hesaplama yap
+        function calculateBurn() {
+            const weightValue = parseFloat(weight.value);
+            const durationValue = parseFloat(duration.value);
+            const activity = activityType.value;
+            const intensityValue = intensity.value;
+
+            if (isNaN(weightValue) || isNaN(durationValue) || weightValue < 30 || weightValue > 200 || durationValue < 1 || durationValue > 300) {
+                showStatus('Lütfen geçerli değerler girin!', true);
+                return;
+            }
+
+            const met = metValues[activity][intensityValue];
+            const calories = calculateCalories(weightValue, durationValue, met);
+            const fat = calculateFat(calories);
+            const distance = calculateDistance(calories);
+
+            // İlerleme çubuğunu güncelle (maksimum 1000 kalori)
+            const progress = Math.min((calories / 1000) * 100, 100);
+            burnProgress.style.width = `${progress}%`;
+
+            document.getElementById('caloriesResult').textContent = `${calories.toFixed(1)} kcal`;
+            document.getElementById('fatResult').textContent = `${fat.toFixed(1)} gram`;
+            document.getElementById('distanceResult').textContent = `${distance.toFixed(1)} km`;
+
+            showStatus('Hesaplama tamamlandı!', false);
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            weight.value = '';
+            duration.value = '';
+            document.getElementById('caloriesResult').textContent = '-';
+            document.getElementById('fatResult').textContent = '-';
+            document.getElementById('distanceResult').textContent = '-';
+            burnProgress.style.width = '0%';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        calculateBtn.addEventListener('click', calculateBurn);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+</html>

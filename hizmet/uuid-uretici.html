@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UUID üretici - Benzersiz tanımlayıcılar oluşturun">
+    <meta name="keywords" content="uuid üretici, uuid oluşturucu, uuid generator, unique identifier">
+    <title>UUID Üretici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .uuid-container {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .controls-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .uuid-display {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            word-break: break-all;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .uuid-history {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .history-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-item {
+            padding: 0.75rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item button {
+            padding: 0.25rem 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .options-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .option-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .option-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            .controls-section {
+                flex-direction: column;
+            }
+            
+            .options-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>UUID Üretici</h1>
+        
+        <div class="uuid-container">
+            <div class="options-section">
+                <div class="option-group">
+                    <input type="checkbox" id="uppercase" checked>
+                    <label for="uppercase">Büyük Harf</label>
+                </div>
+                
+                <div class="option-group">
+                    <input type="checkbox" id="hyphens" checked>
+                    <label for="hyphens">Tire (-) Kullan</label>
+                </div>
+                
+                <div class="option-group">
+                    <input type="checkbox" id="braces">
+                    <label for="braces">Küme Parantezi Kullan</label>
+                </div>
+            </div>
+            
+            <div class="uuid-display" id="uuidDisplay">
+                <div class="tooltip" id="tooltip">Kopyalandı!</div>
+            </div>
+            
+            <div class="controls-section">
+                <button class="btn" id="generateBtn">Yeni UUID Oluştur</button>
+                <button class="btn btn-secondary" id="copyBtn">Kopyala</button>
+                <button class="btn btn-secondary" id="clearBtn">Geçmişi Temizle</button>
+            </div>
+            
+            <div class="uuid-history">
+                <div class="history-title">Geçmiş UUID'ler</div>
+                <ul class="history-list" id="historyList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const uuidDisplay = document.getElementById('uuidDisplay');
+        const tooltip = document.getElementById('tooltip');
+        const historyList = document.getElementById('historyList');
+        
+        function generateUUID() {
+            const uppercase = document.getElementById('uppercase').checked;
+            const hyphens = document.getElementById('hyphens').checked;
+            const braces = document.getElementById('braces').checked;
+            
+            let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            
+            if (uppercase) {
+                uuid = uuid.toUpperCase();
+            }
+            
+            if (!hyphens) {
+                uuid = uuid.replace(/-/g, '');
+            }
+            
+            if (braces) {
+                uuid = `{${uuid}}`;
+            }
+            
+            return uuid;
+        }
+        
+        function updateUUID() {
+            const uuid = generateUUID();
+            uuidDisplay.textContent = uuid;
+            addToHistory(uuid);
+        }
+        
+        function addToHistory(uuid) {
+            const li = document.createElement('li');
+            li.className = 'history-item';
+            li.innerHTML = `
+                <span>${uuid}</span>
+                <button onclick="copyToClipboard('${uuid}')">Kopyala</button>
+            `;
+            historyList.insertBefore(li, historyList.firstChild);
+            
+            // En fazla 10 öğe tut
+            if (historyList.children.length > 10) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        }
+        
+        function clearHistory() {
+            historyList.innerHTML = '';
+        }
+        
+        // Event listeners
+        document.getElementById('generateBtn').addEventListener('click', updateUUID);
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            copyToClipboard(uuidDisplay.textContent);
+        });
+        document.getElementById('clearBtn').addEventListener('click', clearHistory);
+        document.getElementById('uppercase').addEventListener('change', updateUUID);
+        document.getElementById('hyphens').addEventListener('change', updateUUID);
+        document.getElementById('braces').addEventListener('change', updateUUID);
+        
+        // Sayfa yüklendiğinde UUID oluştur
+        updateUUID();
+    </script>
+</body>
+
+</html>

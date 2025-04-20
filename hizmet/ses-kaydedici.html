@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online ses kaydedici ile ses kayıtları yapın. Mikrofonunuzu kullanarak kolayca ses kaydedin ve indirin.">
+    <meta name="keywords" content="ses kaydedici, online ses kaydı, mikrofon kaydı">
+    <title>Online Ses Kaydedici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .audio-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .audio-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .recorder-controls {
+            margin: 20px 0;
+        }
+
+        .record-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .record-btn:hover {
+            background: #28a745;
+        }
+
+        .record-btn.recording {
+            background: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+
+        .record-btn.recording:hover {
+            background: #c82333;
+        }
+
+        .timer {
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .audio-visualizer {
+            width: 100%;
+            height: 100px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visualizer-bars {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+
+        .visualizer-bar {
+            width: 4px;
+            background: #32CD32;
+            transition: height 0.1s;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #28a745;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .recording-status {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .recording-status.recording {
+            color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Online Ses Kaydedici</h2>
+            <div class="audio-container">
+                <div class="audio-form">
+                    <div class="recording-status" id="recordingStatus">Kayıt hazır</div>
+                    <div class="timer" id="timer">00:00</div>
+                    
+                    <div class="audio-visualizer">
+                        <div class="visualizer-bars" id="visualizer"></div>
+                    </div>
+
+                    <div class="recorder-controls">
+                        <button class="record-btn" id="recordBtn">
+                            <i class="fas fa-microphone"></i> Kayda Başla
+                        </button>
+                    </div>
+
+                    <audio id="audioPlayer" class="audio-player" controls style="display: none;"></audio>
+                    
+                    <button class="download-btn" id="downloadBtn" style="display: none;">
+                        <i class="fas fa-download"></i> Kaydı İndir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const recordBtn = document.getElementById('recordBtn');
+        const timer = document.getElementById('timer');
+        const recordingStatus = document.getElementById('recordingStatus');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const visualizer = document.getElementById('visualizer');
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let startTime;
+        let timerInterval;
+        let audioContext;
+        let analyser;
+        let dataArray;
+        let animationFrame;
+
+        // Görselleştirici çubukları oluştur
+        for (let i = 0; i < 50; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'visualizer-bar';
+            visualizer.appendChild(bar);
+        }
+
+        // Mikrofon erişimi iste
+        async function requestMicrophone() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                setupAudioContext(stream);
+                return stream;
+            } catch (err) {
+                alert('Mikrofon erişimi reddedildi. Lütfen mikrofon izni verin.');
+                console.error('Mikrofon erişimi hatası:', err);
+            }
+        }
+
+        // Ses bağlamını ayarla
+        function setupAudioContext(stream) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            const source = audioContext.createMediaStreamSource(stream);
+            source.connect(analyser);
+            analyser.fftSize = 256;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+        }
+
+        // Görselleştiriciyi güncelle
+        function updateVisualizer() {
+            if (!analyser) return;
+
+            analyser.getByteFrequencyData(dataArray);
+            const bars = visualizer.getElementsByClassName('visualizer-bar');
+            
+            for (let i = 0; i < bars.length; i++) {
+                const value = dataArray[i] / 255;
+                bars[i].style.height = `${value * 100}%`;
+            }
+
+            animationFrame = requestAnimationFrame(updateVisualizer);
+        }
+
+        // Zamanlayıcıyı başlat
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Zamanlayıcıyı durdur
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        // Kayıt işlemini başlat
+        async function startRecording() {
+            const stream = await requestMicrophone();
+            if (!stream) return;
+
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = (event) => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                audioPlayer.src = audioUrl;
+                audioPlayer.style.display = 'block';
+                downloadBtn.style.display = 'block';
+            };
+
+            mediaRecorder.start();
+            recordBtn.classList.add('recording');
+            recordBtn.innerHTML = '<i class="fas fa-stop"></i> Kaydı Durdur';
+            recordingStatus.textContent = 'Kayıt yapılıyor...';
+            recordingStatus.classList.add('recording');
+            startTimer();
+            updateVisualizer();
+        }
+
+        // Kayıt işlemini durdur
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="fas fa-microphone"></i> Kayda Başla';
+                recordingStatus.textContent = 'Kayıt tamamlandı';
+                recordingStatus.classList.remove('recording');
+                stopTimer();
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+
+        // Kaydı indir
+        function downloadRecording() {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const url = URL.createObjectURL(audioBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ses-kaydi.wav';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Kayıt düğmesi tıklama olayı
+        recordBtn.addEventListener('click', () => {
+            if (recordBtn.classList.contains('recording')) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+
+        // İndirme düğmesi tıklama olayı
+        downloadBtn.addEventListener('click', downloadRecording);
+    </script>
+</body>
+
+</html>

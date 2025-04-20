@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ses dosyalarınızın frekans analizini yapın, spektrumu görselleştirin ve ses özelliklerini inceleyin.">
+    <meta name="keywords" content="ses analizi, frekans analizi, ses spektrumu, ses özellikleri, ses görselleştirme">
+    <title>Ses Frekans Analiz Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .audio-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .audio-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .file-upload {
+            text-align: center;
+            padding: 30px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: #32CD32;
+            background: #f8f9fa;
+        }
+
+        .file-upload i {
+            font-size: 3rem;
+            color: #32CD32;
+            margin-bottom: 15px;
+        }
+
+        .file-upload p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: #28a745;
+        }
+
+        .control-btn i {
+            font-size: 1.1rem;
+        }
+
+        .stop-btn {
+            background: #dc3545;
+        }
+
+        .stop-btn:hover {
+            background: #c82333;
+        }
+
+        .visualization-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .spectrum-canvas {
+            width: 100%;
+            height: 200px;
+            background: #1E1E1E;
+            border-radius: 5px;
+        }
+
+        .audio-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .info-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .info-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .frequency-bands {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .band-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .frequency-band {
+            flex: 1;
+            min-width: 100px;
+            height: 100px;
+            background: #1E1E1E;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .band-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #32CD32;
+            transition: height 0.1s ease;
+        }
+
+        .band-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .audio-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .audio-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .audio-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .audio-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Ses Frekans Analiz Aracı</h2>
+            <div class="audio-container">
+                <div class="audio-form">
+                    <div class="file-upload" id="fileUpload">
+                        <i class="fas fa-file-audio"></i>
+                        <p>Ses dosyasını buraya sürükleyin veya seçin</p>
+                        <input type="file" id="audioFile" accept="audio/*" style="display: none;">
+                        <button class="control-btn" onclick="document.getElementById('audioFile').click()">
+                            <i class="fas fa-upload"></i> Dosya Seç
+                        </button>
+                    </div>
+
+                    <div class="audio-controls">
+                        <button class="control-btn" id="playBtn" disabled>
+                            <i class="fas fa-play"></i> Oynat
+                        </button>
+                        <button class="control-btn stop-btn" id="stopBtn" disabled>
+                            <i class="fas fa-stop"></i> Durdur
+                        </button>
+                    </div>
+
+                    <div class="visualization-container">
+                        <h3>Frekans Spektrumu</h3>
+                        <canvas id="spectrumCanvas" class="spectrum-canvas"></canvas>
+                    </div>
+
+                    <div class="audio-info">
+                        <h3>Ses Bilgileri</h3>
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h3>Ortalama Frekans</h3>
+                                <p id="avgFrequency">0 Hz</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>Maksimum Frekans</h3>
+                                <p id="maxFrequency">0 Hz</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>Minimum Frekans</h3>
+                                <p id="minFrequency">0 Hz</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>Ses Seviyesi</h3>
+                                <p id="volumeLevel">0 dB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="frequency-bands">
+                        <h3>Frekans Bantları</h3>
+                        <div class="band-container" id="bandContainer">
+                            <!-- Frekans bantları buraya dinamik olarak eklenecek -->
+                        </div>
+                    </div>
+
+                    <div class="audio-tips">
+                        <h3>Ses Analizi İpuçları:</h3>
+                        <ul>
+                            <li>Yüksek kaliteli ses dosyaları kullanın</li>
+                            <li>Farklı frekans bantlarını gözlemleyin</li>
+                            <li>Ses seviyesini dengeli tutun</li>
+                            <li>Frekans spektrumunu analiz edin</li>
+                            <li>Gürültü seviyesini kontrol edin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        let audioContext;
+        let analyser;
+        let audioSource;
+        let audioElement;
+        let isPlaying = false;
+        let animationFrameId;
+
+        // Ses dosyası yükleme
+        document.getElementById('audioFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                loadAudio(url);
+            }
+        });
+
+        // Sürükle-bırak işlemi
+        const fileUpload = document.getElementById('fileUpload');
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.style.borderColor = '#32CD32';
+        });
+
+        fileUpload.addEventListener('dragleave', () => {
+            fileUpload.style.borderColor = '#ddd';
+        });
+
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.style.borderColor = '#ddd';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('audio/')) {
+                const url = URL.createObjectURL(file);
+                loadAudio(url);
+            }
+        });
+
+        // Ses yükleme ve analiz başlatma
+        function loadAudio(url) {
+            if (audioElement) {
+                audioElement.pause();
+                audioElement.src = '';
+            }
+
+            audioElement = new Audio(url);
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048;
+            audioSource = audioContext.createMediaElementSource(audioElement);
+            audioSource.connect(analyser);
+            analyser.connect(audioContext.destination);
+
+            // Kontrol butonlarını aktifleştir
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = false;
+
+            // Frekans bantlarını oluştur
+            createFrequencyBands();
+        }
+
+        // Oynat/Durdur kontrolü
+        document.getElementById('playBtn').addEventListener('click', function() {
+            if (!isPlaying) {
+                audioElement.play();
+                isPlaying = true;
+                this.innerHTML = '<i class="fas fa-pause"></i> Duraklat';
+                startVisualization();
+            } else {
+                audioElement.pause();
+                isPlaying = false;
+                this.innerHTML = '<i class="fas fa-play"></i> Oynat';
+                stopVisualization();
+            }
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', function() {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+            isPlaying = false;
+            document.getElementById('playBtn').innerHTML = '<i class="fas fa-play"></i> Oynat';
+            stopVisualization();
+        });
+
+        // Görselleştirme
+        function startVisualization() {
+            const canvas = document.getElementById('spectrumCanvas');
+            const ctx = canvas.getContext('2d');
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                animationFrameId = requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                ctx.fillStyle = '#1E1E1E';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    const barHeight = (dataArray[i] / 255) * canvas.height;
+                    ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+                    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 1;
+                }
+
+                // Frekans bilgilerini güncelle
+                updateFrequencyInfo(dataArray);
+            }
+
+            draw();
+        }
+
+        function stopVisualization() {
+            cancelAnimationFrame(animationFrameId);
+            const canvas = document.getElementById('spectrumCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Frekans bantlarını oluştur
+        function createFrequencyBands() {
+            const bandContainer = document.getElementById('bandContainer');
+            bandContainer.innerHTML = '';
+
+            const bands = [
+                { label: '20-60 Hz', min: 20, max: 60 },
+                { label: '60-250 Hz', min: 60, max: 250 },
+                { label: '250-500 Hz', min: 250, max: 500 },
+                { label: '500-2k Hz', min: 500, max: 2000 },
+                { label: '2k-4k Hz', min: 2000, max: 4000 },
+                { label: '4k-6k Hz', min: 4000, max: 6000 },
+                { label: '6k-20k Hz', min: 6000, max: 20000 }
+            ];
+
+            bands.forEach(band => {
+                const bandElement = document.createElement('div');
+                bandElement.className = 'frequency-band';
+                bandElement.innerHTML = `
+                    <div class="band-fill" style="height: 0%"></div>
+                    <div class="band-label">${band.label}</div>
+                `;
+                bandContainer.appendChild(bandElement);
+            });
+        }
+
+        // Frekans bilgilerini güncelle
+        function updateFrequencyInfo(dataArray) {
+            const bufferLength = analyser.frequencyBinCount;
+            const sampleRate = audioContext.sampleRate;
+            const frequencies = dataArray.map((value, index) => {
+                return (index * sampleRate) / bufferLength;
+            });
+
+            const avgFreq = frequencies.reduce((a, b) => a + b, 0) / frequencies.length;
+            const maxFreq = Math.max(...frequencies);
+            const minFreq = Math.min(...frequencies);
+            const volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+
+            document.getElementById('avgFrequency').textContent = `${Math.round(avgFreq)} Hz`;
+            document.getElementById('maxFrequency').textContent = `${Math.round(maxFreq)} Hz`;
+            document.getElementById('minFrequency').textContent = `${Math.round(minFreq)} Hz`;
+            document.getElementById('volumeLevel').textContent = `${Math.round(volume)} dB`;
+
+            // Frekans bantlarını güncelle
+            updateFrequencyBands(dataArray);
+        }
+
+        // Frekans bantlarını güncelle
+        function updateFrequencyBands(dataArray) {
+            const bands = document.querySelectorAll('.band-fill');
+            const bufferLength = analyser.frequencyBinCount;
+            const sampleRate = audioContext.sampleRate;
+
+            bands.forEach((band, index) => {
+                const startBin = Math.floor((index * bufferLength) / bands.length);
+                const endBin = Math.floor(((index + 1) * bufferLength) / bands.length);
+                const bandData = dataArray.slice(startBin, endBin);
+                const average = bandData.reduce((a, b) => a + b, 0) / bandData.length;
+                band.style.height = `${(average / 255) * 100}%`;
+            });
+        }
+    </script>
+</body>
+</html>

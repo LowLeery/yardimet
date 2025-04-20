@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sigara bırakarak ne kadar tasarruf edeceğinizi hesaplayın. Sağlığınız ve bütçeniz için sigarayı bırakmanın faydalarını görün.">
+    <meta name="keywords" content="sigara bırakma hesaplama, sigara tasarruf, sigara maliyeti, sigara bırakma faydaları, sigara bırakma motivasyon">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Sigara Bırakma Tasarruf Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #E91E63;
+            --secondary-color: #C2185B;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(233,30,99,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233,30,99,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Sigara Bırakma Tasarruf Hesaplama</h2>
+                <form id="smokingForm">
+                    <div class="form-group">
+                        <label for="dailyCigarettes">Günlük Sigara Sayısı</label>
+                        <input type="number" id="dailyCigarettes" name="dailyCigarettes" min="1" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="packPrice">Paket Fiyatı (TL)</label>
+                        <input type="number" id="packPrice" name="packPrice" min="1" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cigarettesPerPack">Paketteki Sigara Sayısı</label>
+                        <input type="number" id="cigarettesPerPack" name="cigarettesPerPack" min="1" value="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quitDuration">Bırakma Süresi (gün)</label>
+                        <input type="number" id="quitDuration" name="quitDuration" min="1" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Hesaplama Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="savingsAmount">-</div>
+                    <div class="result-unit">TL Tasarruf</div>
+                    <div class="result-description" id="resultDescription">
+                        Tasarruf hesaplaması için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Sigara Bırakmanın Faydaları</h2>
+            <p>Sigara bırakmak, hem sağlığınız hem de bütçeniz için en iyi kararlardan biridir. Bu hesaplama aracı, sigarayı bırakarak ne kadar tasarruf edeceğinizi görmenize yardımcı olur.</p>
+            
+            <h3>Sigara Bırakmanın Sağlık Faydaları</h3>
+            <ul>
+                <li>Akciğer kapasitesi artar</li>
+                <li>Kalp hastalığı riski azalır</li>
+                <li>Kanser riski düşer</li>
+                <li>Nefes alış verişiniz düzelir</li>
+                <li>Ömrünüz uzar</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Vücut Kitle İndeksi</h3>
+                    <p>Vücut kitle indeksinizi hesaplayın</p>
+                    <a href="vki.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Kalp Atış Hızı</h3>
+                    <p>Kalp atış hızınızı hesaplayın</p>
+                    <a href="kalp-atis-hizi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Uyku Kalitesi</h3>
+                    <p>Uyku kalitenizi analiz edin</p>
+                    <a href="uyku-kalitesi.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('smokingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dailyCigarettes = parseInt(document.getElementById('dailyCigarettes').value);
+            const packPrice = parseFloat(document.getElementById('packPrice').value);
+            const cigarettesPerPack = parseInt(document.getElementById('cigarettesPerPack').value);
+            const quitDuration = parseInt(document.getElementById('quitDuration').value);
+            
+            // Günlük paket sayısı
+            const dailyPacks = dailyCigarettes / cigarettesPerPack;
+            
+            // Günlük harcama
+            const dailySpending = dailyPacks * packPrice;
+            
+            // Toplam tasarruf
+            const totalSavings = dailySpending * quitDuration;
+            
+            const resultDiv = document.getElementById('result');
+            const savingsAmountDiv = document.getElementById('savingsAmount');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            savingsAmountDiv.textContent = totalSavings.toFixed(2);
+            
+            let description = `Tasarruf Analizi:\n\n`;
+            description += `Günlük Sigara Sayısı: ${dailyCigarettes}\n`;
+            description += `Günlük Harcama: ${dailySpending.toFixed(2)} TL\n`;
+            description += `Bırakma Süresi: ${quitDuration} gün\n\n`;
+            
+            if (totalSavings >= 1000) {
+                description += `Harika! ${quitDuration} gün boyunca sigarayı bırakarak ${totalSavings.toFixed(2)} TL tasarruf ettiniz. Bu parayla kendinize güzel bir hediye alabilirsiniz!`;
+            } else if (totalSavings >= 500) {
+                description += `İyi! ${quitDuration} gün boyunca sigarayı bırakarak ${totalSavings.toFixed(2)} TL tasarruf ettiniz. Bu tasarrufu artırmak için devam edin!`;
+            } else {
+                description += `Başlangıç için iyi! ${quitDuration} gün boyunca sigarayı bırakarak ${totalSavings.toFixed(2)} TL tasarruf ettiniz. Tasarrufunuzu artırmak için bırakmaya devam edin!`;
+            }
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

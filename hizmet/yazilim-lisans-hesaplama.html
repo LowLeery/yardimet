@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yazılım lisanslarınızın maliyetini ve süresini hesaplayın. Farklı lisans türleri ve kullanıcı sayıları için maliyet analizi yapın.">
+    <meta name="keywords" content="yazılım lisansı, lisans maliyeti, yazılım maliyeti, lisans hesaplama, yazılım bütçesi">
+    <title>Yazılım Lisansı Hesaplama Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .license-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .license-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .license-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .license-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group select,
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+        }
+
+        .license-type {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .license-option {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e9ecef;
+            text-align: center;
+        }
+
+        .license-option:hover {
+            border-color: #32CD32;
+            background: #e8f5e9;
+        }
+
+        .license-option.active {
+            border-color: #32CD32;
+            background: #e8f5e9;
+        }
+
+        .license-option i {
+            font-size: 2rem;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .license-option h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .license-option p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #666;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-value.highlight {
+            color: #32CD32;
+            font-size: 1.2rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .reset-btn {
+            background: #dc3545;
+        }
+
+        .reset-btn:hover {
+            background: #c82333;
+        }
+
+        .license-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .license-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .license-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .license-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comparison-table th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .comparison-table tr:hover {
+            background: #e8f5e9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Yazılım Lisansı Hesaplama Aracı</h2>
+            <div class="license-container">
+                <div class="license-form">
+                    <div class="license-info">
+                        <p>Bu araç, yazılım lisanslarınızın maliyetini ve süresini hesaplamanıza yardımcı olur. Farklı lisans türleri ve kullanıcı sayıları için maliyet analizi yapın.</p>
+                    </div>
+
+                    <div class="license-type">
+                        <div class="license-option" data-type="perpetual">
+                            <i class="fas fa-infinity"></i>
+                            <h3>Süresiz Lisans</h3>
+                            <p>Tek seferlik ödeme</p>
+                        </div>
+                        <div class="license-option" data-type="subscription">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Abonelik</h3>
+                            <p>Aylık/Yıllık ödeme</p>
+                        </div>
+                        <div class="license-option" data-type="concurrent">
+                            <i class="fas fa-users"></i>
+                            <h3>Eşzamanlı</h3>
+                            <p>Eşzamanlı kullanıcı sayısı</p>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="userCount">Kullanıcı Sayısı</label>
+                        <input type="number" id="userCount" min="1" value="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="licenseDuration">Lisans Süresi (Ay)</label>
+                        <input type="number" id="licenseDuration" min="1" value="12">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="basePrice">Temel Fiyat (₺)</label>
+                        <input type="number" id="basePrice" min="0" value="1000">
+                    </div>
+
+                    <div class="results-container">
+                        <div class="result-item">
+                            <span class="result-label">Toplam Lisans Maliyeti</span>
+                            <span class="result-value highlight" id="totalCost">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Aylık Maliyet</span>
+                            <span class="result-value" id="monthlyCost">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Kullanıcı Başı Maliyet</span>
+                            <span class="result-value" id="perUserCost">-</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn reset-btn" id="resetBtn">
+                            <i class="fas fa-redo"></i> Sıfırla
+                        </button>
+                    </div>
+
+                    <div class="license-tips">
+                        <h3>Lisans Seçimi İpuçları:</h3>
+                        <ul>
+                            <li>Kullanıcı sayısına göre en uygun lisans türünü seçin</li>
+                            <li>Uzun vadeli maliyetleri göz önünde bulundurun</li>
+                            <li>Büyüme planlarınıza uygun lisans seçin</li>
+                            <li>Lisans yenileme maliyetlerini hesaplayın</li>
+                            <li>Toplam sahip olma maliyetini (TCO) değerlendirin</li>
+                        </ul>
+                    </div>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Lisans Türü</th>
+                                <th>Avantajlar</th>
+                                <th>Dezavantajlar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Süresiz Lisans</td>
+                                <td>Tek seferlik ödeme, uzun vadede ekonomik</td>
+                                <td>Yüksek başlangıç maliyeti, güncelleme ek maliyet</td>
+                            </tr>
+                            <tr>
+                                <td>Abonelik</td>
+                                <td>Düşük başlangıç maliyeti, düzenli güncellemeler</td>
+                                <td>Devam eden maliyet, uzun vadede daha pahalı</td>
+                            </tr>
+                            <tr>
+                                <td>Eşzamanlı</td>
+                                <td>Esnek kullanım, optimize edilmiş maliyet</td>
+                                <td>Karmaşık yönetim, kullanım takibi gerekli</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elementleri
+        const licenseOptions = document.querySelectorAll('.license-option');
+        const userCount = document.getElementById('userCount');
+        const licenseDuration = document.getElementById('licenseDuration');
+        const basePrice = document.getElementById('basePrice');
+        const totalCost = document.getElementById('totalCost');
+        const monthlyCost = document.getElementById('monthlyCost');
+        const perUserCost = document.getElementById('perUserCost');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Lisans türü seçimi
+        licenseOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                licenseOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+            });
+        });
+
+        // Hesaplama fonksiyonu
+        function calculateLicenseCost() {
+            const selectedType = document.querySelector('.license-option.active')?.dataset.type;
+            if (!selectedType) return;
+
+            const users = parseInt(userCount.value) || 1;
+            const duration = parseInt(licenseDuration.value) || 12;
+            const price = parseFloat(basePrice.value) || 1000;
+
+            let total = 0;
+            let monthly = 0;
+            let perUser = 0;
+
+            switch (selectedType) {
+                case 'perpetual':
+                    total = price * users * 1.2; // %20 ek maliyet
+                    monthly = total / duration;
+                    perUser = total / users;
+                    break;
+                case 'subscription':
+                    total = price * users * duration;
+                    monthly = price * users;
+                    perUser = price;
+                    break;
+                case 'concurrent':
+                    total = price * Math.ceil(users / 5) * duration; // Her 5 kullanıcı için 1 lisans
+                    monthly = total / duration;
+                    perUser = total / users;
+                    break;
+            }
+
+            // Sonuçları güncelle
+            totalCost.textContent = formatCurrency(total);
+            monthlyCost.textContent = formatCurrency(monthly);
+            perUserCost.textContent = formatCurrency(perUser);
+        }
+
+        // Para birimi formatı
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('tr-TR', {
+                style: 'currency',
+                currency: 'TRY'
+            }).format(amount);
+        }
+
+        // Olay dinleyicileri
+        calculateBtn.addEventListener('click', calculateLicenseCost);
+
+        resetBtn.addEventListener('click', () => {
+            userCount.value = '1';
+            licenseDuration.value = '12';
+            basePrice.value = '1000';
+            licenseOptions.forEach(opt => opt.classList.remove('active'));
+            totalCost.textContent = '-';
+            monthlyCost.textContent = '-';
+            perUserCost.textContent = '-';
+        });
+
+        // Varsayılan olarak süresiz lisansı seç
+        document.querySelector('.license-option[data-type="perpetual"]').classList.add('active');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sıcaklık dönüştürücü - Celsius, Fahrenheit ve Kelvin arasında kolayca dönüşüm yapın">
+    <meta name="keywords" content="sıcaklık dönüştürme, celsius, fahrenheit, kelvin, sıcaklık birimi">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Sıcaklık Dönüştürücü | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Sıcaklık Dönüştürücü</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Sıcaklık Girişi</h2>
+                <div class="input-group">
+                    <label for="temperature">Sıcaklık Değeri</label>
+                    <input type="number" id="temperature" placeholder="Sıcaklık değerini girin">
+                </div>
+                
+                <div class="input-group">
+                    <label for="fromUnit">Dönüştürülecek Birim</label>
+                    <select id="fromUnit">
+                        <option value="celsius">Celsius (°C)</option>
+                        <option value="fahrenheit">Fahrenheit (°F)</option>
+                        <option value="kelvin">Kelvin (K)</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn" id="convertBtn">Dönüştür</button>
+            </div>
+            
+            <div class="calculator-section">
+                <h2>Dönüştürme Sonuçları</h2>
+                <div class="result-section">
+                    <div class="result-card">
+                        <div class="result-item">
+                            <span class="result-label">Celsius (°C):</span>
+                            <span class="result-value" id="celsiusResult">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Fahrenheit (°F):</span>
+                            <span class="result-value" id="fahrenheitResult">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Kelvin (K):</span>
+                            <span class="result-value" id="kelvinResult">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Sıcaklık Birimleri Hakkında</h2>
+            <p>Bu araç, farklı sıcaklık birimleri arasında dönüşüm yapmanızı sağlar. Her birim farklı kullanım alanlarına sahiptir.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Celsius (°C)</h3>
+                    <ul>
+                        <li>Günlük hayatta en yaygın kullanılan birim</li>
+                        <li>Su donma noktası: 0°C</li>
+                        <li>Su kaynama noktası: 100°C</li>
+                        <li>Metrik sistemde kullanılır</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Fahrenheit (°F)</h3>
+                    <ul>
+                        <li>ABD'de yaygın olarak kullanılır</li>
+                        <li>Su donma noktası: 32°F</li>
+                        <li>Su kaynama noktası: 212°F</li>
+                        <li>Hava durumu raporlarında kullanılır</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Kelvin (K)</h3>
+                    <ul>
+                        <li>Bilimsel çalışmalarda kullanılır</li>
+                        <li>Mutlak sıfır: 0K (-273.15°C)</li>
+                        <li>SI birim sisteminde kullanılır</li>
+                        <li>Termodinamik hesaplamalarda tercih edilir</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const temperatureInput = document.getElementById('temperature');
+        const fromUnitSelect = document.getElementById('fromUnit');
+        const convertBtn = document.getElementById('convertBtn');
+        const celsiusResult = document.getElementById('celsiusResult');
+        const fahrenheitResult = document.getElementById('fahrenheitResult');
+        const kelvinResult = document.getElementById('kelvinResult');
+
+        // Dönüştürme işlemi
+        convertBtn.addEventListener('click', () => {
+            const temperature = parseFloat(temperatureInput.value);
+            const fromUnit = fromUnitSelect.value;
+            
+            if (isNaN(temperature)) {
+                alert('Lütfen geçerli bir sıcaklık değeri girin.');
+                return;
+            }
+
+            let celsius, fahrenheit, kelvin;
+
+            // Giriş birimine göre dönüşüm
+            switch (fromUnit) {
+                case 'celsius':
+                    celsius = temperature;
+                    fahrenheit = (temperature * 9/5) + 32;
+                    kelvin = temperature + 273.15;
+                    break;
+                case 'fahrenheit':
+                    celsius = (temperature - 32) * 5/9;
+                    fahrenheit = temperature;
+                    kelvin = (temperature - 32) * 5/9 + 273.15;
+                    break;
+                case 'kelvin':
+                    celsius = temperature - 273.15;
+                    fahrenheit = (temperature - 273.15) * 9/5 + 32;
+                    kelvin = temperature;
+                    break;
+            }
+
+            // Sonuçları güncelle
+            celsiusResult.textContent = celsius.toFixed(2) + ' °C';
+            fahrenheitResult.textContent = fahrenheit.toFixed(2) + ' °F';
+            kelvinResult.textContent = kelvin.toFixed(2) + ' K';
+        });
+    </script>
+</body>
+
+</html>

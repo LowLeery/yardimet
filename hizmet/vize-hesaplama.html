@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vize notu hesaplama aracı - Vize notlarınızı kolayca hesaplayın">
+    <meta name="keywords" content="vize, not hesaplama, üniversite, eğitim, sınav">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Vize Notu Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .result-section h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Vize Notu Hesaplama</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Vize Notu Hesaplama</h2>
+                <div class="input-group">
+                    <label for="vizeNotu">Vize Notu (0-100)</label>
+                    <input type="number" id="vizeNotu" min="0" max="100" placeholder="Vize notunuzu girin">
+                </div>
+                <div class="input-group">
+                    <label for="vizeAgirligi">Vize Ağırlığı (%)</label>
+                    <input type="number" id="vizeAgirligi" min="0" max="100" placeholder="Vize ağırlığını girin">
+                </div>
+                <div class="input-group">
+                    <label for="finalNotu">Final Notu (0-100)</label>
+                    <input type="number" id="finalNotu" min="0" max="100" placeholder="Final notunuzu girin">
+                </div>
+                <div class="input-group">
+                    <label for="finalAgirligi">Final Ağırlığı (%)</label>
+                    <input type="number" id="finalAgirligi" min="0" max="100" placeholder="Final ağırlığını girin">
+                </div>
+                <button type="button" class="btn" id="hesaplaBtn">Hesapla</button>
+            </div>
+            
+            <div class="result-section">
+                <h3>Sonuç</h3>
+                <div id="sonuc"></div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Vize Notu Hesaplama Hakkında</h2>
+            <p>Vize notu hesaplama aracı, üniversite derslerinizdeki vize ve final notlarınızı kullanarak dönem sonu notunuzu hesaplamanıza yardımcı olur.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Nasıl Hesaplanır?</h3>
+                    <p>Dönem sonu notu = (Vize Notu × Vize Ağırlığı) + (Final Notu × Final Ağırlığı)</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Önemli Notlar</h3>
+                    <ul>
+                        <li>Vize ve final ağırlıkları toplamı 100 olmalıdır</li>
+                        <li>Notlar 0-100 arasında olmalıdır</li>
+                        <li>Final notu 50'den düşükse ders başarısız sayılır</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const vizeNotu = document.getElementById('vizeNotu');
+        const vizeAgirligi = document.getElementById('vizeAgirligi');
+        const finalNotu = document.getElementById('finalNotu');
+        const finalAgirligi = document.getElementById('finalAgirligi');
+        const hesaplaBtn = document.getElementById('hesaplaBtn');
+        const sonuc = document.getElementById('sonuc');
+
+        function hesapla() {
+            const vize = parseFloat(vizeNotu.value);
+            const vizeAgirlik = parseFloat(vizeAgirligi.value);
+            const final = parseFloat(finalNotu.value);
+            const finalAgirlik = parseFloat(finalAgirligi.value);
+
+            if (isNaN(vize) || isNaN(vizeAgirlik) || isNaN(final) || isNaN(finalAgirlik)) {
+                sonuc.innerHTML = '<p class="error">Lütfen tüm alanları doldurun</p>';
+                return;
+            }
+
+            if (vize < 0 || vize > 100 || final < 0 || final > 100) {
+                sonuc.innerHTML = '<p class="error">Notlar 0-100 arasında olmalıdır</p>';
+                return;
+            }
+
+            if (vizeAgirlik + finalAgirlik !== 100) {
+                sonuc.innerHTML = '<p class="error">Ağırlıklar toplamı 100 olmalıdır</p>';
+                return;
+            }
+
+            const donemSonuNotu = (vize * vizeAgirlik + final * finalAgirlik) / 100;
+            let harfNotu = '';
+
+            if (final < 50) {
+                harfNotu = 'FF (Başarısız)';
+            } else if (donemSonuNotu >= 90) {
+                harfNotu = 'AA';
+            } else if (donemSonuNotu >= 85) {
+                harfNotu = 'BA';
+            } else if (donemSonuNotu >= 80) {
+                harfNotu = 'BB';
+            } else if (donemSonuNotu >= 75) {
+                harfNotu = 'CB';
+            } else if (donemSonuNotu >= 70) {
+                harfNotu = 'CC';
+            } else if (donemSonuNotu >= 65) {
+                harfNotu = 'DC';
+            } else if (donemSonuNotu >= 60) {
+                harfNotu = 'DD';
+            } else if (donemSonuNotu >= 50) {
+                harfNotu = 'FD';
+            } else {
+                harfNotu = 'FF';
+            }
+
+            sonuc.innerHTML = `
+                <p><strong>Dönem Sonu Notu:</strong> ${donemSonuNotu.toFixed(2)}</p>
+                <p><strong>Harf Notu:</strong> ${harfNotu}</p>
+                <p><strong>Durum:</strong> ${final < 50 ? 'Başarısız' : 'Başarılı'}</p>
+            `;
+        }
+
+        hesaplaBtn.addEventListener('click', hesapla);
+    </script>
+</body>
+
+</html>

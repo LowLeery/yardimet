@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Renk görme yeteneğinizi test edin, renk körlüğü durumunuzu değerlendirin ve renk algınızı kontrol edin.">
+    <meta name="keywords" content="renk körlüğü testi, renk görme testi, renk algısı, göz sağlığı, renk testi">
+    <title>Renk Körlüğü Testi | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .test-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .test-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .test-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .color-plate {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .answer-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .answer-btn {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .answer-btn:hover {
+            border-color: #32CD32;
+            background: #f8f9fa;
+        }
+
+        .answer-btn.correct {
+            border-color: #32CD32;
+            background: #32CD32;
+            color: white;
+        }
+
+        .answer-btn.incorrect {
+            border-color: #dc3545;
+            background: #dc3545;
+            color: white;
+        }
+
+        .test-progress {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #32CD32;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .result-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .test-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .test-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .test-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .test-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .restart-btn {
+            background: #dc3545;
+        }
+
+        .restart-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Renk Körlüğü Testi</h2>
+            <div class="test-container">
+                <div class="test-form">
+                    <div class="test-info">
+                        <p>Bu test, renk görme yeteneğinizi değerlendirmek için tasarlanmıştır. Her plakada gördüğünüz sayıyı seçin.</p>
+                    </div>
+
+                    <div class="color-plate" id="colorPlate">
+                        <div class="color-number" id="colorNumber"></div>
+                    </div>
+
+                    <div class="answer-options" id="answerOptions">
+                        <!-- Yanıt seçenekleri JavaScript ile eklenecek -->
+                    </div>
+
+                    <div class="test-progress">
+                        <p>Test İlerlemesi: <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="results-container" id="resultsContainer">
+                        <h3>Test Sonuçları</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h3>Doğru Yanıt</h3>
+                                <p id="correctAnswers">0</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Yanlış Yanıt</h3>
+                                <p id="incorrectAnswers">0</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Başarı Oranı</h3>
+                                <p id="successRate">0%</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Renk Görme Durumu</h3>
+                                <p id="colorVisionStatus">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="nextBtn">
+                            <i class="fas fa-arrow-right"></i> Sonraki
+                        </button>
+                        <button class="action-btn restart-btn" id="restartBtn">
+                            <i class="fas fa-redo"></i> Testi Yeniden Başlat
+                        </button>
+                    </div>
+
+                    <div class="test-tips">
+                        <h3>Test İpuçları:</h3>
+                        <ul>
+                            <li>Testi iyi aydınlatılmış bir ortamda yapın</li>
+                            <li>Ekran parlaklığını normal seviyede tutun</li>
+                            <li>Gözlerinizi dinlendirin ve rahat bir pozisyonda oturun</li>
+                            <li>Her plakaya yeterli süre bakın</li>
+                            <li>Test sonuçlarını bir göz doktoru ile paylaşın</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Test verileri
+        const testData = [
+            { color: '#FF0000', number: '12', options: ['12', '13', '14', '15'] },
+            { color: '#00FF00', number: '8', options: ['6', '7', '8', '9'] },
+            { color: '#0000FF', number: '29', options: ['27', '28', '29', '30'] },
+            { color: '#FFFF00', number: '5', options: ['3', '4', '5', '6'] },
+            { color: '#FF00FF', number: '74', options: ['72', '73', '74', '75'] },
+            { color: '#00FFFF', number: '6', options: ['5', '6', '7', '8'] },
+            { color: '#FFA500', number: '45', options: ['43', '44', '45', '46'] },
+            { color: '#800080', number: '2', options: ['1', '2', '3', '4'] },
+            { color: '#008000', number: '16', options: ['15', '16', '17', '18'] },
+            { color: '#FFC0CB', number: '7', options: ['6', '7', '8', '9'] }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+
+        // Testi başlat
+        function startTest() {
+            currentQuestion = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            document.getElementById('resultsContainer').style.display = 'none';
+            showQuestion();
+        }
+
+        // Soruyu göster
+        function showQuestion() {
+            const question = testData[currentQuestion];
+            const colorPlate = document.getElementById('colorPlate');
+            const colorNumber = document.getElementById('colorNumber');
+            const answerOptions = document.getElementById('answerOptions');
+
+            // Renk plakasını güncelle
+            colorPlate.style.backgroundColor = question.color;
+            colorNumber.textContent = question.number;
+
+            // Yanıt seçeneklerini oluştur
+            answerOptions.innerHTML = '';
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                answerOptions.appendChild(button);
+            });
+
+            // İlerleme çubuğunu güncelle
+            updateProgress();
+        }
+
+        // Yanıtı kontrol et
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = testData[currentQuestion].number;
+            const buttons = document.querySelectorAll('.answer-btn');
+
+            buttons.forEach(button => {
+                button.disabled = true;
+                if (button.textContent === correctAnswer) {
+                    button.classList.add('correct');
+                } else if (button.textContent === selectedAnswer && selectedAnswer !== correctAnswer) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            if (selectedAnswer === correctAnswer) {
+                correctAnswers++;
+            } else {
+                incorrectAnswers++;
+            }
+
+            // Sonraki soruya geç
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < testData.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1500);
+        }
+
+        // İlerleme çubuğunu güncelle
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / testData.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = currentQuestion + 1;
+            document.getElementById('totalQuestions').textContent = testData.length;
+        }
+
+        // Sonuçları göster
+        function showResults() {
+            const successRate = Math.round((correctAnswers / testData.length) * 100);
+            let colorVisionStatus = '';
+
+            if (successRate >= 90) {
+                colorVisionStatus = 'Normal';
+            } else if (successRate >= 70) {
+                colorVisionStatus = 'Hafif Renk Körlüğü';
+            } else if (successRate >= 50) {
+                colorVisionStatus = 'Orta Renk Körlüğü';
+            } else {
+                colorVisionStatus = 'Şiddetli Renk Körlüğü';
+            }
+
+            document.getElementById('correctAnswers').textContent = correctAnswers;
+            document.getElementById('incorrectAnswers').textContent = incorrectAnswers;
+            document.getElementById('successRate').textContent = `${successRate}%`;
+            document.getElementById('colorVisionStatus').textContent = colorVisionStatus;
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('restartBtn').addEventListener('click', startTest);
+
+        // Testi başlat
+        startTest();
+    </script>
+</body>
+</html>

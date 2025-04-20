@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="XML to JSON dönüştürücü - XML verilerinizi JSON formatına kolayca dönüştürün">
+    <meta name="keywords" content="xml to json, veri dönüştürme, xml, json, format dönüşümü">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>XML to JSON Dönüştürücü | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background-color: var(--secondary-color);
+            cursor: not-allowed;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .result-card pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>XML to JSON Dönüştürücü</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>XML Girişi</h2>
+                <div class="input-group">
+                    <label for="xmlInput">XML Verisi</label>
+                    <textarea id="xmlInput" placeholder="XML verinizi buraya yapıştırın..."></textarea>
+                </div>
+                <button type="button" class="btn" id="convertBtn">Dönüştür</button>
+            </div>
+            
+            <div class="calculator-section">
+                <h2>JSON Çıktısı</h2>
+                <div class="result-section">
+                    <div class="result-card">
+                        <pre id="jsonOutput">Dönüştürülen JSON verisi burada görüntülenecek...</pre>
+                    </div>
+                </div>
+                <button type="button" class="btn" id="copyBtn" disabled>Kopyala</button>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>XML to JSON Dönüşümü Hakkında</h2>
+            <p>Bu araç, XML verilerinizi JSON formatına dönüştürmenizi sağlar. XML ve JSON, veri alışverişi için yaygın olarak kullanılan iki farklı veri formatıdır.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>XML Özellikleri</h3>
+                    <ul>
+                        <li>Etiket tabanlı yapı</li>
+                        <li>İnsan tarafından okunabilir</li>
+                        <li>Karmaşık veri yapıları için uygun</li>
+                        <li>Şema desteği</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>JSON Özellikleri</h3>
+                    <ul>
+                        <li>Anahtar-değer çiftleri</li>
+                        <li>Daha hafif ve hızlı</li>
+                        <li>JavaScript ile uyumlu</li>
+                        <li>Modern web uygulamaları için ideal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const xmlInput = document.getElementById('xmlInput');
+        const jsonOutput = document.getElementById('jsonOutput');
+        const convertBtn = document.getElementById('convertBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        // XML to JSON dönüşümü
+        function xmlToJson(xml) {
+            let obj = {};
+            
+            if (xml.nodeType === 1) {
+                if (xml.attributes.length > 0) {
+                    obj["@attributes"] = {};
+                    for (let j = 0; j < xml.attributes.length; j++) {
+                        const attribute = xml.attributes.item(j);
+                        obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+                    }
+                }
+            } else if (xml.nodeType === 3) {
+                obj = xml.nodeValue;
+            }
+            
+            if (xml.hasChildNodes()) {
+                for (let i = 0; i < xml.childNodes.length; i++) {
+                    const item = xml.childNodes.item(i);
+                    const nodeName = item.nodeName;
+                    
+                    if (typeof obj[nodeName] === "undefined") {
+                        obj[nodeName] = xmlToJson(item);
+                    } else {
+                        if (typeof obj[nodeName].push === "undefined") {
+                            const old = obj[nodeName];
+                            obj[nodeName] = [];
+                            obj[nodeName].push(old);
+                        }
+                        obj[nodeName].push(xmlToJson(item));
+                    }
+                }
+            }
+            
+            return obj;
+        }
+
+        // Dönüştürme işlemi
+        convertBtn.addEventListener('click', () => {
+            try {
+                const xmlString = xmlInput.value.trim();
+                if (!xmlString) {
+                    throw new Error('Lütfen XML verisi girin.');
+                }
+
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+                
+                if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
+                    throw new Error('Geçersiz XML formatı.');
+                }
+
+                const jsonObj = xmlToJson(xmlDoc);
+                const jsonString = JSON.stringify(jsonObj, null, 2);
+                
+                jsonOutput.textContent = jsonString;
+                copyBtn.disabled = false;
+            } catch (error) {
+                jsonOutput.textContent = `Hata: ${error.message}`;
+                copyBtn.disabled = true;
+            }
+        });
+
+        // Kopyalama işlemi
+        copyBtn.addEventListener('click', () => {
+            const jsonText = jsonOutput.textContent;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                alert('JSON verisi panoya kopyalandı.');
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        });
+    </script>
+</body>
+
+</html>

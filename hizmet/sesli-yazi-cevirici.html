@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sesli konuşmalarınızı yazıya çevirin. Ses dosyalarından metin elde edin.">
+    <meta name="keywords" content="ses yazıya çevirme, konuşma tanıma, ses tanıma">
+    <title>Sesli Yazıya Çevirici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .converter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .converter-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .upload-section {
+            margin: 20px 0;
+            padding: 30px;
+            border: 2px dashed #32CD32;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-section:hover {
+            background: #f8f9fa;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .record-section {
+            margin: 20px 0;
+        }
+
+        .record-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .record-btn:hover {
+            background: #28a745;
+        }
+
+        .record-btn.recording {
+            background: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .language-select {
+            margin: 20px 0;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .result-text {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        .copy-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #28a745;
+        }
+
+        .status {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Sesli Yazıya Çevirici</h2>
+            <div class="converter-container">
+                <div class="converter-form">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p>Ses dosyasını sürükleyip bırakın veya tıklayarak seçin</p>
+                        <p class="small">(WAV, MP3, M4A formatları desteklenir)</p>
+                        <input type="file" id="fileInput" accept="audio/*" style="display: none;">
+                    </div>
+
+                    <div class="record-section">
+                        <p>veya direkt kayıt yapın</p>
+                        <button class="record-btn" id="recordBtn">
+                            <i class="fas fa-microphone"></i> Kayda Başla
+                        </button>
+                    </div>
+
+                    <select class="language-select" id="languageSelect">
+                        <option value="tr-TR">Türkçe</option>
+                        <option value="en-US">English</option>
+                        <option value="de-DE">Deutsch</option>
+                        <option value="fr-FR">Français</option>
+                        <option value="es-ES">Español</option>
+                    </select>
+
+                    <div class="status" id="status">Ses dosyası bekleniyor...</div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+
+                    <div class="result-section">
+                        <textarea class="result-text" id="resultText" placeholder="Çeviri burada görünecek..." readonly></textarea>
+                        <button class="copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> Metni Kopyala
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+        const recordBtn = document.getElementById('recordBtn');
+        const languageSelect = document.getElementById('languageSelect');
+        const status = document.getElementById('status');
+        const progress = document.getElementById('progress');
+        const resultText = document.getElementById('resultText');
+        const copyBtn = document.getElementById('copyBtn');
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let recognition;
+
+        // Dosya yükleme işlemleri
+        uploadSection.addEventListener('click', () => fileInput.click());
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#28a745';
+        });
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.style.borderColor = '#32CD32';
+        });
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#32CD32';
+            handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        // Dosya işleme
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('audio/')) {
+                alert('Lütfen geçerli bir ses dosyası seçin!');
+                return;
+            }
+
+            status.textContent = 'Ses dosyası işleniyor...';
+            progress.style.width = '30%';
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const audioData = await audioContext.decodeAudioData(e.target.result);
+                    convertToText(audioData);
+                } catch (err) {
+                    console.error('Ses dosyası işleme hatası:', err);
+                    status.textContent = 'Ses dosyası işlenirken bir hata oluştu!';
+                    progress.style.width = '0%';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Kayıt işlemleri
+        recordBtn.addEventListener('click', () => {
+            if (recordBtn.classList.contains('recording')) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (e) => {
+                    audioChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    handleFile(audioBlob);
+                };
+
+                mediaRecorder.start();
+                recordBtn.classList.add('recording');
+                recordBtn.innerHTML = '<i class="fas fa-stop"></i> Kaydı Durdur';
+                status.textContent = 'Kayıt yapılıyor...';
+            } catch (err) {
+                console.error('Kayıt başlatma hatası:', err);
+                alert('Mikrofon erişimi reddedildi!');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="fas fa-microphone"></i> Kayda Başla';
+            }
+        }
+
+        // Ses tanıma işlemi
+        function convertToText(audioData) {
+            // Web Speech API kullanarak ses tanıma
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = languageSelect.value;
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            let finalTranscript = '';
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript + ' ';
+                    } else {
+                        interimTranscript += transcript;
+                    }
+                }
+
+                resultText.value = finalTranscript + interimTranscript;
+                progress.style.width = '70%';
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Ses tanıma hatası:', event.error);
+                status.textContent = 'Ses tanıma sırasında bir hata oluştu!';
+                progress.style.width = '0%';
+            };
+
+            recognition.onend = () => {
+                status.textContent = 'Çeviri tamamlandı!';
+                progress.style.width = '100%';
+            };
+
+            // Ses tanımayı başlat
+            recognition.start();
+        }
+
+        // Metni kopyalama
+        copyBtn.addEventListener('click', () => {
+            resultText.select();
+            document.execCommand('copy');
+            alert('Metin kopyalandı!');
+        });
+
+        // Dil değişikliği
+        languageSelect.addEventListener('change', () => {
+            if (recognition) {
+                recognition.lang = languageSelect.value;
+            }
+        });
+    </script>
+</body>
+
+</html>

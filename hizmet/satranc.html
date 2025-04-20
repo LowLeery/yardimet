@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online satranç oyunu - Arkadaşlarınızla veya bilgisayara karşı satranç oynayın">
+    <meta name="keywords" content="satranç, oyun, eğlence, online oyun">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Online Satranç Oyunu | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .game-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .game-board {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            aspect-ratio: 1/1;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            border: 2px solid #333;
+        }
+
+        .square {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .square.white {
+            background-color: #f0d9b5;
+        }
+
+        .square.black {
+            background-color: #b58863;
+        }
+
+        .square.selected {
+            background-color: #4a6bff;
+        }
+
+        .square.valid-move {
+            background-color: #4a6bff33;
+        }
+
+        .piece {
+            width: 80%;
+            height: 80%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .piece:hover {
+            transform: scale(1.1);
+        }
+
+        .piece.white {
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+        }
+
+        .piece.black {
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8));
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .game-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .game-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .game-btn.secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .game-info {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .game-info .turn {
+            color: var(--primary-color);
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <h1>Online Satranç Oyunu</h1>
+        
+        <div class="game-grid">
+            <div class="game-section">
+                <div class="game-info">
+                    <p>Sıra: <span class="turn">Beyaz</span></p>
+                    <p>Durum: <span class="status">Oyun Devam Ediyor</span></p>
+                </div>
+                <div class="game-board" id="gameBoard"></div>
+                <div class="game-controls">
+                    <button class="game-btn primary" id="newGameBtn">Yeni Oyun</button>
+                    <button class="game-btn secondary" id="undoBtn">Geri Al</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Satranç Oyunu Hakkında</h2>
+            <p>Satranç, iki oyuncu arasında oynanan stratejik bir masa oyunudur. Oyunun amacı, rakibin şahını mat etmektir.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Oyun Kuralları</h3>
+                    <ul>
+                        <li>Her oyuncu sırayla bir hamle yapar</li>
+                        <li>Her taşın kendine özgü hareket kuralları vardır</li>
+                        <li>Rakibin şahını tehdit ettiğinizde "şah" denir</li>
+                        <li>Şahı kurtarmanın yolu olmadığında "mat" olur</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Taş Hareketleri</h3>
+                    <ul>
+                        <li>Piyon: İleri bir kare, ilk hamlede iki kare</li>
+                        <li>Kale: Yatay ve dikey istediği kadar</li>
+                        <li>Fil: Çapraz istediği kadar</li>
+                        <li>At: L şeklinde hareket eder</li>
+                        <li>Vezir: Her yöne istediği kadar</li>
+                        <li>Şah: Her yöne bir kare</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const gameBoard = document.getElementById('gameBoard');
+        const turnInfo = document.querySelector('.turn');
+        const statusInfo = document.querySelector('.status');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const undoBtn = document.getElementById('undoBtn');
+        
+        let board = [];
+        let currentPlayer = 'white';
+        let selectedPiece = null;
+        let validMoves = [];
+        let moveHistory = [];
+
+        const pieceImages = {
+            white: {
+                pawn: '♙',
+                rook: '♖',
+                knight: '♘',
+                bishop: '♗',
+                queen: '♕',
+                king: '♔'
+            },
+            black: {
+                pawn: '♟',
+                rook: '♜',
+                knight: '♞',
+                bishop: '♝',
+                queen: '♛',
+                king: '♚'
+            }
+        };
+
+        function initializeBoard() {
+            board = Array(8).fill().map(() => Array(8).fill(null));
+            
+            // Başlangıç pozisyonu
+            const initialSetup = [
+                ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'],
+                Array(8).fill('pawn'),
+                Array(8).fill(null),
+                Array(8).fill(null),
+                Array(8).fill(null),
+                Array(8).fill(null),
+                Array(8).fill('pawn'),
+                ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+            ];
+            
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    if (initialSetup[row][col]) {
+                        const color = row < 4 ? 'black' : 'white';
+                        board[row][col] = {
+                            type: initialSetup[row][col],
+                            color: color
+                        };
+                    }
+                }
+            }
+            
+            renderBoard();
+        }
+
+        function renderBoard() {
+            gameBoard.innerHTML = '';
+            
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const square = document.createElement('div');
+                    square.className = `square ${(row + col) % 2 === 0 ? 'white' : 'black'}`;
+                    square.dataset.row = row;
+                    square.dataset.col = col;
+                    square.addEventListener('click', () => handleSquareClick(row, col));
+                    
+                    if (board[row][col]) {
+                        const piece = document.createElement('div');
+                        piece.className = `piece ${board[row][col].color}`;
+                        piece.textContent = pieceImages[board[row][col].color][board[row][col].type];
+                        square.appendChild(piece);
+                    }
+                    
+                    gameBoard.appendChild(square);
+                }
+            }
+        }
+
+        function handleSquareClick(row, col) {
+            const square = board[row][col];
+            
+            if (selectedPiece === null) {
+                if (square && square.color === currentPlayer) {
+                    selectedPiece = { row, col };
+                    validMoves = getValidMoves(row, col);
+                    highlightValidMoves();
+                }
+            } else {
+                if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
+                    movePiece(selectedPiece.row, selectedPiece.col, row, col);
+                    selectedPiece = null;
+                    clearHighlights();
+                    currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+                    turnInfo.textContent = currentPlayer === 'white' ? 'Beyaz' : 'Siyah';
+                } else if (square && square.color === currentPlayer) {
+                    selectedPiece = { row, col };
+                    validMoves = getValidMoves(row, col);
+                    highlightValidMoves();
+                }
+            }
+        }
+
+        function getValidMoves(row, col) {
+            const piece = board[row][col];
+            const moves = [];
+            
+            switch (piece.type) {
+                case 'pawn':
+                    const direction = piece.color === 'white' ? -1 : 1;
+                    const startRow = piece.color === 'white' ? 6 : 1;
+                    
+                    // İleri hareket
+                    if (row + direction >= 0 && row + direction < 8 && !board[row + direction][col]) {
+                        moves.push({ row: row + direction, col });
+                        
+                        // İlk hamlede iki kare
+                        if (row === startRow && !board[row + 2 * direction][col]) {
+                            moves.push({ row: row + 2 * direction, col });
+                        }
+                    }
+                    
+                    // Çapraz alma
+                    for (let dc = -1; dc <= 1; dc += 2) {
+                        const newCol = col + dc;
+                        if (newCol >= 0 && newCol < 8 && board[row + direction][newCol] && 
+                            board[row + direction][newCol].color !== piece.color) {
+                            moves.push({ row: row + direction, col: newCol });
+                        }
+                    }
+                    break;
+                    
+                case 'rook':
+                    // Yatay ve dikey hareket
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            if (Math.abs(dr) !== Math.abs(dc)) {
+                                let newRow = row + dr;
+                                let newCol = col + dc;
+                                
+                                while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                                    if (!board[newRow][newCol]) {
+                                        moves.push({ row: newRow, col: newCol });
+                                    } else if (board[newRow][newCol].color !== piece.color) {
+                                        moves.push({ row: newRow, col: newCol });
+                                        break;
+                                    } else {
+                                        break;
+                                    }
+                                    
+                                    newRow += dr;
+                                    newCol += dc;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                    
+                // Diğer taşların hareketleri benzer şekilde eklenebilir
+            }
+            
+            return moves;
+        }
+
+        function isValidMove(fromRow, fromCol, toRow, toCol) {
+            return validMoves.some(move => move.row === toRow && move.col === toCol);
+        }
+
+        function movePiece(fromRow, fromCol, toRow, toCol) {
+            moveHistory.push({
+                from: { row: fromRow, col: fromCol },
+                to: { row: toRow, col: toCol },
+                captured: board[toRow][toCol]
+            });
+            
+            board[toRow][toCol] = board[fromRow][fromCol];
+            board[fromRow][fromCol] = null;
+            
+            renderBoard();
+        }
+
+        function highlightValidMoves() {
+            document.querySelectorAll('.square').forEach(square => {
+                square.classList.remove('valid-move');
+            });
+            
+            validMoves.forEach(move => {
+                const square = document.querySelector(`[data-row="${move.row}"][data-col="${move.col}"]`);
+                square.classList.add('valid-move');
+            });
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.square').forEach(square => {
+                square.classList.remove('valid-move');
+            });
+        }
+
+        function undoMove() {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                board[lastMove.from.row][lastMove.from.col] = board[lastMove.to.row][lastMove.to.col];
+                board[lastMove.to.row][lastMove.to.col] = lastMove.captured;
+                currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+                turnInfo.textContent = currentPlayer === 'white' ? 'Beyaz' : 'Siyah';
+                renderBoard();
+            }
+        }
+
+        newGameBtn.addEventListener('click', () => {
+            initializeBoard();
+            currentPlayer = 'white';
+            turnInfo.textContent = 'Beyaz';
+            statusInfo.textContent = 'Oyun Devam Ediyor';
+            moveHistory = [];
+        });
+
+        undoBtn.addEventListener('click', undoMove);
+
+        // Oyunu başlat
+        initializeBoard();
+    </script>
+</body>
+
+</html> 

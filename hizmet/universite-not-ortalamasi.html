@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Üniversite not ortalaması hesaplama aracı - Dönem ve genel not ortalamanızı hesaplayın">
+    <meta name="keywords" content="üniversite, not ortalaması, GANO, AGNO, eğitim">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Üniversite Not Ortalaması Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .result-section h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .ders-listesi {
+            margin-top: 1rem;
+        }
+
+        .ders-ekle-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .ders-ekle-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Üniversite Not Ortalaması Hesaplama</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Ders Bilgileri</h2>
+                <div class="ders-listesi" id="dersListesi">
+                    <div class="input-group">
+                        <label for="dersAdi">Ders Adı</label>
+                        <input type="text" id="dersAdi" placeholder="Ders adını girin">
+                    </div>
+                    <div class="input-group">
+                        <label for="kredi">Kredi</label>
+                        <input type="number" id="kredi" min="1" max="10" placeholder="Ders kredisini girin">
+                    </div>
+                    <div class="input-group">
+                        <label for="not">Not</label>
+                        <select id="not">
+                            <option value="4">AA (4.00)</option>
+                            <option value="3.5">BA (3.50)</option>
+                            <option value="3">BB (3.00)</option>
+                            <option value="2.5">CB (2.50)</option>
+                            <option value="2">CC (2.00)</option>
+                            <option value="1.5">DC (1.50)</option>
+                            <option value="1">DD (1.00)</option>
+                            <option value="0">FF (0.00)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="ders-ekle-btn" id="dersEkleBtn">Ders Ekle</button>
+                <button type="button" class="btn" id="hesaplaBtn">Hesapla</button>
+            </div>
+            
+            <div class="result-section">
+                <h3>Sonuç</h3>
+                <div id="sonuc"></div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Üniversite Not Ortalaması Hakkında</h2>
+            <p>Üniversite not ortalaması, öğrencinin akademik başarısını gösteren önemli bir göstergedir.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Not Sistemi</h3>
+                    <ul>
+                        <li>AA: 4.00</li>
+                        <li>BA: 3.50</li>
+                        <li>BB: 3.00</li>
+                        <li>CB: 2.50</li>
+                        <li>CC: 2.00</li>
+                        <li>DC: 1.50</li>
+                        <li>DD: 1.00</li>
+                        <li>FF: 0.00</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Önemli Notlar</h3>
+                    <ul>
+                        <li>GNO: Genel Not Ortalaması</li>
+                        <li>AGNO: Ağırlıklı Genel Not Ortalaması</li>
+                        <li>Minimum geçme notu: 2.00</li>
+                        <li>Her dersin kredisi farklı olabilir</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const dersListesi = document.getElementById('dersListesi');
+        const dersEkleBtn = document.getElementById('dersEkleBtn');
+        const hesaplaBtn = document.getElementById('hesaplaBtn');
+        const sonuc = document.getElementById('sonuc');
+        let dersler = [];
+
+        function dersEkle() {
+            const dersAdi = document.getElementById('dersAdi').value;
+            const kredi = parseFloat(document.getElementById('kredi').value);
+            const not = parseFloat(document.getElementById('not').value);
+
+            if (!dersAdi || !kredi || !not) {
+                alert('Lütfen tüm alanları doldurun');
+                return;
+            }
+
+            dersler.push({ dersAdi, kredi, not });
+
+            // Input alanlarını temizle
+            document.getElementById('dersAdi').value = '';
+            document.getElementById('kredi').value = '';
+            document.getElementById('not').value = '4';
+        }
+
+        function hesapla() {
+            if (dersler.length === 0) {
+                sonuc.innerHTML = '<p class="error">Lütfen en az bir ders ekleyin</p>';
+                return;
+            }
+
+            let toplamKredi = 0;
+            let toplamPuan = 0;
+
+            dersler.forEach(ders => {
+                toplamKredi += ders.kredi;
+                toplamPuan += ders.kredi * ders.not;
+            });
+
+            const gno = toplamPuan / toplamKredi;
+
+            sonuc.innerHTML = `
+                <p><strong>Genel Not Ortalaması (GNO):</strong> ${gno.toFixed(2)}</p>
+                <p><strong>Toplam Kredi:</strong> ${toplamKredi}</p>
+                <p><strong>Durum:</strong> ${gno >= 2.00 ? 'Başarılı' : 'Başarısız'}</p>
+            `;
+        }
+
+        dersEkleBtn.addEventListener('click', dersEkle);
+        hesaplaBtn.addEventListener('click', hesapla);
+    </script>
+</body>
+
+</html>

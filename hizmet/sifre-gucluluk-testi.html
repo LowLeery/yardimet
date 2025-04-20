@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Şifrelerinizin güçlülüğünü test edin. Güvenli şifre oluşturma ve analiz aracı.">
+    <meta name="keywords" content="şifre güçlülük testi, password strength, şifre güvenliği, password security">
+    <title>Şifre Güçlülük Testi | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .password-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .password-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .strength-meter {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            background: #ff4444;
+            transition: all 0.3s ease;
+        }
+
+        .strength-text {
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .criteria-list {
+            margin: 20px 0;
+        }
+
+        .criterion {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .criterion i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .criterion.valid {
+            color: #2e7d32;
+        }
+
+        .criterion.valid i {
+            color: #2e7d32;
+        }
+
+        .criterion.invalid {
+            color: #c62828;
+        }
+
+        .criterion.invalid i {
+            color: #c62828;
+        }
+
+        .suggestions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .suggestions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .suggestions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .suggestions li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Şifre Güçlülük Testi</h2>
+            <div class="password-container">
+                <div class="password-form">
+                    <div class="input-group">
+                        <label for="password">Şifreniz:</label>
+                        <input type="password" id="password" placeholder="Şifrenizi girin...">
+                    </div>
+
+                    <div class="strength-meter">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText">Zayıf</div>
+
+                    <div class="criteria-list">
+                        <div class="criterion" id="lengthCriterion">
+                            <i class="fas fa-times"></i>
+                            <span>En az 8 karakter uzunluğunda</span>
+                        </div>
+                        <div class="criterion" id="uppercaseCriterion">
+                            <i class="fas fa-times"></i>
+                            <span>En az 1 büyük harf içeriyor</span>
+                        </div>
+                        <div class="criterion" id="lowercaseCriterion">
+                            <i class="fas fa-times"></i>
+                            <span>En az 1 küçük harf içeriyor</span>
+                        </div>
+                        <div class="criterion" id="numberCriterion">
+                            <i class="fas fa-times"></i>
+                            <span>En az 1 rakam içeriyor</span>
+                        </div>
+                        <div class="criterion" id="specialCriterion">
+                            <i class="fas fa-times"></i>
+                            <span>En az 1 özel karakter içeriyor</span>
+                        </div>
+                    </div>
+
+                    <div class="suggestions" id="suggestions">
+                        <h3>Güçlü Şifre Önerileri:</h3>
+                        <ul>
+                            <li>En az 12 karakter kullanın</li>
+                            <li>Büyük ve küçük harfleri karıştırın</li>
+                            <li>Rakamlar ve özel karakterler ekleyin</li>
+                            <li>Kişisel bilgilerinizi kullanmayın</li>
+                            <li>Farklı hesaplar için farklı şifreler kullanın</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+        const status = document.getElementById('status');
+
+        // Kriter elementleri
+        const lengthCriterion = document.getElementById('lengthCriterion');
+        const uppercaseCriterion = document.getElementById('uppercaseCriterion');
+        const lowercaseCriterion = document.getElementById('lowercaseCriterion');
+        const numberCriterion = document.getElementById('numberCriterion');
+        const specialCriterion = document.getElementById('specialCriterion');
+
+        // Şifre güçlülüğünü kontrol et
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let criteria = {
+                length: false,
+                uppercase: false,
+                lowercase: false,
+                number: false,
+                special: false
+            };
+
+            // Uzunluk kontrolü
+            if (password.length >= 8) {
+                strength += 20;
+                criteria.length = true;
+            }
+
+            // Büyük harf kontrolü
+            if (/[A-Z]/.test(password)) {
+                strength += 20;
+                criteria.uppercase = true;
+            }
+
+            // Küçük harf kontrolü
+            if (/[a-z]/.test(password)) {
+                strength += 20;
+                criteria.lowercase = true;
+            }
+
+            // Rakam kontrolü
+            if (/[0-9]/.test(password)) {
+                strength += 20;
+                criteria.number = true;
+            }
+
+            // Özel karakter kontrolü
+            if (/[^A-Za-z0-9]/.test(password)) {
+                strength += 20;
+                criteria.special = true;
+            }
+
+            // Kriterleri güncelle
+            updateCriteria(criteria);
+
+            // Güçlülük seviyesini güncelle
+            updateStrength(strength);
+        }
+
+        // Kriterleri güncelle
+        function updateCriteria(criteria) {
+            // Uzunluk kriteri
+            if (criteria.length) {
+                lengthCriterion.classList.add('valid');
+                lengthCriterion.classList.remove('invalid');
+                lengthCriterion.querySelector('i').className = 'fas fa-check';
+            } else {
+                lengthCriterion.classList.add('invalid');
+                lengthCriterion.classList.remove('valid');
+                lengthCriterion.querySelector('i').className = 'fas fa-times';
+            }
+
+            // Büyük harf kriteri
+            if (criteria.uppercase) {
+                uppercaseCriterion.classList.add('valid');
+                uppercaseCriterion.classList.remove('invalid');
+                uppercaseCriterion.querySelector('i').className = 'fas fa-check';
+            } else {
+                uppercaseCriterion.classList.add('invalid');
+                uppercaseCriterion.classList.remove('valid');
+                uppercaseCriterion.querySelector('i').className = 'fas fa-times';
+            }
+
+            // Küçük harf kriteri
+            if (criteria.lowercase) {
+                lowercaseCriterion.classList.add('valid');
+                lowercaseCriterion.classList.remove('invalid');
+                lowercaseCriterion.querySelector('i').className = 'fas fa-check';
+            } else {
+                lowercaseCriterion.classList.add('invalid');
+                lowercaseCriterion.classList.remove('valid');
+                lowercaseCriterion.querySelector('i').className = 'fas fa-times';
+            }
+
+            // Rakam kriteri
+            if (criteria.number) {
+                numberCriterion.classList.add('valid');
+                numberCriterion.classList.remove('invalid');
+                numberCriterion.querySelector('i').className = 'fas fa-check';
+            } else {
+                numberCriterion.classList.add('invalid');
+                numberCriterion.classList.remove('valid');
+                numberCriterion.querySelector('i').className = 'fas fa-times';
+            }
+
+            // Özel karakter kriteri
+            if (criteria.special) {
+                specialCriterion.classList.add('valid');
+                specialCriterion.classList.remove('invalid');
+                specialCriterion.querySelector('i').className = 'fas fa-check';
+            } else {
+                specialCriterion.classList.add('invalid');
+                specialCriterion.classList.remove('valid');
+                specialCriterion.querySelector('i').className = 'fas fa-times';
+            }
+        }
+
+        // Güçlülük seviyesini güncelle
+        function updateStrength(strength) {
+            strengthBar.style.width = strength + '%';
+
+            if (strength <= 20) {
+                strengthBar.style.background = '#ff4444';
+                strengthText.textContent = 'Çok Zayıf';
+                strengthText.style.color = '#ff4444';
+            } else if (strength <= 40) {
+                strengthBar.style.background = '#ffbb33';
+                strengthText.textContent = 'Zayıf';
+                strengthText.style.color = '#ffbb33';
+            } else if (strength <= 60) {
+                strengthBar.style.background = '#ffeb3b';
+                strengthText.textContent = 'Orta';
+                strengthText.style.color = '#ffeb3b';
+            } else if (strength <= 80) {
+                strengthBar.style.background = '#00C851';
+                strengthText.textContent = 'Güçlü';
+                strengthText.style.color = '#00C851';
+            } else {
+                strengthBar.style.background = '#007E33';
+                strengthText.textContent = 'Çok Güçlü';
+                strengthText.style.color = '#007E33';
+            }
+        }
+
+        // Şifre değişikliğini dinle
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            checkPasswordStrength(password);
+        });
+    </script>
+</body>
+</html>

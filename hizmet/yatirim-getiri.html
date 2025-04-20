@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yatırım getirilerinizi hesaplayın. Başlangıç tutarı, yatırım süresi ve getiri oranına göre yatırım sonucunuzu kolayca hesaplayın.">
+    <meta name="keywords" content="yatırım getirisi hesaplama, yatırım kazancı, yatırım faizi, yatırım planı, yatırım sonucu">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Yatırım Getirisi Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF9800;
+            --secondary-color: #F57C00;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,152,0,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Yatırım Getirisi Hesaplama</h2>
+                <form id="investmentForm">
+                    <div class="form-group">
+                        <label for="initialAmount">Başlangıç Tutarı (TL)</label>
+                        <input type="number" id="initialAmount" name="initialAmount" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="returnRate">Yıllık Getiri Oranı (%)</label>
+                        <input type="number" id="returnRate" name="returnRate" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="investmentPeriod">Yatırım Süresi (Yıl)</label>
+                        <input type="number" id="investmentPeriod" name="investmentPeriod" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="compoundFrequency">Faiz Ödeme Sıklığı</label>
+                        <select id="compoundFrequency" name="compoundFrequency" required>
+                            <option value="1">Yıllık</option>
+                            <option value="2">6 Aylık</option>
+                            <option value="4">3 Aylık</option>
+                            <option value="12">Aylık</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Yatırım Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="finalAmount">-</div>
+                    <div class="result-unit">TL</div>
+                    <div class="result-description" id="resultDescription">
+                        Yatırım sonucu için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Yatırım Getirisi Hakkında</h2>
+            <p>Yatırım getirisi hesaplama aracı, yatırımlarınızın gelecekteki değerini hesaplamanıza yardımcı olur. Başlangıç tutarı, getiri oranı ve yatırım süresine göre yatırım sonucunuzu kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Yatırım Getirisi Faktörleri</h3>
+            <ul>
+                <li>Başlangıç Tutarı</li>
+                <li>Yıllık Getiri Oranı</li>
+                <li>Yatırım Süresi</li>
+                <li>Faiz Ödeme Sıklığı</li>
+                <li>Enflasyon Oranı</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Kripto Kazanç</h3>
+                    <p>Kripto kazançlarınızı hesaplayın</p>
+                    <a href="kripto-kazanc-hesaplama.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Basit Faiz</h3>
+                    <p>Basit faiz hesaplamaları yapın</p>
+                    <a href="basit-faiz.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Kredi Hesaplama</h3>
+                    <p>Kredi taksitlerinizi hesaplayın</p>
+                    <a href="kredi-hesaplama.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('investmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value);
+            const returnRate = parseFloat(document.getElementById('returnRate').value) / 100;
+            const investmentPeriod = parseInt(document.getElementById('investmentPeriod').value);
+            const compoundFrequency = parseInt(document.getElementById('compoundFrequency').value);
+            
+            // Bileşik faiz formülü: A = P(1 + r/n)^(nt)
+            const finalAmount = initialAmount * Math.pow(1 + (returnRate / compoundFrequency), compoundFrequency * investmentPeriod);
+            
+            // Toplam getiri
+            const totalReturn = finalAmount - initialAmount;
+            
+            // Yıllık ortalama getiri
+            const averageAnnualReturn = (Math.pow(finalAmount / initialAmount, 1 / investmentPeriod) - 1) * 100;
+            
+            const resultDiv = document.getElementById('result');
+            const finalAmountDiv = document.getElementById('finalAmount');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            finalAmountDiv.textContent = finalAmount.toFixed(2);
+            
+            let description = `Yatırım Detayları:\n\n`;
+            description += `Başlangıç Tutarı: ${initialAmount.toFixed(2)} TL\n`;
+            description += `Yıllık Getiri Oranı: ${(returnRate * 100).toFixed(2)}%\n`;
+            description += `Yatırım Süresi: ${investmentPeriod} yıl\n`;
+            description += `Faiz Ödeme Sıklığı: ${compoundFrequency} kez/yıl\n`;
+            description += `Toplam Getiri: ${totalReturn.toFixed(2)} TL\n`;
+            description += `Yıllık Ortalama Getiri: ${averageAnnualReturn.toFixed(2)}%`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

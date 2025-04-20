@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Üçgen alan hesaplama aracı ile üçgenin alanını kolayca hesaplayabilirsiniz. Taban ve yükseklik değerlerini girerek anında sonuç alın.">
+    <meta name="keywords" content="üçgen alan hesaplama, geometri, matematik, alan hesaplama, üçgen">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Üçgen Alan Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .calculator {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .formula {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .example {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Üçgen Alan Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <div class="calculator">
+            <h2>Üçgen Alan Hesaplama</h2>
+            <p>Üçgenin taban uzunluğu ve yüksekliğini girerek alanını hesaplayabilirsiniz.</p>
+            
+            <form id="triangle-form">
+                <div class="input-group">
+                    <label for="base">Taban Uzunluğu (cm):</label>
+                    <input type="number" id="base" step="0.01" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="height">Yükseklik (cm):</label>
+                    <input type="number" id="height" step="0.01" required>
+                </div>
+                
+                <button type="submit" class="btn">Hesapla</button>
+            </form>
+
+            <div id="result" class="result" style="display: none;">
+                Üçgenin Alanı: <span id="area"></span> cm²
+            </div>
+
+            <div class="formula">
+                <h3>Hesaplama Formülü</h3>
+                <p>Alan = (Taban × Yükseklik) / 2</p>
+            </div>
+
+            <div class="example">
+                <h3>Örnek Hesaplama</h3>
+                <p>Taban uzunluğu 10 cm ve yüksekliği 6 cm olan bir üçgenin alanı:</p>
+                <p>(10 × 6) / 2 = 30 cm²</p>
+            </div>
+        </div>
+
+        <div class="seo-container">
+            <div class="seo-item">
+                <h3>Üçgen Alan Hesaplama Nedir?</h3>
+                <p>Üçgen alan hesaplama, bir üçgenin kapladığı alanı bulmak için kullanılan matematiksel bir işlemdir. Üçgenin taban uzunluğu ve yüksekliği bilindiğinde, alan kolayca hesaplanabilir.</p>
+            </div>
+            
+            <div class="seo-item">
+                <h3>Üçgen Alan Hesaplama Nasıl Yapılır?</h3>
+                <p>Üçgenin alanını hesaplamak için şu adımları izleyin:</p>
+                <ol>
+                    <li>Üçgenin taban uzunluğunu ölçün</li>
+                    <li>Üçgenin yüksekliğini ölçün</li>
+                    <li>Taban uzunluğu ile yüksekliği çarpın</li>
+                    <li>Çıkan sonucu 2'ye bölün</li>
+                </ol>
+            </div>
+            
+            <div class="seo-item">
+                <h3>Üçgen Alan Hesaplamanın Kullanım Alanları</h3>
+                <p>Üçgen alan hesaplama, mimarlık, inşaat, mühendislik, geometri ve günlük hayatta birçok alanda kullanılır. Özellikle:</p>
+                <ul>
+                    <li>Mimari projelerde</li>
+                    <li>İnşaat hesaplamalarında</li>
+                    <li>Okul ödevlerinde</li>
+                    <li>Günlük yaşamda alan hesaplamalarında</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('triangle-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const base = parseFloat(document.getElementById('base').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            const area = (base * height) / 2;
+            
+            document.getElementById('area').textContent = area.toFixed(2);
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
