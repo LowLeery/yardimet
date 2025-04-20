@@ -1,0 +1,291 @@
+/* Genel stil ayarları */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+ }
+ 
+ header {
+    background: linear-gradient(135deg, #32CD32, #28a745);
+     padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+ }
+ 
+ .navbar {
+     display: flex;
+    flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+ }
+ 
+ .navbar .logo h1 {
+     color: white;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 600px;
+ }
+ 
+ .search-bar input {
+    padding: 15px;
+    width: 100%;
+    border-radius: 30px;
+     border: none;
+     font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.welcome-section {
+     text-align: center;
+    padding: 40px 20px;
+    background-color: white;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+ }
+ 
+.welcome-section h2 {
+    font-size: 2.5rem;
+    color: #32CD32;
+     margin-bottom: 20px;
+ }
+ 
+.welcome-text {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content h2 {
+    font-size: 2rem;
+    color: #32CD32;
+    margin-bottom: 30px;
+    text-align: center;
+ }
+ 
+ .service-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.service-item {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.service-item a {
+    display: block;
+    padding: 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.service-item a:hover {
+    color: #32CD32;
+}
+
+.seo-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.seo-container h2 {
+    font-size: 2rem;
+    color: #32CD32;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.seo-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.seo-item h3 {
+    font-size: 1.5rem;
+    color: #32CD32;
+    margin-bottom: 15px;
+}
+
+.seo-item p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+footer {
+    background: linear-gradient(135deg, #32CD32, #28a745);
+    color: white;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+}
+
+.footer-content a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-content a:hover {
+    opacity: 0.8;
+}
+
+.footer-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .navbar .logo h1 {
+        font-size: 2rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 2rem;
+    }
+    
+    .content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .service-container {
+        grid-template-columns: 1fr;
+     }
+     
+    .seo-container {
+        padding: 20px;
+    }
+
+    .seo-item {
+        padding: 15px;
+    }
+
+    .seo-item h3 {
+        font-size: 1.3rem;
+    }
+    
+    .seo-item p {
+        font-size: 1rem;
+    }
+ }
+ 
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.category-tab {
+    padding: 8px 16px;
+    background: #f5f5f5;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: #666;
+    border: 1px solid #e0e0e0;
+}
+
+.category-tab:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.category-tab.active {
+    background: #4CAF50;
+     color: white;
+    border-color: #4CAF50;
+}
+
+@media (max-width: 768px) {
+    .category-tabs {
+        gap: 8px;
+        padding: 0 10px;
+ }
+ 
+    .category-tab {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-tabs {
+        gap: 6px;
+ }
+ 
+    .category-tab {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+ }

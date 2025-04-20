@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online çekiliş yapıcı - Adil ve şeffaf çekilişler düzenleyin">
+    <meta name="keywords" content="çekiliş, kura, rastgele seçim, online çekiliş, adil çekiliş">
+    <title>Online Çekiliş Yapıcı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .winner-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .winner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .winner-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .winner-card p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .calculate-btn:disabled {
+            background: var(--secondary-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinning {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+        }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Online Çekiliş Yapıcı</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <div class="input-group">
+                    <label for="participants">Katılımcılar (Her satıra bir isim yazın)</label>
+                    <textarea id="participants" placeholder="Örnek:&#10;Ahmet Yılmaz&#10;Mehmet Demir&#10;Ayşe Kaya"></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label for="winnerCount">Kazanan Sayısı</label>
+                    <input type="number" id="winnerCount" min="1" value="1">
+        </div>
+
+                <button class="calculate-btn" id="drawBtn">Çekiliş Yap</button>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <h2>Kazananlar</h2>
+                <div id="winners"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const participantsTextarea = document.getElementById('participants');
+        const winnerCountInput = document.getElementById('winnerCount');
+        const drawBtn = document.getElementById('drawBtn');
+        const resultSection = document.getElementById('resultSection');
+        const winnersDiv = document.getElementById('winners');
+
+        function getParticipants() {
+            const text = participantsTextarea.value.trim();
+            if (!text) return [];
+            return text.split('\n').filter(name => name.trim());
+        }
+
+        function validateInput() {
+            const participants = getParticipants();
+            const winnerCount = parseInt(winnerCountInput.value);
+            
+            if (participants.length === 0) {
+                alert('Lütfen en az bir katılımcı girin.');
+                return false;
+            }
+            
+            if (winnerCount < 1) {
+                alert('Kazanan sayısı en az 1 olmalıdır.');
+                return false;
+            }
+            
+            if (winnerCount > participants.length) {
+                alert('Kazanan sayısı katılımcı sayısından fazla olamaz.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function drawWinners() {
+            if (!validateInput()) return;
+            
+            const participants = getParticipants();
+            const winnerCount = parseInt(winnerCountInput.value);
+            
+            drawBtn.disabled = true;
+            drawBtn.innerHTML = '<i class="fas fa-spinner spinning"></i> Çekiliş Yapılıyor...';
+
+            // Simulate spinning animation
+                setTimeout(() => {
+                const winners = [];
+                const remainingParticipants = [...participants];
+                
+                for (let i = 0; i < winnerCount; i++) {
+                    const randomIndex = Math.floor(Math.random() * remainingParticipants.length);
+                    winners.push(remainingParticipants[randomIndex]);
+                    remainingParticipants.splice(randomIndex, 1);
+                }
+                
+                displayWinners(winners);
+                
+                drawBtn.disabled = false;
+                drawBtn.textContent = 'Çekiliş Yap';
+            }, 2000);
+        }
+
+        function displayWinners(winners) {
+            winnersDiv.innerHTML = '';
+            
+            winners.forEach((winner, index) => {
+                const card = document.createElement('div');
+                card.className = 'winner-card';
+                card.innerHTML = `
+                    <h3>${index + 1}. Kazanan</h3>
+                    <p>${winner}</p>
+                `;
+                winnersDiv.appendChild(card);
+            });
+            
+            resultSection.classList.add('active');
+        }
+
+        drawBtn.addEventListener('click', drawWinners);
+    </script>
+</body>
+
+</html>

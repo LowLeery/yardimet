@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ev taşıma sürecinizi organize edin, eksiksiz bir taşınma kontrol listesi oluşturun.">
+    <meta name="keywords" content="ev taşıma checklist, taşınma listesi, taşınma planı, ev taşıma organizasyonu">
+    <title>Ev Taşıma Checklist | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 26px;
+            color: #333;
+        }
+
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #4CAF50;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+
+        /* SEO İçeriği */
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .checklist-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .checklist-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .checklist-section {
+            margin-bottom: 30px;
+        }
+
+        .checklist-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #32CD32;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .checklist-item:hover {
+            background: #e8f5e9;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .checklist-item.completed {
+            background: #e8f5e9;
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #32CD32;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .moving-tips {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .moving-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .moving-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .moving-tips li {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Ev Taşıma Checklist</h2>
+            <div class="checklist-container">
+                <div class="checklist-form">
+                    <div class="progress-container">
+                        <div class="progress-text">Tamamlanma Durumu: <span id="progressText">0%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3>Taşınmadan Önce</h3>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item1">
+                            <label for="item1">Taşınma firması ile görüşme yap</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item2">
+                            <label for="item2">Taşınma tarihini belirle</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item3">
+                            <label for="item3">Eşyaları paketleme malzemeleri al</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item4">
+                            <label for="item4">Faturaları yeni adrese yönlendir</label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3>Paketleme</h3>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item5">
+                            <label for="item5">Kırılabilir eşyaları paketle</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item6">
+                            <label for="item6">Kıyafetleri paketle</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item7">
+                            <label for="item7">Elektronik eşyaları paketle</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item8">
+                            <label for="item8">Kitapları paketle</label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3>Taşınma Günü</h3>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item9">
+                            <label for="item9">Eşyaları kontrol et</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item10">
+                            <label for="item10">Anahtarları teslim et</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item11">
+                            <label for="item11">Yeni evde eşyaları yerleştir</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="item12">
+                            <label for="item12">Temizlik yap</label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="saveBtn">
+                            <i class="fas fa-save"></i> Kaydet
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="moving-tips">
+                        <h3>Taşınma İpuçları:</h3>
+                        <ul>
+                            <li>Eşyaları kategorilere göre paketleyin</li>
+                            <li>Kırılabilir eşyaları özel olarak işaretleyin</li>
+                            <li>Önemli belgeleri yanınızda taşıyın</li>
+                            <li>Yeni evde ilk gün için gerekli eşyaları ayrı tutun</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const progressText = document.getElementById('progressText');
+        const progressFill = document.getElementById('progressFill');
+        const saveBtn = document.getElementById('saveBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // İlerleme durumunu güncelle
+        function updateProgress() {
+            const total = checkboxes.length;
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const percentage = (completed / total) * 100;
+            
+            progressText.textContent = `${Math.round(percentage)}%`;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        // Tüm kutuları temizle
+        function clearAll() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateProgress();
+        }
+
+        // Durumu kaydet
+        function saveProgress() {
+            const progress = {};
+            checkboxes.forEach((checkbox, index) => {
+                progress[`item${index + 1}`] = checkbox.checked;
+            });
+            localStorage.setItem('movingChecklist', JSON.stringify(progress));
+        }
+
+        // Kaydedilmiş durumu yükle
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('movingChecklist');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                checkboxes.forEach((checkbox, index) => {
+                    checkbox.checked = progress[`item${index + 1}`] || false;
+                });
+                updateProgress();
+            }
+        }
+
+        // Olay dinleyicileri
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateProgress();
+                saveProgress();
+            });
+        });
+
+        saveBtn.addEventListener('click', saveProgress);
+        clearBtn.addEventListener('click', clearAll);
+
+        // Sayfa yüklendiğinde kaydedilmiş durumu yükle
+        loadProgress();
+    </script>
+
+</body>
+
+</html>

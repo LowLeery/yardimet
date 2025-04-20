@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Görme mesafenizi hesaplayın, görme yeteneğinizi değerlendirin ve göz sağlığınızı takip edin.">
+    <meta name="keywords" content="görme mesafesi, görme testi, göz sağlığı, görme yeteneği, görme değerlendirmesi">
+    <title>Görme Mesafesi Hesaplayıcı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .vision-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .vision-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .result-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .vision-chart {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #32CD32;
+            transition: height 0.5s ease;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 20px;
+        }
+
+        .chart-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .vision-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .vision-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .vision-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .vision-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .progress-section {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #32CD32;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Görme Mesafesi Hesaplayıcı</h2>
+            <div class="vision-container">
+                <div class="vision-form">
+                    <div class="input-group">
+                        <label for="age">Yaş:</label>
+                        <input type="number" id="age" min="1" max="120" placeholder="Yaşınızı girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="eyeCondition">Göz Durumu:</label>
+                        <select id="eyeCondition">
+                            <option value="normal">Normal Görme</option>
+                            <option value="myopia">Miyop</option>
+                            <option value="hyperopia">Hipermetrop</option>
+                            <option value="astigmatism">Astigmat</option>
+                            <option value="presbyopia">Presbiyopi</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="currentDistance">Mevcut Görme Mesafesi (cm):</label>
+                        <input type="number" id="currentDistance" min="1" placeholder="Mevcut görme mesafenizi girin">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-container">
+                        <h3>Görme Değerlendirmesi</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h3>İdeal Görme Mesafesi</h3>
+                                <p id="idealDistance">0 cm</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Görme Oranı</h3>
+                                <p id="visionRatio">0%</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Görme Durumu</h3>
+                                <p id="visionStatus">-</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Önerilen Kontrol</h3>
+                                <p id="recommendedCheck">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vision-chart">
+                        <h3>Görme Mesafesi Grafiği</h3>
+                        <div class="chart-container">
+                            <div class="chart-bar" id="visionBar"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span class="chart-label">0 cm</span>
+                            <span class="chart-label">50 cm</span>
+                            <span class="chart-label">100 cm</span>
+                            <span class="chart-label">150 cm</span>
+                            <span class="chart-label">200 cm</span>
+                        </div>
+                    </div>
+
+                    <div class="vision-tips">
+                        <h3>Göz Sağlığı İpuçları:</h3>
+                        <ul>
+                            <li>Düzenli göz muayenesi yaptırın</li>
+                            <li>Ekran kullanımında 20-20-20 kuralını uygulayın</li>
+                            <li>Gözlerinizi dinlendirin ve nemlendirin</li>
+                            <li>Parlak ışıklardan korunun</li>
+                            <li>Sağlıklı beslenin ve bol su için</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hesaplama fonksiyonu
+        function calculateVision() {
+            const age = parseInt(document.getElementById('age').value);
+            const eyeCondition = document.getElementById('eyeCondition').value;
+            const currentDistance = parseInt(document.getElementById('currentDistance').value);
+
+            if (!age || !currentDistance) {
+                alert('Lütfen tüm alanları doldurun!');
+                return;
+            }
+
+            // İdeal görme mesafesi hesaplama
+            let idealDistance = 100; // cm cinsinden
+            if (age < 20) {
+                idealDistance = 120;
+            } else if (age < 40) {
+                idealDistance = 100;
+            } else if (age < 60) {
+                idealDistance = 80;
+            } else {
+                idealDistance = 60;
+            }
+
+            // Göz durumuna göre düzeltme
+            switch (eyeCondition) {
+                case 'myopia':
+                    idealDistance *= 0.8;
+                    break;
+                case 'hyperopia':
+                    idealDistance *= 1.2;
+                    break;
+                case 'astigmatism':
+                    idealDistance *= 0.9;
+                    break;
+                case 'presbyopia':
+                    idealDistance *= 0.7;
+                    break;
+            }
+
+            // Görme oranı hesaplama
+            const visionRatio = Math.min(100, Math.round((currentDistance / idealDistance) * 100));
+
+            // Görme durumu belirleme
+            let visionStatus = '';
+            if (visionRatio >= 90) {
+                visionStatus = 'Mükemmel';
+            } else if (visionRatio >= 70) {
+                visionStatus = 'İyi';
+            } else if (visionRatio >= 50) {
+                visionStatus = 'Orta';
+            } else {
+                visionStatus = 'Zayıf';
+            }
+
+            // Önerilen kontrol süresi
+            let recommendedCheck = '';
+            if (visionRatio >= 90) {
+                recommendedCheck = '2 yılda bir';
+            } else if (visionRatio >= 70) {
+                recommendedCheck = 'Yılda bir';
+            } else if (visionRatio >= 50) {
+                recommendedCheck = '6 ayda bir';
+            } else {
+                recommendedCheck = '3 ayda bir';
+            }
+
+            // Sonuçları göster
+            document.getElementById('idealDistance').textContent = `${Math.round(idealDistance)} cm`;
+            document.getElementById('visionRatio').textContent = `${visionRatio}%`;
+            document.getElementById('visionStatus').textContent = visionStatus;
+            document.getElementById('recommendedCheck').textContent = recommendedCheck;
+
+            // Grafik güncelleme
+            const visionBar = document.getElementById('visionBar');
+            const maxHeight = 300; // px
+            const height = (currentDistance / 200) * maxHeight;
+            visionBar.style.height = `${Math.min(height, maxHeight)}px`;
+        }
+
+        // Alanları temizle
+        function clearInputs() {
+            document.getElementById('age').value = '';
+            document.getElementById('eyeCondition').value = 'normal';
+            document.getElementById('currentDistance').value = '';
+            document.getElementById('idealDistance').textContent = '0 cm';
+            document.getElementById('visionRatio').textContent = '0%';
+            document.getElementById('visionStatus').textContent = '-';
+            document.getElementById('recommendedCheck').textContent = '-';
+            document.getElementById('visionBar').style.height = '0px';
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('calculateBtn').addEventListener('click', calculateVision);
+        document.getElementById('clearBtn').addEventListener('click', clearInputs);
+    </script>
+</body>
+</html>

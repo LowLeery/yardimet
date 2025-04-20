@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Çevrenizdeki gürültü seviyesini ölçün, ses seviyesini değerlendirin ve gürültü kontrolü yapın.">
+    <meta name="keywords" content="gürültü ölçer, ses seviyesi ölçümü, desibel ölçer, gürültü kontrolü, ses ölçümü">
+    <meta name="author" content="Gürültü Ölçer">
+    <title>Gürültü Ölçer | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-content button:hover {
+            background-color: #388E3C;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .meter-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .meter-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .meter-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .meter-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .meter-display {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter-scale {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .meter-bar {
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to top, #32CD32, #ffd700, #ff4500);
+            transition: height 0.3s ease;
+        }
+
+        .meter-labels {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .meter-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .meter-controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: #28a745;
+        }
+
+        .control-btn i {
+            font-size: 1.1rem;
+        }
+
+        .stop-btn {
+            background: #dc3545;
+        }
+
+        .stop-btn:hover {
+            background: #c82333;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .result-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .meter-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .meter-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .meter-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .meter-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .noise-levels {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .noise-level {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+
+        .noise-level-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .noise-level-info {
+            flex: 1;
+        }
+
+        .noise-level-title {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .noise-level-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Gürültü Ölçer</h2>
+            <div class="meter-container">
+                <div class="meter-form">
+                    <div class="meter-info">
+                        <p>Bu araç, çevrenizdeki gürültü seviyesini ölçmenize yardımcı olur. Mikrofon erişimi izni vererek ölçüme başlayabilirsiniz.</p>
+                    </div>
+
+                    <div class="meter-display">
+                        <div class="meter-scale">
+                            <div class="meter-bar" id="meterBar"></div>
+                        </div>
+                        <div class="meter-labels">
+                            <span class="meter-label">0 dB</span>
+                            <span class="meter-label">50 dB</span>
+                            <span class="meter-label">100 dB</span>
+                        </div>
+                    </div>
+
+                    <div class="meter-controls">
+                        <button class="control-btn" id="startBtn">
+                            <i class="fas fa-play"></i> Ölçümü Başlat
+                        </button>
+                        <button class="control-btn stop-btn" id="stopBtn">
+                            <i class="fas fa-stop"></i> Ölçümü Durdur
+                        </button>
+                    </div>
+
+                    <div class="results-container">
+                        <h3>Gürültü Seviyesi</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h3>Anlık Seviye</h3>
+                                <p id="currentLevel">0 dB</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Ortalama Seviye</h3>
+                                <p id="averageLevel">0 dB</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Maksimum Seviye</h3>
+                                <p id="maxLevel">0 dB</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Gürültü Durumu</h3>
+                                <p id="noiseStatus">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="noise-levels">
+                        <h3>Gürültü Seviyeleri:</h3>
+                        <div class="noise-level">
+                            <div class="noise-level-color" style="background: #32CD32;"></div>
+                            <div class="noise-level-info">
+                                <div class="noise-level-title">0-30 dB</div>
+                                <div class="noise-level-desc">Sessiz ortam (Fısıltı, sessiz ofis)</div>
+                            </div>
+                        </div>
+                        <div class="noise-level">
+                            <div class="noise-level-color" style="background: #ffd700;"></div>
+                            <div class="noise-level-info">
+                                <div class="noise-level-title">30-60 dB</div>
+                                <div class="noise-level-desc">Normal konuşma, ev ortamı</div>
+                            </div>
+                        </div>
+                        <div class="noise-level">
+                            <div class="noise-level-color" style="background: #ffa500;"></div>
+                            <div class="noise-level-info">
+                                <div class="noise-level-title">60-80 dB</div>
+                                <div class="noise-level-desc">Yüksek ses (Trafik, restoran)</div>
+                            </div>
+                        </div>
+                        <div class="noise-level">
+                            <div class="noise-level-color" style="background: #ff4500;"></div>
+                            <div class="noise-level-info">
+                                <div class="noise-level-title">80+ dB</div>
+                                <div class="noise-level-desc">Tehlikeli seviye (İş makinesi, konser)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meter-tips">
+                        <h3>Gürültü Kontrolü İpuçları:</h3>
+                        <ul>
+                            <li>Yüksek gürültülü ortamlarda kulak koruyucu kullanın</li>
+                            <li>Uzun süre yüksek gürültüye maruz kalmaktan kaçının</li>
+                            <li>Çalışma ortamınızı gürültü kontrolü açısından değerlendirin</li>
+                            <li>Gürültü seviyesini düzenli olarak ölçün</li>
+                            <li>Gürültü şikayetlerinizi ilgili mercilere bildirin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        let audioContext;
+        let analyser;
+        let microphone;
+        let isMeasuring = false;
+        let measurements = [];
+        let maxLevel = 0;
+
+        // Ses seviyesini hesapla
+        function calculateDecibels(dataArray) {
+            const rms = Math.sqrt(dataArray.reduce((sum, value) => sum + value * value, 0) / dataArray.length);
+            const db = 20 * Math.log10(rms);
+            return Math.max(0, Math.round(db));
+        }
+
+        // Gürültü durumunu belirle
+        function getNoiseStatus(db) {
+            if (db < 30) return 'Sessiz';
+            if (db < 60) return 'Normal';
+            if (db < 80) return 'Yüksek';
+            return 'Tehlikeli';
+        }
+
+        // Ölçüm çubuğunu güncelle
+        function updateMeter(db) {
+            const meterBar = document.getElementById('meterBar');
+            const height = Math.min(100, (db / 100) * 100);
+            meterBar.style.height = `${height}%`;
+        }
+
+        // Sonuçları güncelle
+        function updateResults(db) {
+            measurements.push(db);
+            maxLevel = Math.max(maxLevel, db);
+            
+            const average = Math.round(measurements.reduce((a, b) => a + b, 0) / measurements.length);
+            
+            document.getElementById('currentLevel').textContent = `${db} dB`;
+            document.getElementById('averageLevel').textContent = `${average} dB`;
+            document.getElementById('maxLevel').textContent = `${maxLevel} dB`;
+            document.getElementById('noiseStatus').textContent = getNoiseStatus(db);
+        }
+
+        // Ölçümü başlat
+        async function startMeasurement() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 2048;
+
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                microphone = audioContext.createMediaStreamSource(stream);
+                microphone.connect(analyser);
+
+                isMeasuring = true;
+                measurements = [];
+                maxLevel = 0;
+
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                
+                function measure() {
+                    if (!isMeasuring) return;
+                    
+                    analyser.getByteFrequencyData(dataArray);
+                    const db = calculateDecibels(dataArray);
+                    
+                    updateMeter(db);
+                    updateResults(db);
+                    
+                    requestAnimationFrame(measure);
+                }
+                
+                measure();
+            } catch (error) {
+                alert('Mikrofon erişimi sağlanamadı. Lütfen izin verin.');
+            }
+        }
+
+        // Ölçümü durdur
+        function stopMeasurement() {
+            isMeasuring = false;
+            if (microphone) {
+                microphone.disconnect();
+            }
+            if (audioContext) {
+                audioContext.close();
+            }
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('startBtn').addEventListener('click', startMeasurement);
+        document.getElementById('stopBtn').addEventListener('click', stopMeasurement);
+    </script>
+</body>
+</html>

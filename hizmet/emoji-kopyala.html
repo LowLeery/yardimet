@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emoji ve özel simgeleri kolayca bulun ve kopyalayın. Yüz ifadeleri, semboller, işaretler ve daha fazlası.">
+    <meta name="keywords" content="emoji kopyalama, özel simgeler, emoji arama, emoji kategorileri, simge kopyalama">
+    <title>Emoji ve Simge Kopyalama Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .emoji-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .emoji-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .emoji-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .emoji-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #32CD32;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-tab {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-tab:hover, .category-tab.active {
+            background: #32CD32;
+            color: white;
+            border-color: #32CD32;
+        }
+
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .emoji-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+        }
+
+        .emoji-item:hover {
+            background: #e8f5e9;
+            transform: scale(1.1);
+        }
+
+        .emoji-item.copied {
+            background: #32CD32;
+            color: white;
+        }
+
+        .recent-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .recent-title {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .recent-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .recent-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .recent-item:hover {
+            background: #e8f5e9;
+        }
+
+        .emoji-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .emoji-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .emoji-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .emoji-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #32CD32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Emoji ve Simge Kopyalama Aracı</h2>
+            <div class="emoji-container">
+                <div class="emoji-form">
+                    <div class="emoji-info">
+                        <p>Bu araç, emoji ve özel simgeleri kolayca bulmanıza ve kopyalamanıza yardımcı olur. Yüz ifadeleri, semboller, işaretler ve daha fazlası.</p>
+                    </div>
+
+                    <div class="search-container">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Emoji veya simge ara...">
+                    </div>
+
+                    <div class="category-tabs">
+                        <div class="category-tab active" data-category="all">Tümü</div>
+                        <div class="category-tab" data-category="faces">Yüz İfadeleri</div>
+                        <div class="category-tab" data-category="animals">Hayvanlar</div>
+                        <div class="category-tab" data-category="food">Yiyecek</div>
+                        <div class="category-tab" data-category="activities">Aktiviteler</div>
+                        <div class="category-tab" data-category="objects">Nesneler</div>
+                        <div class="category-tab" data-category="symbols">Semboller</div>
+                        <div class="category-tab" data-category="flags">Bayraklar</div>
+                    </div>
+
+                    <div class="emoji-grid" id="emojiGrid"></div>
+
+                    <div class="recent-container">
+                        <h3 class="recent-title">Son Kullanılanlar</h3>
+                        <div class="recent-list" id="recentList"></div>
+                    </div>
+
+                    <div class="emoji-tips">
+                        <h3>Emoji Kullanım İpuçları:</h3>
+                        <ul>
+                            <li>Emojileri doğru bağlamda kullanın</li>
+                            <li>Çok fazla emoji kullanmaktan kaçının</li>
+                            <li>Profesyonel iletişimde dikkatli kullanın</li>
+                            <li>Farklı platformlarda farklı görünebilir</li>
+                            <li>Erişilebilirlik için alternatif metin ekleyin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="copy-notification" id="copyNotification">Kopyalandı!</div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Emoji veritabanı
+        const emojiData = {
+            faces: ['😀', '😃', '😄', '😁', '😅', '😂', '🤣', '😊', '😇', '🙂', '🙃', '😉', '😌', '😍', '🥰', '😘', '😗', '😙', '😚', '😋', '😛', '😝', '😜', '🤪', '🤨', '🧐', '🤓', '😎', '🤩', '🥳'],
+            animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🐤', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋'],
+            food: ['🍏', '🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🍆', '🥑', '🥦', '🥬', '🥒', '🌶', '🌽', '🥕', '🧄', '🧅', '🥔', '🍠', '🥐'],
+            activities: ['⚽', '🏀', '🏈', '⚾', '🥎', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🏒', '🏑', '🥅', '🏏', '⛳', '🎯', '🎮', '🎲', '🎳', '🎭', '🎨', '🎬', '🎤', '🎧', '🎼', '🎹', '🥁', '🎸', '🎺'],
+            objects: ['⌚', '📱', '📲', '💻', '⌨️', '🖥', '🖨', '🖱', '🖲', '🕹', '🗜', '💽', '💾', '💿', '📀', '📼', '📷', '📸', '📹', '🎥', '📽', '🎞', '📞', '☎️', '📟', '📠', '📺', '📻', '🎙', '🎚'],
+            symbols: ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️', '✝️', '☪️', '🕉', '☸️', '✡️', '🔯', '🕎', '☯️', '☦️', '🛐'],
+            flags: ['🏳️', '🏴', '🏁', '🚩', '🏳️‍🌈', '🏳️‍⚧️', '🏴‍☠️', '🇦🇫', '🇦🇽', '🇦🇱', '🇩🇿', '🇦🇸', '🇦🇩', '🇦🇴', '🇦🇮', '🇦🇶', '🇦🇬', '🇦🇷', '🇦🇲', '🇦🇼', '🇦🇺', '🇦🇹', '🇦🇿', '🇧🇸', '🇧🇭', '🇧🇩', '🇧🇧', '🇧🇾', '🇧🇪', '🇧🇿']
+        };
+
+        // Son kullanılan emojileri saklamak için
+        let recentEmojis = [];
+
+        // Emoji grid'i oluştur
+        function createEmojiGrid(category = 'all') {
+            const grid = document.getElementById('emojiGrid');
+            grid.innerHTML = '';
+
+            let emojis = [];
+            if (category === 'all') {
+                Object.values(emojiData).forEach(category => {
+                    emojis = emojis.concat(category);
+                });
+            } else {
+                emojis = emojiData[category] || [];
+            }
+
+            emojis.forEach(emoji => {
+                const item = document.createElement('div');
+                item.className = 'emoji-item';
+                item.textContent = emoji;
+                item.addEventListener('click', () => copyEmoji(emoji));
+                grid.appendChild(item);
+            });
+        }
+
+        // Emoji kopyala
+        function copyEmoji(emoji) {
+            navigator.clipboard.writeText(emoji).then(() => {
+                // Kopyalama bildirimi göster
+                const notification = document.getElementById('copyNotification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 2000);
+
+                // Son kullanılanlara ekle
+                if (!recentEmojis.includes(emoji)) {
+                    recentEmojis.unshift(emoji);
+                    if (recentEmojis.length > 10) {
+                        recentEmojis.pop();
+                    }
+                    updateRecentList();
+                }
+            });
+        }
+
+        // Son kullanılanları güncelle
+        function updateRecentList() {
+            const list = document.getElementById('recentList');
+            list.innerHTML = '';
+            recentEmojis.forEach(emoji => {
+                const item = document.createElement('div');
+                item.className = 'recent-item';
+                item.textContent = emoji;
+                item.addEventListener('click', () => copyEmoji(emoji));
+                list.appendChild(item);
+            });
+        }
+
+        // Arama fonksiyonu
+        function searchEmojis(query) {
+            const grid = document.getElementById('emojiGrid');
+            const items = grid.getElementsByClassName('emoji-item');
+            
+            Array.from(items).forEach(item => {
+                const emoji = item.textContent;
+                const isVisible = emoji.includes(query);
+                item.style.display = isVisible ? 'block' : 'none';
+            });
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchEmojis(e.target.value);
+        });
+
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                createEmojiGrid(tab.dataset.category);
+            });
+        });
+
+        // Başlangıçta emoji grid'i oluştur
+        createEmojiGrid();
+    </script>
+</body>
+</html> 

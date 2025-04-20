@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online dama oyunu - Arkadaşlarınızla veya bilgisayara karşı dama oynayın">
+    <meta name="keywords" content="dama, oyun, eğlence, online oyun">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Online Dama Oyunu | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .game-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .game-board {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            aspect-ratio: 1/1;
+            border: 2px solid var(--text-color);
+        }
+
+        .game-cell {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-cell.black {
+            background-color: #333;
+        }
+
+        .game-cell.white {
+            background-color: #fff;
+        }
+
+        .piece {
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .piece:hover {
+            transform: scale(1.1);
+        }
+
+        .piece.red {
+            background-color: #dc3545;
+        }
+
+        .piece.black {
+            background-color: #212529;
+        }
+
+        .piece.king::after {
+            content: '👑';
+            position: absolute;
+            font-size: 0.8rem;
+            color: gold;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .game-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .game-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .game-btn.secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .game-info {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .game-info .turn {
+            color: var(--primary-color);
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <h1>Online Dama Oyunu</h1>
+        
+        <div class="game-grid">
+            <div class="game-section">
+                <div class="game-info">
+                    <p>Sıra: <span class="turn">Kırmızı</span></p>
+                </div>
+                <div class="game-board" id="gameBoard">
+                    <!-- Oyun tahtası JavaScript ile oluşturulacak -->
+                </div>
+                <div class="game-controls">
+                    <button class="game-btn primary" id="newGameBtn">Yeni Oyun</button>
+                    <button class="game-btn secondary" id="undoBtn">Geri Al</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Dama Oyunu Hakkında</h2>
+            <p>Dama, iki oyuncu arasında oynanan stratejik bir masa oyunudur. Oyunun amacı, rakibin tüm taşlarını yemek veya hareket edemez hale getirmektir.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Oyun Kuralları</h3>
+                    <ul>
+                        <li>Taşlar çapraz hareket eder</li>
+                        <li>Rakip taşı yemek için üzerinden atlanır</li>
+                        <li>Taşlar sadece ileri hareket eder</li>
+                        <li>Son sıraya ulaşan taş kral olur</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Strateji İpuçları</h3>
+                    <ul>
+                        <li>Taşlarınızı korumaya özen gösterin</li>
+                        <li>Rakibin taşlarını yemek için fırsat kollayın</li>
+                        <li>Kral olmak için son sıraya ulaşmaya çalışın</li>
+                        <li>Taşlarınızı birbirini koruyacak şekilde konumlandırın</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const gameBoard = document.getElementById('gameBoard');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const undoBtn = document.getElementById('undoBtn');
+        const turnInfo = document.querySelector('.turn');
+        
+        let board = [];
+        let selectedPiece = null;
+        let currentPlayer = 'red';
+        let moveHistory = [];
+
+        function initializeBoard() {
+            board = [];
+            for (let i = 0; i < 8; i++) {
+                board[i] = [];
+                for (let j = 0; j < 8; j++) {
+                    board[i][j] = null;
+                }
+            }
+            
+            // Kırmızı taşları yerleştir
+            for (let i = 0; i < 3; i++) {
+                for (let j = (i % 2); j < 8; j += 2) {
+                    board[i][j] = { color: 'red', isKing: false };
+                }
+            }
+            
+            // Siyah taşları yerleştir
+            for (let i = 5; i < 8; i++) {
+                for (let j = (i % 2); j < 8; j += 2) {
+                    board[i][j] = { color: 'black', isKing: false };
+                }
+            }
+            
+            renderBoard();
+        }
+
+        function renderBoard() {
+            gameBoard.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = `game-cell ${(i + j) % 2 === 0 ? 'white' : 'black'}`;
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    
+                    if (board[i][j]) {
+                        const piece = document.createElement('div');
+                        piece.className = `piece ${board[i][j].color} ${board[i][j].isKing ? 'king' : ''}`;
+                        piece.addEventListener('click', () => selectPiece(i, j));
+                        cell.appendChild(piece);
+                    } else {
+                        cell.addEventListener('click', () => movePiece(i, j));
+                    }
+                    
+                    gameBoard.appendChild(cell);
+                }
+            }
+        }
+
+        function selectPiece(row, col) {
+            if (board[row][col] && board[row][col].color === currentPlayer) {
+                selectedPiece = { row, col };
+                highlightMoves(row, col);
+            }
+        }
+
+        function highlightMoves(row, col) {
+            const moves = getValidMoves(row, col);
+            moves.forEach(({ row: newRow, col: newCol }) => {
+                const cell = gameBoard.querySelector(`[data-row="${newRow}"][data-col="${newCol}"]`);
+                cell.style.backgroundColor = '#4a6bff33';
+            });
+        }
+
+        function getValidMoves(row, col) {
+            const piece = board[row][col];
+            const moves = [];
+            const directions = piece.isKing ? 
+                [[-1, -1], [-1, 1], [1, -1], [1, 1]] : 
+                piece.color === 'red' ? [[1, -1], [1, 1]] : [[-1, -1], [-1, 1]];
+
+            for (const [dx, dy] of directions) {
+                const newRow = row + dx;
+                const newCol = col + dy;
+                
+                if (isValidPosition(newRow, newCol) && !board[newRow][newCol]) {
+                    moves.push({ row: newRow, col: newCol });
+                } else if (isValidPosition(newRow, newCol) && board[newRow][newCol].color !== piece.color) {
+                    const jumpRow = newRow + dx;
+                    const jumpCol = newCol + dy;
+                    if (isValidPosition(jumpRow, jumpCol) && !board[jumpRow][jumpCol]) {
+                        moves.push({ row: jumpRow, col: jumpCol, capture: true });
+                    }
+                }
+            }
+            
+            return moves;
+        }
+
+        function isValidPosition(row, col) {
+            return row >= 0 && row < 8 && col >= 0 && col < 8;
+        }
+
+        function movePiece(row, col) {
+            if (!selectedPiece) return;
+            
+            const moves = getValidMoves(selectedPiece.row, selectedPiece.col);
+            const move = moves.find(m => m.row === row && m.col === col);
+            
+            if (move) {
+                moveHistory.push({
+                    board: JSON.parse(JSON.stringify(board)),
+                    selectedPiece: { ...selectedPiece },
+                    currentPlayer
+                });
+                
+                const piece = board[selectedPiece.row][selectedPiece.col];
+                board[selectedPiece.row][selectedPiece.col] = null;
+                board[row][col] = piece;
+                
+                if (move.capture) {
+                    const capturedRow = selectedPiece.row + (row - selectedPiece.row) / 2;
+                    const capturedCol = selectedPiece.col + (col - selectedPiece.col) / 2;
+                    board[capturedRow][capturedCol] = null;
+                }
+                
+                // Kral olma kontrolü
+                if ((piece.color === 'red' && row === 7) || (piece.color === 'black' && row === 0)) {
+                    piece.isKing = true;
+                }
+                
+                selectedPiece = null;
+                currentPlayer = currentPlayer === 'red' ? 'black' : 'red';
+                turnInfo.textContent = currentPlayer === 'red' ? 'Kırmızı' : 'Siyah';
+                renderBoard();
+                
+                if (isGameOver()) {
+                    alert(`Oyun bitti! ${currentPlayer === 'red' ? 'Siyah' : 'Kırmızı'} kazandı!`);
+                }
+            }
+        }
+
+        function isGameOver() {
+            let redPieces = 0;
+            let blackPieces = 0;
+            
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    if (board[i][j]) {
+                        if (board[i][j].color === 'red') redPieces++;
+                        else blackPieces++;
+                    }
+                }
+            }
+            
+            return redPieces === 0 || blackPieces === 0;
+        }
+
+        function undoMove() {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                board = lastMove.board;
+                selectedPiece = lastMove.selectedPiece;
+                currentPlayer = lastMove.currentPlayer;
+                turnInfo.textContent = currentPlayer === 'red' ? 'Kırmızı' : 'Siyah';
+                renderBoard();
+            }
+        }
+
+        newGameBtn.addEventListener('click', () => {
+            initializeBoard();
+            currentPlayer = 'red';
+            turnInfo.textContent = 'Kırmızı';
+            moveHistory = [];
+        });
+
+        undoBtn.addEventListener('click', undoMove);
+
+        // Oyunu başlat
+        initializeBoard();
+    </script>
+</body>
+
+</html>

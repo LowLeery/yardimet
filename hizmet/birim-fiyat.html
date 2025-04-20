@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ürün ve hizmetlerinizin birim fiyatını hesaplayın. Toplam maliyet ve miktara göre birim fiyatı kolayca hesaplayın.">
+    <meta name="keywords" content="birim fiyat hesaplama, ürün fiyatı, hizmet fiyatı, maliyet hesaplama, fiyat analizi">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Birim Fiyat Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF9800;
+            --secondary-color: #F57C00;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,152,0,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Birim Fiyat Hesaplama</h2>
+                <form id="unitPriceForm">
+                    <div class="form-group">
+                        <label for="totalCost">Toplam Maliyet (TL)</label>
+                        <input type="number" id="totalCost" name="totalCost" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Miktar</label>
+                        <input type="number" id="quantity" name="quantity" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unitType">Birim Tipi</label>
+                        <select id="unitType" name="unitType" required>
+                            <option value="adet">Adet</option>
+                            <option value="kg">Kilogram</option>
+                            <option value="lt">Litre</option>
+                            <option value="m">Metre</option>
+                            <option value="m2">Metrekare</option>
+                            <option value="m3">Metreküp</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Birim Fiyat Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="unitPrice">-</div>
+                    <div class="result-unit">TL/<span id="unitTypeDisplay">adet</span></div>
+                    <div class="result-description" id="resultDescription">
+                        Birim fiyat sonucu için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Birim Fiyat Hesaplama Hakkında</h2>
+            <p>Birim fiyat hesaplama aracı, ürün ve hizmetlerinizin birim fiyatını hesaplamanıza yardımcı olur. Toplam maliyet ve miktara göre birim fiyatı kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Birim Fiyat Faktörleri</h3>
+            <ul>
+                <li>Toplam Maliyet</li>
+                <li>Miktar</li>
+                <li>Birim Tipi</li>
+                <li>Üretim/Hizmet Süreci</li>
+                <li>Pazar Koşulları</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Ciro Hesaplama</h3>
+                    <p>İşletme cirosunu hesaplayın</p>
+                    <a href="ciro-hesapla.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Fiyat Endeksi</h3>
+                    <p>Fiyat endeksi hesaplamaları yapın</p>
+                    <a href="fiyat-endeksi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Toplam Maliyet</h3>
+                    <p>Toplam maliyet hesaplamaları yapın</p>
+                    <a href="toplam-maliyet.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('unitPriceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const totalCost = parseFloat(document.getElementById('totalCost').value);
+            const quantity = parseFloat(document.getElementById('quantity').value);
+            const unitType = document.getElementById('unitType').value;
+            
+            // Birim fiyat hesaplama
+            const unitPrice = totalCost / quantity;
+            
+            const resultDiv = document.getElementById('result');
+            const unitPriceDiv = document.getElementById('unitPrice');
+            const unitTypeDisplay = document.getElementById('unitTypeDisplay');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            unitPriceDiv.textContent = unitPrice.toFixed(2);
+            unitTypeDisplay.textContent = unitType;
+            
+            let description = `Birim Fiyat Detayları:\n\n`;
+            description += `Toplam Maliyet: ${totalCost.toFixed(2)} TL\n`;
+            description += `Miktar: ${quantity} ${unitType}\n`;
+            description += `Birim Fiyat: ${unitPrice.toFixed(2)} TL/${unitType}\n`;
+            description += `Birim Tipi: ${unitType}`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

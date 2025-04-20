@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GIF oluşturun. Resimlerinizi GIF formatına dönüştürün ve animasyonlar oluşturun.">
+    <meta name="keywords" content="gif, animasyon, resim dönüştürme, gif oluşturma">
+    <title>GIF Oluşturucu | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+        }
+
+        .main-content {
+            padding: 20px;
+            min-height: 70vh;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        #gif-preview {
+            max-width: 100%;
+            border: 2px solid #4CAF50;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .gif-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .gif-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #32CD32;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input:hover {
+            background: #f8f9fa;
+        }
+
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-group {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .settings-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .settings-group input[type="range"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .settings-group input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .generate-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .generate-btn:hover {
+            background: #28a745;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-gif {
+            max-width: 100%;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>GIF Oluşturucu</h2>
+            <div class="gif-container">
+                <div class="gif-form">
+                    <div class="form-group">
+                        <label>Resimler Yükleyin</label>
+                        <div class="file-input" id="fileInput">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Resimleri sürükle ve bırakın veya tıklayarak seçin</p>
+                        </div>
+                        <div class="preview-container" id="previewContainer"></div>
+                    </div>
+
+                    <div class="settings-group">
+                        <label>
+                            Kare Hızı (ms):
+                            <input type="number" id="frameSpeed" value="200" min="50" max="1000">
+                        </label>
+                        <input type="range" id="frameSpeedRange" min="50" max="1000" value="200">
+                        
+                        <label>
+                            Döngü Sayısı:
+                            <input type="number" id="loopCount" value="0" min="0">
+                            (0 = sonsuz)
+                        </label>
+                    </div>
+
+                    <button class="generate-btn" onclick="generateGif()">GIF Oluştur</button>
+                </div>
+
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>Oluşturulan GIF</h3>
+                    <img id="resultGif" class="result-gif" src="" alt="Oluşturulan GIF">
+                    <button class="download-btn" onclick="downloadGif()">GIF'i İndir</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const frameSpeedInput = document.getElementById('frameSpeed');
+        const frameSpeedRange = document.getElementById('frameSpeedRange');
+        const loopCountInput = document.getElementById('loopCount');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultGif = document.getElementById('resultGif');
+
+        let images = [];
+
+        // Sürükle-bırak işlemleri
+        fileInput.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#28a745';
+        });
+
+        fileInput.addEventListener('dragleave', () => {
+            fileInput.style.borderColor = '#32CD32';
+        });
+
+        fileInput.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInput.style.borderColor = '#32CD32';
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.multiple = true;
+            input.onchange = (e) => handleFiles(e.target.files);
+            input.click();
+        });
+
+        // Hız ayarı senkronizasyonu
+        frameSpeedRange.addEventListener('input', () => {
+            frameSpeedInput.value = frameSpeedRange.value;
+        });
+
+        frameSpeedInput.addEventListener('input', () => {
+            frameSpeedRange.value = frameSpeedInput.value;
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.src = e.target.result;
+                        images.push(img);
+                        addPreview(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function addPreview(img) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            
+            const imgElement = document.createElement('img');
+            imgElement.src = img.src;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = () => {
+                previewContainer.removeChild(previewItem);
+                images = images.filter(i => i.src !== img.src);
+            };
+            
+            previewItem.appendChild(imgElement);
+            previewItem.appendChild(removeBtn);
+            previewContainer.appendChild(previewItem);
+        }
+
+        function generateGif() {
+            if (images.length < 2) {
+                alert('Lütfen en az 2 resim yükleyin!');
+                return;
+            }
+
+            const gif = new GIF({
+                workers: 2,
+                quality: 10,
+                width: images[0].width,
+                height: images[0].height,
+                repeat: loopCountInput.value === '0' ? -1 : parseInt(loopCountInput.value)
+            });
+
+            images.forEach(img => {
+                gif.addFrame(img, {delay: parseInt(frameSpeedInput.value)});
+            });
+
+            gif.on('finished', function(blob) {
+                resultGif.src = URL.createObjectURL(blob);
+                resultContainer.style.display = 'block';
+            });
+
+            gif.render();
+        }
+
+        function downloadGif() {
+            const link = document.createElement('a');
+            link.href = resultGif.src;
+            link.download = 'animasyon.gif';
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

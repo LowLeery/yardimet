@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalkış ve varış saatlerini hesaplayın, yolculuk süresini ve tahmini varış zamanını öğrenin.">
+    <meta name="keywords" content="kalkış saati hesaplama, varış saati hesaplama, yolculuk süresi, seyahat planlama">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Kalkış ve Varış Saati Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .time-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .time-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .results-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .clock-container {
+            margin-top: 20px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clock-container i {
+            font-size: 4rem;
+            color: #32CD32;
+        }
+
+        .travel-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .travel-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .travel-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .travel-info li {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Kalkış ve Varış Saati Hesaplama</h2>
+            <div class="time-container">
+                <div class="time-form">
+                    <div class="clock-container">
+                        <i class="fas fa-clock"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="departureTime">Kalkış Saati:</label>
+                        <input type="time" id="departureTime">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="distance">Mesafe (km):</label>
+                        <input type="number" id="distance" min="1" placeholder="Mesafeyi girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="averageSpeed">Ortalama Hız (km/s):</label>
+                        <input type="number" id="averageSpeed" min="1" max="120" placeholder="Ortalama hızı girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="breakTime">Mola Süresi (dakika):</label>
+                        <input type="number" id="breakTime" min="0" placeholder="Mola süresini girin">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-section">
+                        <h3>Hesaplama Sonuçları</h3>
+                        <div class="result-item">
+                            <div class="result-label">Yolculuk Süresi:</div>
+                            <div class="result-value" id="travelTimeResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Tahmini Varış Saati:</div>
+                            <div class="result-value" id="arrivalTimeResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Toplam Mola Süresi:</div>
+                            <div class="result-value" id="totalBreakTimeResult">-</div>
+                        </div>
+                    </div>
+
+                    <div class="travel-info">
+                        <h3>Yolculuk İpuçları:</h3>
+                        <ul id="travelInfoList">
+                            <li>Her 2 saatte bir 15 dakika mola verin</li>
+                            <li>Yorgunluk belirtilerine dikkat edin</li>
+                            <li>Hava durumunu kontrol edin</li>
+                            <li>Yol durumunu takip edin</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const departureTime = document.getElementById('departureTime');
+        const distance = document.getElementById('distance');
+        const averageSpeed = document.getElementById('averageSpeed');
+        const breakTime = document.getElementById('breakTime');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+
+        // Hesaplama yap
+        function calculateTime() {
+            const departure = departureTime.value;
+            const dist = parseFloat(distance.value);
+            const speed = parseFloat(averageSpeed.value);
+            const breakDuration = parseFloat(breakTime.value) || 0;
+
+            if (!departure || isNaN(dist) || isNaN(speed) || dist <= 0 || speed <= 0) {
+                showStatus('Lütfen geçerli değerler girin!', true);
+                return;
+            }
+
+            // Yolculuk süresini hesapla (saat)
+            const travelTime = dist / speed;
+            
+            // Toplam mola süresini hesapla (saat)
+            const totalBreakTime = breakDuration / 60;
+            
+            // Toplam süreyi hesapla
+            const totalTime = travelTime + totalBreakTime;
+            
+            // Varış saatini hesapla
+            const [hours, minutes] = departure.split(':').map(Number);
+            const departureDate = new Date();
+            departureDate.setHours(hours, minutes, 0);
+            
+            const arrivalDate = new Date(departureDate.getTime() + totalTime * 60 * 60 * 1000);
+            
+            // Sonuçları göster
+            document.getElementById('travelTimeResult').textContent = 
+                `${Math.floor(travelTime)} saat ${Math.floor((travelTime % 1) * 60)} dakika`;
+            
+            document.getElementById('arrivalTimeResult').textContent = 
+                `${arrivalDate.getHours().toString().padStart(2, '0')}:${arrivalDate.getMinutes().toString().padStart(2, '0')}`;
+            
+            document.getElementById('totalBreakTimeResult').textContent = 
+                `${breakDuration} dakika`;
+
+            showStatus('Hesaplama tamamlandı!', false);
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            departureTime.value = '';
+            distance.value = '';
+            averageSpeed.value = '';
+            breakTime.value = '';
+            document.getElementById('travelTimeResult').textContent = '-';
+            document.getElementById('arrivalTimeResult').textContent = '-';
+            document.getElementById('totalBreakTimeResult').textContent = '-';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        calculateBtn.addEventListener('click', calculateTime);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+
+</body>
+
+</html>

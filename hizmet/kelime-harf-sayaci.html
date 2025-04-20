@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metin kelime ve harf sayısını hızlıca hesaplayabilen basit bir araç. Yazdığınız metnin toplam kelime ve harf sayısını öğrenin.">
+    <meta name="keywords" content="kelime sayacı, harf sayacı, metin analizi, online sayacı, kelime ve harf sayımı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Kelime ve Harf Sayacı</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            resize: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Kelime ve Harf Sayacı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <h2>Metni Yazın ve Kelime ve Harf Sayısını Öğrenin</h2>
+        <textarea id="textInput" placeholder="Metninizi buraya yazın"></textarea>
+        <button onclick="countText()">Say</button>
+        <p id="textCountResult"></p>
+    </section>
+
+    <div class="seo-container">
+        <p>
+            Kelime ve Harf Sayacı, metinlerinizi hızlıca analiz etmenizi sağlar. Yazdığınız metnin toplam kelime ve harf sayısını kolayca öğrenebilirsiniz. Bu araç, yazılarınızın uzunluğunu kontrol etmek ve daha verimli yazılar oluşturmak için mükemmeldir.
+        </p>
+        <div class="seo-item">
+            <h3>Nasıl Kullanılır?</h3>
+            <p>1. Metninizi yazın.</p>
+            <p>2. "Say" butonuna tıklayın.</p>
+            <p>3. Kelime ve harf sayısını anında görüntüleyin.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+    </footer>
+
+    <script>
+        function countText() {
+            const text = document.getElementById('textInput').value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            const chars = text.length;
+            document.getElementById('textCountResult').textContent = `Kelime: ${words}, Harf: ${chars}`;
+        }
+    </script>
+
+</body>
+
+</html>

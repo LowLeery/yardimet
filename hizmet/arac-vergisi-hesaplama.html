@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Araç vergilerinizi hesaplayın. Motor hacmi, yaş ve yakıt tipine göre araç vergisi tutarınızı kolayca hesaplayın.">
+    <meta name="keywords" content="araç vergisi hesaplama, motorlu taşıt vergisi, mtv hesaplama, araç vergisi tutarı, motor hacmi">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Araç Vergisi Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF9800;
+            --secondary-color: #F57C00;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,152,0,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Araç Vergisi Hesaplama</h2>
+                <form id="taxForm">
+                    <div class="form-group">
+                        <label for="engineSize">Motor Hacmi (cc)</label>
+                        <input type="number" id="engineSize" name="engineSize" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleAge">Araç Yaşı</label>
+                        <input type="number" id="vehicleAge" name="vehicleAge" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fuelType">Yakıt Tipi</label>
+                        <select id="fuelType" name="fuelType" required>
+                            <option value="benzin">Benzin</option>
+                            <option value="dizel">Dizel</option>
+                            <option value="lpg">LPG</option>
+                            <option value="elektrik">Elektrik</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Vergi Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="taxAmount">-</div>
+                    <div class="result-unit">TL</div>
+                    <div class="result-description" id="resultDescription">
+                        Vergi tutarı için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Araç Vergisi Hakkında</h2>
+            <p>Araç vergisi hesaplama aracı, motorlu taşıt vergisi (MTV) tutarınızı hesaplamanıza yardımcı olur. Motor hacmi, araç yaşı ve yakıt tipine göre vergi tutarınızı kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Vergi Hesaplama Faktörleri</h3>
+            <ul>
+                <li>Motor Hacmi (cc)</li>
+                <li>Araç Yaşı</li>
+                <li>Yakıt Tipi</li>
+                <li>Çevre Düzenlemesi</li>
+                <li>Yıllık Enflasyon Oranı</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Trafik Cezası</h3>
+                    <p>Trafik cezalarınızı hesaplayın</p>
+                    <a href="trafik-cezasi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Elektrik Faturası</h3>
+                    <p>Elektrik faturalarınızı hesaplayın</p>
+                    <a href="elektrik-faturasi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Kıdem Tazminatı</h3>
+                    <p>Kıdem tazminatınızı hesaplayın</p>
+                    <a href="kidem-tazminati.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('taxForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const engineSize = parseFloat(document.getElementById('engineSize').value);
+            const vehicleAge = parseInt(document.getElementById('vehicleAge').value);
+            const fuelType = document.getElementById('fuelType').value;
+            
+            // Vergi hesaplama formülü
+            let baseTax = 0;
+            
+            // Motor hacmine göre baz vergi
+            if (engineSize <= 1300) {
+                baseTax = 1000;
+            } else if (engineSize <= 1600) {
+                baseTax = 1500;
+            } else if (engineSize <= 2000) {
+                baseTax = 2000;
+            } else if (engineSize <= 3000) {
+                baseTax = 3000;
+            } else {
+                baseTax = 4000;
+            }
+            
+            // Yakıt tipine göre çarpan
+            let fuelMultiplier = 1;
+            if (fuelType === 'dizel') {
+                fuelMultiplier = 1.2;
+            } else if (fuelType === 'lpg') {
+                fuelMultiplier = 0.8;
+            } else if (fuelType === 'elektrik') {
+                fuelMultiplier = 0.5;
+            }
+            
+            // Araç yaşına göre indirim
+            let ageDiscount = 0;
+            if (vehicleAge > 5) {
+                ageDiscount = 0.1 * (vehicleAge - 5);
+                if (ageDiscount > 0.5) ageDiscount = 0.5; // Maksimum %50 indirim
+            }
+            
+            // Toplam vergi hesaplama
+            let totalTax = baseTax * fuelMultiplier * (1 - ageDiscount);
+            
+            const resultDiv = document.getElementById('result');
+            const taxAmountDiv = document.getElementById('taxAmount');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            taxAmountDiv.textContent = totalTax.toFixed(2);
+            
+            let description = `Vergi Detayları:\n\n`;
+            description += `Motor Hacmi: ${engineSize} cc\n`;
+            description += `Araç Yaşı: ${vehicleAge} yıl\n`;
+            description += `Yakıt Tipi: ${fuelType}\n`;
+            description += `Baz Vergi: ${baseTax.toFixed(2)} TL\n`;
+            description += `Yakıt Çarpanı: ${fuelMultiplier}\n`;
+            description += `Yaş İndirimi: %${(ageDiscount * 100).toFixed(0)}\n`;
+            description += `Toplam Vergi: ${totalTax.toFixed(2)} TL`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

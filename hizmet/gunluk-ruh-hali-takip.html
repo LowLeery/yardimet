@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Günlük ruh halinizi takip edin ve analiz edin. Duygusal durumunuzu izleyin ve iyileştirin.">
+    <meta name="keywords" content="ruh hali takibi, duygusal durum, günlük ruh hali, duygu analizi, ruh sağlığı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Günlük Ruh Hali Takipçisi | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #9C27B0;
+            --secondary-color: #7B1FA2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Günlük Ruh Hali Takipçisi</h2>
+                <form id="moodForm">
+                    <div class="form-group">
+                        <label for="moodLevel">Genel Ruh Hali</label>
+                        <select id="moodLevel" name="moodLevel" required>
+                            <option value="1">Çok Kötü</option>
+                            <option value="2">Kötü</option>
+                            <option value="3">Normal</option>
+                            <option value="4">İyi</option>
+                            <option value="5">Çok İyi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="energyLevel">Enerji Seviyesi</label>
+                        <select id="energyLevel" name="energyLevel" required>
+                            <option value="1">Çok Düşük</option>
+                            <option value="2">Düşük</option>
+                            <option value="3">Normal</option>
+                            <option value="4">Yüksek</option>
+                            <option value="5">Çok Yüksek</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="stressLevel">Stres Seviyesi</label>
+                        <select id="stressLevel" name="stressLevel" required>
+                            <option value="1">Çok Yüksek</option>
+                            <option value="2">Yüksek</option>
+                            <option value="3">Normal</option>
+                            <option value="4">Düşük</option>
+                            <option value="5">Çok Düşük</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sleepQuality">Uyku Kalitesi</label>
+                        <select id="sleepQuality" name="sleepQuality" required>
+                            <option value="1">Çok Kötü</option>
+                            <option value="2">Kötü</option>
+                            <option value="3">Normal</option>
+                            <option value="4">İyi</option>
+                            <option value="5">Çok İyi</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Analiz Et</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Analiz Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="moodScore">-</div>
+                    <div class="result-unit">Ruh Hali Puanı</div>
+                    <div class="result-description" id="resultDescription">
+                        Ruh hali analizi için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Ruh Hali Takibi Hakkında</h2>
+            <p>Ruh halinizi takip etmek, duygusal sağlığınızı anlamak ve iyileştirmek için önemli bir araçtır. Bu takip aracı, günlük duygusal durumunuzu değerlendirmenize ve iyileştirmenize yardımcı olur.</p>
+            
+            <h3>Ruh Halini İyileştirme Önerileri</h3>
+            <ul>
+                <li>Düzenli egzersiz yapın</li>
+                <li>Sağlıklı beslenin</li>
+                <li>Yeterli uyku uyuyun</li>
+                <li>Meditasyon veya nefes egzersizleri yapın</li>
+                <li>Sosyal bağlantılarınızı güçlendirin</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Uyku Kalitesi</h3>
+                    <p>Uyku kalitenizi analiz edin</p>
+                    <a href="uyku-kalitesi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Stres Seviyesi</h3>
+                    <p>Stres seviyenizi ölçün</p>
+                    <a href="stres-seviyesi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Kalp Atış Hızı</h3>
+                    <p>Kalp atış hızınızı hesaplayın</p>
+                    <a href="kalp-atis-hizi.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('moodForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const moodLevel = parseInt(document.getElementById('moodLevel').value);
+            const energyLevel = parseInt(document.getElementById('energyLevel').value);
+            const stressLevel = parseInt(document.getElementById('stressLevel').value);
+            const sleepQuality = parseInt(document.getElementById('sleepQuality').value);
+            
+            // Ruh hali puanı hesaplama (100 üzerinden)
+            let moodScore = 0;
+            
+            // Genel ruh hali puanı (maksimum 30 puan)
+            moodScore += (moodLevel - 1) * 7.5;
+            
+            // Enerji seviyesi puanı (maksimum 20 puan)
+            moodScore += (energyLevel - 1) * 5;
+            
+            // Stres seviyesi puanı (maksimum 30 puan)
+            moodScore += (6 - stressLevel) * 7.5;
+            
+            // Uyku kalitesi puanı (maksimum 20 puan)
+            moodScore += (sleepQuality - 1) * 5;
+            
+            const resultDiv = document.getElementById('result');
+            const moodScoreDiv = document.getElementById('moodScore');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            moodScoreDiv.textContent = moodScore;
+            
+            let description = `Ruh Hali Analizi Sonuçları:\n\n`;
+            description += `Genel Ruh Hali: ${moodLevel}/5\n`;
+            description += `Enerji Seviyesi: ${energyLevel}/5\n`;
+            description += `Stres Seviyesi: ${stressLevel}/5\n`;
+            description += `Uyku Kalitesi: ${sleepQuality}/5\n\n`;
+            
+            if (moodScore >= 80) {
+                description += `Mükemmel! Ruh haliniz çok iyi. Bu düzeni korumaya devam edin.`;
+            } else if (moodScore >= 60) {
+                description += `İyi! Ruh haliniz yeterli, ancak bazı iyileştirmeler yapabilirsiniz.`;
+            } else if (moodScore >= 40) {
+                description += `Orta! Ruh halinizde iyileştirme yapılması gerekiyor.`;
+            } else {
+                description += `Düşük! Ruh halinizde önemli sorunlar var. Duygusal sağlığınızı gözden geçirmeniz önerilir.`;
+            }
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

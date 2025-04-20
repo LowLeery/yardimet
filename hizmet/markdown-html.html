@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Markdown'dan HTML'e dönüştürücü - Markdown metinlerinizi HTML'e kolayca dönüştürün">
+    <meta name="keywords" content="markdown, html, dönüştürme, metin dönüştürme, web geliştirme">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Markdown to HTML Dönüştürücü | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .converter-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .converter-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            height: 300px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            resize: vertical;
+        }
+
+        .preview-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            min-height: 300px;
+            overflow-y: auto;
+        }
+
+        .preview-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .markdown-example {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .converter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="converter-container">
+        <h1>Markdown to HTML Dönüştürücü</h1>
+        
+        <div class="converter-grid">
+            <div class="converter-section">
+                <h2>Markdown Girişi</h2>
+                <div class="input-group">
+                    <label for="markdownInput">Markdown Metni</label>
+                    <textarea id="markdownInput" placeholder="Markdown metnini buraya yazın..."></textarea>
+                </div>
+                <button type="button" class="btn" id="convertBtn">Dönüştür</button>
+            </div>
+            
+            <div class="converter-section">
+                <h2>HTML Önizleme</h2>
+                <div class="preview-section" id="htmlPreview">
+                    <p>Dönüştürülen HTML burada görüntülenecek...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Markdown Sözdizimi Hakkında</h2>
+            <p>Markdown, metin biçimlendirme için kullanılan hafif bir işaretleme dilidir. Aşağıda temel Markdown sözdizimi örnekleri bulunmaktadır.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Başlıklar</h3>
+                    <div class="markdown-example">
+                        # Başlık 1<br>
+                        ## Başlık 2<br>
+                        ### Başlık 3
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Metin Biçimlendirme</h3>
+                    <div class="markdown-example">
+                        *italik* veya _italik_<br>
+                        **kalın** veya __kalın__<br>
+                        ~~üstü çizili~~
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Listeler</h3>
+                    <div class="markdown-example">
+                        - Sırasız liste<br>
+                        1. Sıralı liste<br>
+                        - [ ] Görev listesi
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Bağlantılar ve Resimler</h3>
+                    <div class="markdown-example">
+                        [Bağlantı metni](URL)<br>
+                        ![Resim açıklaması](resim URL)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const markdownInput = document.getElementById('markdownInput');
+        const convertBtn = document.getElementById('convertBtn');
+        const htmlPreview = document.getElementById('htmlPreview');
+
+        // Markdown'dan HTML'e dönüştürme fonksiyonu
+        function convertMarkdownToHTML(markdown) {
+            // Başlıklar
+            markdown = markdown.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            markdown = markdown.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+            markdown = markdown.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+            
+            // Kalın ve italik
+            markdown = markdown.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            markdown = markdown.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Bağlantılar
+            markdown = markdown.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+            
+            // Resimler
+            markdown = markdown.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">');
+            
+            // Sırasız liste
+            markdown = markdown.replace(/^\s*\*\s(.*$)/gm, '<li>$1</li>');
+            markdown = markdown.replace(/^\s*-\s(.*$)/gm, '<li>$1</li>');
+            
+            // Sıralı liste
+            markdown = markdown.replace(/^\s*\d+\.\s(.*$)/gm, '<li>$1</li>');
+            
+            // Paragraflar
+            markdown = markdown.replace(/^(?!<h|<li|<ul|<ol)(.*$)/gm, '<p>$1</p>');
+            
+            return markdown;
+        }
+
+        // Dönüştürme işlemi
+        convertBtn.addEventListener('click', () => {
+            const markdown = markdownInput.value;
+            const html = convertMarkdownToHTML(markdown);
+            htmlPreview.innerHTML = html;
+        });
+
+        // Otomatik dönüştürme
+        markdownInput.addEventListener('input', () => {
+            const markdown = markdownInput.value;
+            const html = convertMarkdownToHTML(markdown);
+            htmlPreview.innerHTML = html;
+        });
+    </script>
+</body>
+
+</html>

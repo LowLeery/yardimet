@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Günlük Hesaplama Araçları iletişim sayfası. Sorularınız, önerileriniz ve geri bildirimleriniz için bizimle iletişime geçin.">
+    <meta name="keywords" content="iletişim, geri bildirim, destek, sorular">
+    <title>İletişim | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .contact-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h2, .contact-form h2 {
+            color: #32CD32;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .contact-info p {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .contact-info ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .contact-info li:before {
+            content: "•";
+            color: #32CD32;
+            position: absolute;
+            left: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #32CD32;
+            outline: none;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #2db82d;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info, .contact-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>İletişim Bilgileri</h2>
+            <p>Günlük Hesaplama Araçları ekibi olarak, sorularınız, önerileriniz ve geri bildirimleriniz için her zaman yanınızdayız.</p>
+            
+            <ul>
+                <li><strong>E-posta:</strong> <a href="mailto:info@gunlukhesaplama.com">info@gunlukhesaplama.com</a></li>
+                <li><strong>Çalışma Saatleri:</strong> Hafta içi 09:00 - 18:00</li>
+                <li><strong>Yanıt Süresi:</strong> En geç 24 saat içinde</li>
+            </ul>
+
+            <h3>Sık Sorulan Sorular</h3>
+            <p>Yanıtlarını merak ettiğiniz sorular için <a href="sss.html">SSS sayfamızı</a> ziyaret edebilirsiniz.</p>
+        </div>
+
+        <div class="contact-form">
+            <h2>Bize Ulaşın</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Adınız Soyadınız</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-posta Adresiniz</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Konu</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mesajınız</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Gönder</button>
+                </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="hakkinda.html">Hakkında</a> | <a href="iletisim.html">İletişim</a> | <a href="kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Form gönderimi burada işlenecek
+            alert('Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

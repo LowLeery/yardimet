@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Futbol maçı skor tahmin aracı - Maç sonuçlarını tahmin edin">
+    <meta name="keywords" content="futbol, skor tahmin, maç tahmin, futbol tahmin, skor hesaplama">
+    <meta name="author" content="Futbol Tahmin Ekibi">
+    <title>Futbol Maçı Skor Tahmin Aracı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .team-inputs {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .vs {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .prediction-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .prediction-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .prediction-card .score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .prediction-card .probability {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .calculate-btn:disabled {
+            background: var(--secondary-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+        }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+        }
+
+            .team-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .vs {
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Futbol Maçı Skor Tahmin Aracı</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <div class="team-inputs">
+                    <div class="input-group">
+                        <label for="homeTeam">Ev Sahibi Takım</label>
+                        <input type="text" id="homeTeam" placeholder="Örn: Galatasaray">
+                    </div>
+                    
+                    <div class="vs">VS</div>
+                    
+                    <div class="input-group">
+                        <label for="awayTeam">Deplasman Takımı</label>
+                        <input type="text" id="awayTeam" placeholder="Örn: Fenerbahçe">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="homeTeamStrength">Ev Sahibi Takım Gücü (1-10)</label>
+                    <input type="number" id="homeTeamStrength" min="1" max="10" value="5">
+                </div>
+                
+                <div class="input-group">
+                    <label for="awayTeamStrength">Deplasman Takımı Gücü (1-10)</label>
+                    <input type="number" id="awayTeamStrength" min="1" max="10" value="5">
+                </div>
+                
+                <button class="calculate-btn" id="predictBtn">Tahmin Et</button>
+            </div>
+
+            <div class="result-section" id="resultSection">
+                <h2>Maç Tahminleri</h2>
+                <div id="predictions"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const homeTeamInput = document.getElementById('homeTeam');
+        const awayTeamInput = document.getElementById('awayTeam');
+        const homeTeamStrengthInput = document.getElementById('homeTeamStrength');
+        const awayTeamStrengthInput = document.getElementById('awayTeamStrength');
+        const predictBtn = document.getElementById('predictBtn');
+        const resultSection = document.getElementById('resultSection');
+        const predictionsDiv = document.getElementById('predictions');
+
+        function validateInput() {
+            if (!homeTeamInput.value.trim() || !awayTeamInput.value.trim()) {
+                alert('Lütfen her iki takımın da adını girin.');
+                return false;
+            }
+            
+            const homeStrength = parseInt(homeTeamStrengthInput.value);
+            const awayStrength = parseInt(awayTeamStrengthInput.value);
+
+            if (homeStrength < 1 || homeStrength > 10 || awayStrength < 1 || awayStrength > 10) {
+                alert('Takım güçleri 1-10 arasında olmalıdır.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function generateScore(homeStrength, awayStrength) {
+            // Temel skor oluşturma mantığı
+            const homeGoals = Math.floor(Math.random() * 4 * (homeStrength / 10));
+            const awayGoals = Math.floor(Math.random() * 4 * (awayStrength / 10));
+            
+            // Ev sahibi avantajı
+            const homeAdvantage = Math.random() < 0.6 ? 1 : 0;
+            
+            return {
+                home: homeGoals + homeAdvantage,
+                away: awayGoals
+            };
+            }
+
+        function calculateProbability(homeGoals, awayGoals, homeStrength, awayStrength) {
+            // Basit bir olasılık hesaplama
+            const totalStrength = homeStrength + awayStrength;
+            const homeProbability = (homeStrength / totalStrength) * 100;
+            const awayProbability = (awayStrength / totalStrength) * 100;
+            
+            return {
+                home: Math.round(homeProbability),
+                away: Math.round(awayProbability)
+            };
+        }
+
+        function predictMatch() {
+            if (!validateInput()) return;
+            
+            const homeTeam = homeTeamInput.value.trim();
+            const awayTeam = awayTeamInput.value.trim();
+            const homeStrength = parseInt(homeTeamStrengthInput.value);
+            const awayStrength = parseInt(awayTeamStrengthInput.value);
+            
+            predictBtn.disabled = true;
+            predictBtn.textContent = 'Tahmin Yapılıyor...';
+            
+            setTimeout(() => {
+                const score = generateScore(homeStrength, awayStrength);
+                const probability = calculateProbability(score.home, score.away, homeStrength, awayStrength);
+                
+                displayPrediction(homeTeam, awayTeam, score, probability);
+                
+                predictBtn.disabled = false;
+                predictBtn.textContent = 'Tahmin Et';
+            }, 1000);
+        }
+
+        function displayPrediction(homeTeam, awayTeam, score, probability) {
+            predictionsDiv.innerHTML = '';
+            
+            const card = document.createElement('div');
+            card.className = 'prediction-card';
+            card.innerHTML = `
+                <h3>${homeTeam} vs ${awayTeam}</h3>
+                <div class="score">${score.home} - ${score.away}</div>
+                <div class="probability">
+                    Kazanma Olasılığı:<br>
+                    ${homeTeam}: %${probability.home}<br>
+                    ${awayTeam}: %${probability.away}
+                </div>
+            `;
+            predictionsDiv.appendChild(card);
+            
+            resultSection.classList.add('active');
+        }
+
+        predictBtn.addEventListener('click', predictMatch);
+    </script>
+</body>
+
+</html>

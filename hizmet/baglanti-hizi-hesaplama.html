@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="İnternet bağlantı hızınızı ölçün ve farklı birimler arasında dönüşüm yapın.">
+    <meta name="keywords" content="bağlantı hızı hesaplama, internet hız testi, mbps hesaplama, download speed, upload speed">
+    <title>Bağlantı Hızı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .speed-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .speed-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group select,
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .results-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .speed-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .speed-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .speed-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .speed-info li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .speed-gauge {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .speed-gauge i {
+            font-size: 4rem;
+            color: #32CD32;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #32CD32, #28a745);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Bağlantı Hızı Hesaplama</h2>
+            <div class="speed-container">
+                <div class="speed-form">
+                    <div class="speed-gauge">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="speedType">Hız Türü:</label>
+                        <select id="speedType">
+                            <option value="download">İndirme Hızı</option>
+                            <option value="upload">Yükleme Hızı</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="speedValue">Hız Değeri:</label>
+                        <input type="number" id="speedValue" min="0" placeholder="Hız değerini girin">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="speedUnit">Birim:</label>
+                        <select id="speedUnit">
+                            <option value="mbps">Mbps</option>
+                            <option value="kbps">Kbps</option>
+                            <option value="mbps">MB/s</option>
+                            <option value="kbps">KB/s</option>
+                        </select>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress" id="speedProgress" style="width: 0%"></div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-section">
+                        <h3>Hesaplama Sonuçları</h3>
+                        <div class="result-item">
+                            <div class="result-label">Mbps:</div>
+                            <div class="result-value" id="mbpsResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Kbps:</div>
+                            <div class="result-value" id="kbpsResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">MB/s:</div>
+                            <div class="result-value" id="mbsResult">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">KB/s:</div>
+                            <div class="result-value" id="kbsResult">-</div>
+                        </div>
+                    </div>
+
+                    <div class="speed-info">
+                        <h3>Hız Değerlendirmesi:</h3>
+                        <ul id="speedInfoList">
+                            <li>0-5 Mbps: Düşük hız - Temel web tarama</li>
+                            <li>5-15 Mbps: Orta hız - Video izleme ve indirme</li>
+                            <li>15-50 Mbps: İyi hız - HD video ve oyun</li>
+                            <li>50+ Mbps: Yüksek hız - 4K video ve çoklu cihaz</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const speedType = document.getElementById('speedType');
+        const speedValue = document.getElementById('speedValue');
+        const speedUnit = document.getElementById('speedUnit');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const speedProgress = document.getElementById('speedProgress');
+
+        // Hız dönüşüm fonksiyonları
+        function convertSpeed(value, fromUnit, toUnit) {
+            const conversions = {
+                mbps: {
+                    kbps: (v) => v * 1000,
+                    mbs: (v) => v / 8,
+                    kbs: (v) => v * 125
+                },
+                kbps: {
+                    mbps: (v) => v / 1000,
+                    mbs: (v) => v / 8000,
+                    kbs: (v) => v / 8
+                },
+                mbs: {
+                    mbps: (v) => v * 8,
+                    kbps: (v) => v * 8000,
+                    kbs: (v) => v * 1000
+                },
+                kbs: {
+                    mbps: (v) => v / 125,
+                    kbps: (v) => v * 8,
+                    mbs: (v) => v / 1000
+                }
+            };
+
+            if (fromUnit === toUnit) return value;
+            return conversions[fromUnit][toUnit](value);
+        }
+
+        // Hız değerlendirmesi
+        function getSpeedRating(mbps) {
+            if (mbps < 5) return { rating: 'Düşük', color: '#dc3545' };
+            if (mbps < 15) return { rating: 'Orta', color: '#ffc107' };
+            if (mbps < 50) return { rating: 'İyi', color: '#28a745' };
+            return { rating: 'Yüksek', color: '#007bff' };
+        }
+
+        // Hız hesapla
+        function calculateSpeed() {
+            const value = parseFloat(speedValue.value);
+            const unit = speedUnit.value;
+
+            if (isNaN(value) || value < 0) {
+                showStatus('Lütfen geçerli bir hız değeri girin!', true);
+                return;
+            }
+
+            const mbps = convertSpeed(value, unit, 'mbps');
+            const kbps = convertSpeed(value, unit, 'kbps');
+            const mbs = convertSpeed(value, unit, 'mbs');
+            const kbs = convertSpeed(value, unit, 'kbs');
+
+            const rating = getSpeedRating(mbps);
+            speedProgress.style.width = `${Math.min(mbps / 100 * 100, 100)}%`;
+            speedProgress.style.background = `linear-gradient(90deg, ${rating.color}, #28a745)`;
+
+            document.getElementById('mbpsResult').textContent = `${mbps.toFixed(2)} Mbps`;
+            document.getElementById('kbpsResult').textContent = `${kbps.toFixed(2)} Kbps`;
+            document.getElementById('mbsResult').textContent = `${mbs.toFixed(2)} MB/s`;
+            document.getElementById('kbsResult').textContent = `${kbs.toFixed(2)} KB/s`;
+
+            showStatus('Hız hesaplaması tamamlandı!', false);
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            speedValue.value = '';
+            document.getElementById('mbpsResult').textContent = '-';
+            document.getElementById('kbpsResult').textContent = '-';
+            document.getElementById('mbsResult').textContent = '-';
+            document.getElementById('kbsResult').textContent = '-';
+            speedProgress.style.width = '0%';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        calculateBtn.addEventListener('click', calculateSpeed);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metinleri farklı karakter setleri arasında dönüştürün. UTF-8, ASCII, ISO-8859-9 ve daha fazlası.">
+    <meta name="keywords" content="karakter seti dönüştürücü, encoding converter, utf-8, ascii, iso-8859-9, karakter kodlama">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Karakter Seti Dönüştürücü | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .converter-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .converter-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .converter-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .converter-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #32CD32;
+        }
+
+        .encoding-selectors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .encoding-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .encoding-selector select {
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .encoding-selector select:focus {
+            outline: none;
+            border-color: #32CD32;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .result-card p {
+            margin: 10px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .converter-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .converter-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .converter-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .converter-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .encoding-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .encoding-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .encoding-info p {
+            margin: 10px 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Karakter Seti Dönüştürücü</h2>
+            <div class="converter-container">
+                <div class="converter-form">
+                    <div class="converter-info">
+                        <p>Bu araç, metinleri farklı karakter setleri arasında dönüştürmenize yardımcı olur. UTF-8, ASCII, ISO-8859-9 ve daha fazla karakter seti desteği sunar.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputText">Giriş Metni:</label>
+                        <textarea id="inputText" placeholder="Dönüştürmek istediğiniz metni buraya yazın..."></textarea>
+                    </div>
+
+                    <div class="encoding-selectors">
+                        <div class="encoding-selector">
+                            <label for="sourceEncoding">Kaynak Karakter Seti:</label>
+                            <select id="sourceEncoding">
+                                <option value="UTF-8">UTF-8</option>
+                                <option value="ASCII">ASCII</option>
+                                <option value="ISO-8859-9">ISO-8859-9 (Türkçe)</option>
+                                <option value="Windows-1254">Windows-1254 (Türkçe)</option>
+                                <option value="ISO-8859-1">ISO-8859-1 (Latin-1)</option>
+                                <option value="UTF-16">UTF-16</option>
+                            </select>
+                        </div>
+                        <div class="encoding-selector">
+                            <label for="targetEncoding">Hedef Karakter Seti:</label>
+                            <select id="targetEncoding">
+                                <option value="UTF-8">UTF-8</option>
+                                <option value="ASCII">ASCII</option>
+                                <option value="ISO-8859-9">ISO-8859-9 (Türkçe)</option>
+                                <option value="Windows-1254">Windows-1254 (Türkçe)</option>
+                                <option value="ISO-8859-1">ISO-8859-1 (Latin-1)</option>
+                                <option value="UTF-16">UTF-16</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="convertBtn">
+                            <i class="fas fa-exchange-alt"></i> Dönüştür
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="outputText">Sonuç:</label>
+                        <textarea id="outputText" readonly></textarea>
+                    </div>
+
+                    <div class="error-message" id="errorMessage"></div>
+
+                    <div class="results-container">
+                        <h3>Dönüşüm Bilgileri</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h3>Karakter Sayısı</h3>
+                                <p id="charCount">0</p>
+                            </div>
+                            <div class="result-card">
+                                <h3>Bayt Boyutu</h3>
+                                <p id="byteSize">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="encoding-info">
+                        <h3>Karakter Setleri Hakkında</h3>
+                        <p><strong>UTF-8:</strong> Evrensel karakter seti, tüm dilleri destekler.</p>
+                        <p><strong>ASCII:</strong> Temel İngilizce karakterleri destekler (128 karakter).</p>
+                        <p><strong>ISO-8859-9:</strong> Türkçe karakterleri destekleyen Latin alfabesi.</p>
+                        <p><strong>Windows-1254:</strong> Windows'ta kullanılan Türkçe karakter seti.</p>
+                        <p><strong>ISO-8859-1:</strong> Batı Avrupa dillerini destekleyen Latin alfabesi.</p>
+                        <p><strong>UTF-16:</strong> Geniş karakter seti, her karakter 2 veya 4 bayt.</p>
+                    </div>
+
+                    <div class="converter-tips">
+                        <h3>Dönüşüm İpuçları:</h3>
+                        <ul>
+                            <li>UTF-8, modern web uygulamaları için en uygun karakter setidir</li>
+                            <li>Türkçe metinler için ISO-8859-9 veya Windows-1254 kullanın</li>
+                            <li>ASCII sadece temel İngilizce karakterleri destekler</li>
+                            <li>Dönüşüm sırasında karakter kaybı olabilir, sonuçları kontrol edin</li>
+                            <li>Web sayfaları için UTF-8 kullanmanız önerilir</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Karakter seti dönüşüm fonksiyonu
+        function convertText() {
+            const inputText = document.getElementById('inputText').value;
+            const sourceEncoding = document.getElementById('sourceEncoding').value;
+            const targetEncoding = document.getElementById('targetEncoding').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            try {
+                // TextEncoder ve TextDecoder kullanarak dönüşüm
+                const encoder = new TextEncoder();
+                const decoder = new TextDecoder(targetEncoding);
+                
+                // Önce UTF-8'e dönüştür
+                const utf8Bytes = encoder.encode(inputText);
+                
+                // Sonra hedef karakter setine dönüştür
+                const convertedText = decoder.decode(utf8Bytes);
+                
+                // Sonuçları göster
+                document.getElementById('outputText').value = convertedText;
+                document.getElementById('charCount').textContent = convertedText.length;
+                document.getElementById('byteSize').textContent = utf8Bytes.length;
+                errorMessage.style.display = 'none';
+            } catch (error) {
+                errorMessage.textContent = 'Dönüşüm sırasında bir hata oluştu: ' + error.message;
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Olay dinleyicileri
+        document.getElementById('convertBtn').addEventListener('click', convertText);
+        
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+            document.getElementById('charCount').textContent = '0';
+            document.getElementById('byteSize').textContent = '0';
+            document.getElementById('errorMessage').style.display = 'none';
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalp atış hızınızı hesaplayın ve takip edin. Sağlıklı kalp atış hızı aralıklarını öğrenin ve egzersiz hedeflerinizi belirleyin.">
+    <meta name="keywords" content="kalp atış hızı hesaplama, nabız hesaplama, maksimum kalp atış hızı, hedef kalp atış hızı, egzersiz nabız">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Kalp Atış Hızı Hesaplayıcı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #E91E63;
+            --secondary-color: #C2185B;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(233,30,99,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233,30,99,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Kalp Atış Hızı Hesaplayıcı</h2>
+                <form id="heartRateForm">
+                    <div class="form-group">
+                        <label for="age">Yaşınız</label>
+                        <input type="number" id="age" name="age" required min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="restingHeartRate">Dinlenme Nabzınız (isteğe bağlı)</label>
+                        <input type="number" id="restingHeartRate" name="restingHeartRate" min="30" max="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="activityLevel">Egzersiz Seviyesi</label>
+                        <select id="activityLevel" name="activityLevel" required>
+                            <option value="0.5">Hafif Egzersiz (%50-60)</option>
+                            <option value="0.6">Orta Egzersiz (%60-70)</option>
+                            <option value="0.7">Yoğun Egzersiz (%70-80)</option>
+                            <option value="0.8">Çok Yoğun Egzersiz (%80-90)</option>
+                            <option value="0.9">Maksimum Egzersiz (%90-100)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuç</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="targetHeartRate">-</div>
+                    <div class="result-unit">Atım/Dakika</div>
+                    <div class="result-description" id="resultDescription">
+                        Kalp atış hızı hesaplaması için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Kalp Atış Hızı Hakkında</h2>
+            <p>Kalp atış hızı, kalbinizin dakikada kaç kez attığını gösteren önemli bir sağlık göstergesidir. Bu hesaplama aracı, yaşınıza ve aktivite seviyenize göre hedef kalp atış hızı aralığınızı belirlemenize yardımcı olur.</p>
+            
+            <h3>Kalp Atış Hızı Bölgeleri</h3>
+            <ul>
+                <li>Hafif Egzersiz (%50-60): Isınma ve soğuma için ideal</li>
+                <li>Orta Egzersiz (%60-70): Yağ yakımı ve dayanıklılık için</li>
+                <li>Yoğun Egzersiz (%70-80): Aerobik kapasite geliştirme</li>
+                <li>Çok Yoğun Egzersiz (%80-90): Performans artırma</li>
+                <li>Maksimum Egzersiz (%90-100): Sadece kısa süreli ve profesyonel sporcular için</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Vücut Kitle İndeksi</h3>
+                    <p>Vücut kitle indeksinizi hesaplayın</p>
+                    <a href="vki.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Kalori Hesaplama</h3>
+                    <p>Günlük kalori ihtiyacınızı hesaplayın</p>
+                    <a href="kalori-hesapla.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Egzersiz Süresi</h3>
+                    <p>Egzersiz sürenizi hesaplayın</p>
+                    <a href="egzersiz-suresi.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('heartRateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const age = parseInt(document.getElementById('age').value);
+            const restingHeartRate = document.getElementById('restingHeartRate').value;
+            const activityLevel = parseFloat(document.getElementById('activityLevel').value);
+            
+            // Maksimum kalp atış hızı hesaplama (220 - yaş)
+            const maxHeartRate = 220 - age;
+            
+            // Hedef kalp atış hızı hesaplama
+            let targetHeartRate;
+            if (restingHeartRate) {
+                // Karvonen formülü kullanarak hedef kalp atış hızı hesaplama
+                const heartRateReserve = maxHeartRate - restingHeartRate;
+                targetHeartRate = Math.round(restingHeartRate + (heartRateReserve * activityLevel));
+            } else {
+                // Basit formül kullanarak hedef kalp atış hızı hesaplama
+                targetHeartRate = Math.round(maxHeartRate * activityLevel);
+            }
+            
+            const resultDiv = document.getElementById('result');
+            const targetHeartRateDiv = document.getElementById('targetHeartRate');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            targetHeartRateDiv.textContent = targetHeartRate;
+            
+            let description = `Maksimum kalp atış hızınız: ${maxHeartRate} atım/dakika\n\n`;
+            if (restingHeartRate) {
+                description += `Dinlenme nabzınız: ${restingHeartRate} atım/dakika\n\n`;
+            }
+            description += `Hedef kalp atış hızı aralığınız: ${Math.round(targetHeartRate * 0.95)} - ${Math.round(targetHeartRate * 1.05)} atım/dakika\n\n`;
+            description += `Bu aralıkta egzersiz yaparak maksimum fayda sağlayabilirsiniz.`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+
+</body>
+
+</html>

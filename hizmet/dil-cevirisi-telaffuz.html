@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metinleri çevirin ve telaffuzlarını öğrenin. Farklı diller arasında kolay çeviri yapın.">
+    <meta name="keywords" content="dil çevirisi, telaffuz rehberi, çeviri aracı, dil öğrenme">
+    <title>Dil Çevirisi ve Telaffuz Rehberi | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .translation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .translation-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .language-selectors {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .language-selector {
+            flex: 1;
+        }
+
+        .language-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .language-selector select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .text-areas {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .text-area {
+            flex: 1;
+        }
+
+        .text-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .text-area textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .pronunciation-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .pronunciation-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .pronunciation-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .pronunciation-item span {
+            flex: 1;
+        }
+
+        .pronunciation-item button {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pronunciation-item button:hover {
+            background: #28a745;
+        }
+
+        .language-tips {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .language-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .language-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .language-tips li {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Dil Çevirisi ve Telaffuz Rehberi</h2>
+            <div class="translation-container">
+                <div class="translation-form">
+                    <div class="language-selectors">
+                        <div class="language-selector">
+                            <label for="sourceLanguage">Kaynak Dil:</label>
+                            <select id="sourceLanguage">
+                                <option value="tr">Türkçe</option>
+                                <option value="en">İngilizce</option>
+                                <option value="de">Almanca</option>
+                                <option value="fr">Fransızca</option>
+                                <option value="es">İspanyolca</option>
+                                <option value="it">İtalyanca</option>
+                                <option value="ru">Rusça</option>
+                                <option value="ja">Japonca</option>
+                                <option value="zh">Çince</option>
+                                <option value="ar">Arapça</option>
+                            </select>
+                        </div>
+                        <div class="language-selector">
+                            <label for="targetLanguage">Hedef Dil:</label>
+                            <select id="targetLanguage">
+                                <option value="en">İngilizce</option>
+                                <option value="tr">Türkçe</option>
+                                <option value="de">Almanca</option>
+                                <option value="fr">Fransızca</option>
+                                <option value="es">İspanyolca</option>
+                                <option value="it">İtalyanca</option>
+                                <option value="ru">Rusça</option>
+                                <option value="ja">Japonca</option>
+                                <option value="zh">Çince</option>
+                                <option value="ar">Arapça</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-areas">
+                        <div class="text-area">
+                            <label for="sourceText">Çevrilecek Metin:</label>
+                            <textarea id="sourceText" placeholder="Çevrilecek metni buraya yazın..."></textarea>
+                        </div>
+                        <div class="text-area">
+                            <label for="targetText">Çeviri Sonucu:</label>
+                            <textarea id="targetText" placeholder="Çeviri sonucu burada görünecek..." readonly></textarea>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="translateBtn">
+                            <i class="fas fa-language"></i> Çevir
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="pronunciation-section">
+                        <h3>Telaffuz Rehberi</h3>
+                        <div class="pronunciation-item">
+                            <span id="pronunciationText">-</span>
+                            <button id="playPronunciation">
+                                <i class="fas fa-volume-up"></i> Dinle
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="language-tips">
+                        <h3>Dil Öğrenme İpuçları:</h3>
+                        <ul>
+                            <li>Düzenli pratik yapın</li>
+                            <li>Günlük konuşma pratikleri yapın</li>
+                            <li>Film ve dizileri orijinal dilinde izleyin</li>
+                            <li>Dil öğrenme uygulamalarını kullanın</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const sourceLanguage = document.getElementById('sourceLanguage');
+        const targetLanguage = document.getElementById('targetLanguage');
+        const sourceText = document.getElementById('sourceText');
+        const targetText = document.getElementById('targetText');
+        const translateBtn = document.getElementById('translateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const pronunciationText = document.getElementById('pronunciationText');
+        const playPronunciation = document.getElementById('playPronunciation');
+
+        // Örnek çeviriler (gerçek uygulamada API kullanılacak)
+        const translations = {
+            'tr-en': {
+                'Merhaba': 'Hello',
+                'Nasılsın': 'How are you',
+                'Teşekkür ederim': 'Thank you',
+                'Günaydın': 'Good morning',
+                'İyi günler': 'Good day'
+            },
+            'en-tr': {
+                'Hello': 'Merhaba',
+                'How are you': 'Nasılsın',
+                'Thank you': 'Teşekkür ederim',
+                'Good morning': 'Günaydın',
+                'Good day': 'İyi günler'
+            }
+        };
+
+        // Çeviri yap
+        function translateText() {
+            const text = sourceText.value.trim();
+            if (!text) {
+                targetText.value = '';
+                pronunciationText.textContent = '-';
+                return;
+            }
+
+            const translationKey = `${sourceLanguage.value}-${targetLanguage.value}`;
+            const translation = translations[translationKey]?.[text] || 'Çeviri bulunamadı';
+            
+            targetText.value = translation;
+            pronunciationText.textContent = translation;
+        }
+
+        // Telaffuzu oynat (simülasyon)
+        function playPronunciationText() {
+            const text = pronunciationText.textContent;
+            if (text && text !== '-') {
+                // Gerçek uygulamada burada metin-ses dönüşümü API'si kullanılacak
+                alert(`Telaffuz: ${text}`);
+            }
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            sourceText.value = '';
+            targetText.value = '';
+            pronunciationText.textContent = '-';
+        }
+
+        // Olay dinleyicileri
+        translateBtn.addEventListener('click', translateText);
+        clearBtn.addEventListener('click', clearAll);
+        playPronunciation.addEventListener('click', playPronunciationText);
+    </script>
+</body>
+</html> 

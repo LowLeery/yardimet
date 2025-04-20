@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Metinleri şifreleyin ve deşifre edin. Güvenli ve kolay metin şifreleme aracı.">
+    <meta name="keywords" content="metin şifreleme, text encryption, şifre çözme, text decryption">
+    <title>Metin Şifreleyici / Deşifre Edici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 90%;
+            max-width: 600px;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .encryption-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .encryption-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .options-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .option-group select, .option-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: #007bff;
+        }
+
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .character-count {
+            text-align: right;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Metin Şifreleyici / Deşifre Edici</h2>
+            <div class="encryption-container">
+                <div class="encryption-form">
+                    <div class="input-group">
+                        <label for="inputText">Metin:</label>
+                        <textarea id="inputText" placeholder="Şifrelemek veya deşifre etmek istediğiniz metni buraya yazın..."></textarea>
+                        <div class="character-count" id="charCount">0 karakter</div>
+                    </div>
+
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label for="algorithm">Şifreleme Algoritması:</label>
+                            <select id="algorithm">
+                                <option value="AES">AES</option>
+                                <option value="DES">DES</option>
+                                <option value="TripleDES">Triple DES</option>
+                                <option value="Rabbit">Rabbit</option>
+                                <option value="RC4">RC4</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="key">Anahtar:</label>
+                            <input type="text" id="key" placeholder="Şifreleme anahtarını girin">
+                        </div>
+                    </div>
+
+                    <div class="status" id="status"></div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="encryptBtn">
+                            <i class="fas fa-lock"></i> Şifrele
+                        </button>
+                        <button class="action-btn" id="decryptBtn">
+                            <i class="fas fa-unlock"></i> Deşifre Et
+                        </button>
+                        <button class="action-btn copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> Kopyala
+                        </button>
+                        <button class="action-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="outputText">Sonuç:</label>
+                        <textarea id="outputText" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const algorithm = document.getElementById('algorithm');
+        const key = document.getElementById('key');
+        const encryptBtn = document.getElementById('encryptBtn');
+        const decryptBtn = document.getElementById('decryptBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const charCount = document.getElementById('charCount');
+
+        // Karakter sayısını güncelle
+        inputText.addEventListener('input', () => {
+            charCount.textContent = `${inputText.value.length} karakter`;
+        });
+
+        // Şifreleme işlemi
+        function encrypt() {
+            const text = inputText.value;
+            const encryptionKey = key.value;
+            
+            if (!text) {
+                showStatus('Lütfen şifrelenecek metni girin!', true);
+                return;
+            }
+            
+            if (!encryptionKey) {
+                showStatus('Lütfen bir şifreleme anahtarı girin!', true);
+                return;
+            }
+
+            try {
+                let encrypted;
+                switch (algorithm.value) {
+                    case 'AES':
+                        encrypted = CryptoJS.AES.encrypt(text, encryptionKey).toString();
+                        break;
+                    case 'DES':
+                        encrypted = CryptoJS.DES.encrypt(text, encryptionKey).toString();
+                        break;
+                    case 'TripleDES':
+                        encrypted = CryptoJS.TripleDES.encrypt(text, encryptionKey).toString();
+                        break;
+                    case 'Rabbit':
+                        encrypted = CryptoJS.Rabbit.encrypt(text, encryptionKey).toString();
+                        break;
+                    case 'RC4':
+                        encrypted = CryptoJS.RC4.encrypt(text, encryptionKey).toString();
+                        break;
+                }
+                
+                outputText.value = encrypted;
+                showStatus('Metin başarıyla şifrelendi!', false);
+            } catch (err) {
+                console.error('Şifreleme hatası:', err);
+                showStatus('Şifreleme işlemi başarısız oldu!', true);
+            }
+        }
+
+        // Deşifre işlemi
+        function decrypt() {
+            const text = inputText.value;
+            const encryptionKey = key.value;
+            
+            if (!text) {
+                showStatus('Lütfen deşifre edilecek metni girin!', true);
+                return;
+            }
+            
+            if (!encryptionKey) {
+                showStatus('Lütfen şifreleme anahtarını girin!', true);
+                return;
+            }
+
+            try {
+                let decrypted;
+                switch (algorithm.value) {
+                    case 'AES':
+                        decrypted = CryptoJS.AES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+                        break;
+                    case 'DES':
+                        decrypted = CryptoJS.DES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+                        break;
+                    case 'TripleDES':
+                        decrypted = CryptoJS.TripleDES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+                        break;
+                    case 'Rabbit':
+                        decrypted = CryptoJS.Rabbit.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+                        break;
+                    case 'RC4':
+                        decrypted = CryptoJS.RC4.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+                        break;
+                }
+                
+                if (!decrypted) {
+                    throw new Error('Geçersiz anahtar veya şifreli metin!');
+                }
+                
+                outputText.value = decrypted;
+                showStatus('Metin başarıyla deşifre edildi!', false);
+            } catch (err) {
+                console.error('Deşifre hatası:', err);
+                showStatus('Deşifre işlemi başarısız oldu!', true);
+            }
+        }
+
+        // Metni panoya kopyala
+        function copyToClipboard() {
+            if (!outputText.value) {
+                showStatus('Kopyalanacak metin yok!', true);
+                return;
+            }
+
+            navigator.clipboard.writeText(outputText.value)
+                .then(() => showStatus('Metin panoya kopyalandı!', false))
+                .catch(() => showStatus('Metin kopyalanamadı!', true));
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            inputText.value = '';
+            outputText.value = '';
+            key.value = '';
+            charCount.textContent = '0 karakter';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        encryptBtn.addEventListener('click', encrypt);
+        decryptBtn.addEventListener('click', decrypt);
+        copyBtn.addEventListener('click', copyToClipboard);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+
+</html>

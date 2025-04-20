@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Karenin alanını hesaplayın. Kenar uzunluğuna göre kare alanını kolayca hesaplayın.">
+    <meta name="keywords" content="kare alan hesaplama, geometri hesaplama, kare alanı, matematik, alan hesaplama">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Kare Alanı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #9C27B0;
+            --secondary-color: #7B1FA2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Kare Alanı Hesaplama</h2>
+                <form id="squareForm">
+                    <div class="form-group">
+                        <label for="side">Kenar Uzunluğu (cm)</label>
+                        <input type="number" id="side" name="side" min="0" step="0.01" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Kare Alanı Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="area">-</div>
+                    <div class="result-unit">cm²</div>
+                    <div class="result-description" id="resultDescription">
+                        Kare alanı sonucu için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Kare Alanı Hesaplama Hakkında</h2>
+            <p>Kare alanı hesaplama aracı, karenin alanını hesaplamanıza yardımcı olur. Kenar uzunluğunu girerek kare alanını kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Kare Özellikleri</h3>
+            <ul>
+                <li>Tüm kenarları eşit uzunluktadır</li>
+                <li>Tüm açıları 90 derecedir</li>
+                <li>Alan = a² (a: kenar uzunluğu)</li>
+                <li>Çevre = 4 × a</li>
+                <li>Köşegen = a × √2</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Dikdörtgen Alanı</h3>
+                    <p>Dikdörtgen alanını hesaplayın</p>
+                    <a href="dikdortgen-alan.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Üçgen Alanı</h3>
+                    <p>Üçgen alanını hesaplayın</p>
+                    <a href="üçgen-alan.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Daire Alanı</h3>
+                    <p>Daire alanını hesaplayın</p>
+                    <a href="daire-alan.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('squareForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const side = parseFloat(document.getElementById('side').value);
+            
+            // Alan hesaplama
+            const area = Math.pow(side, 2);
+            
+            // Çevre hesaplama
+            const perimeter = 4 * side;
+            
+            // Köşegen hesaplama
+            const diagonal = side * Math.sqrt(2);
+            
+            const resultDiv = document.getElementById('result');
+            const areaDiv = document.getElementById('area');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            areaDiv.textContent = area.toFixed(2);
+            
+            let description = `Kare Detayları:\n\n`;
+            description += `Kenar Uzunluğu: ${side.toFixed(2)} cm\n`;
+            description += `Alan: ${area.toFixed(2)} cm²\n`;
+            description += `Çevre: ${perimeter.toFixed(2)} cm\n`;
+            description += `Köşegen: ${diagonal.toFixed(2)} cm`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+
+</body>
+
+</html>

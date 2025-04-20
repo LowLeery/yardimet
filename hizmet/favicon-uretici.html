@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Favicon üretici - Özelleştirilebilir faviconlar oluşturun">
+    <meta name="keywords" content="favicon üretici, favicon oluşturucu, favicon generator, site ikonu">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Favicon Üretici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .favicon-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .controls-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .preview-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .color-picker input[type="color"] {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+
+        .color-picker input[type="text"] {
+            flex: 1;
+        }
+
+        .favicon-preview {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .favicon-display {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--box-shadow);
+        }
+
+        .favicon-sizes {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .size-preview {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+            box-shadow: var(--box-shadow);
+        }
+
+        .code-display {
+            background: var(--background-color);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        @media (max-width: 768px) {
+            .favicon-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-section {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Favicon Üretici</h1>
+        
+        <div class="favicon-container">
+            <div class="controls-section">
+                <div class="input-group">
+                    <label for="text">Metin</label>
+                    <input type="text" id="text" maxlength="2" placeholder="Örn: GH">
+                </div>
+                
+                <div class="input-group">
+                    <label for="backgroundColor">Arka Plan Rengi</label>
+                    <div class="color-picker">
+                        <input type="color" id="backgroundColor" value="#4a6bff">
+                        <input type="text" id="backgroundColorHex" value="#4a6bff">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="textColor">Metin Rengi</label>
+                    <div class="color-picker">
+                        <input type="color" id="textColor" value="#ffffff">
+                        <input type="text" id="textColorHex" value="#ffffff">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="font">Yazı Tipi</label>
+                    <select id="font">
+                        <option value="Arial">Arial</option>
+                        <option value="Roboto">Roboto</option>
+                        <option value="Open Sans">Open Sans</option>
+                        <option value="Montserrat">Montserrat</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="shape">Şekil</label>
+                    <select id="shape">
+                        <option value="square">Kare</option>
+                        <option value="circle">Daire</option>
+                        <option value="rounded">Yuvarlak Köşeli</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="favicon-preview">
+                    <div class="favicon-display" id="faviconDisplay">GH</div>
+                    
+                    <div class="favicon-sizes">
+                        <div class="size-preview" style="width: 16px; height: 16px;">16</div>
+                        <div class="size-preview" style="width: 32px; height: 32px;">32</div>
+                        <div class="size-preview" style="width: 48px; height: 48px;">48</div>
+                        <div class="size-preview" style="width: 64px; height: 64px;">64</div>
+                    </div>
+                </div>
+                
+                <div class="code-display" id="codeDisplay">
+                    <div class="tooltip" id="tooltip">Kopyalandı!</div>
+                </div>
+                
+                <button class="copy-btn" id="copyBtn">Kodu Kopyala</button>
+                <button class="download-btn" id="downloadBtn">Favicon'u İndir</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const faviconDisplay = document.getElementById('faviconDisplay');
+        const codeDisplay = document.getElementById('codeDisplay');
+        const tooltip = document.getElementById('tooltip');
+        
+        function updateFavicon() {
+            const text = document.getElementById('text').value;
+            const backgroundColor = document.getElementById('backgroundColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const font = document.getElementById('font').value;
+            const shape = document.getElementById('shape').value;
+            
+            // Favicon görünümünü güncelle
+            faviconDisplay.textContent = text;
+            faviconDisplay.style.backgroundColor = backgroundColor;
+            faviconDisplay.style.color = textColor;
+            faviconDisplay.style.fontFamily = font;
+            
+            // Şekil ayarlarını güncelle
+            switch (shape) {
+                case 'square':
+                    faviconDisplay.style.borderRadius = '0';
+                    break;
+                case 'circle':
+                    faviconDisplay.style.borderRadius = '50%';
+                    break;
+                case 'rounded':
+                    faviconDisplay.style.borderRadius = '15%';
+                    break;
+            }
+            
+            // HTML kodunu güncelle
+            const htmlCode = `<link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="icon" type="image/png" href="favicon.png" sizes="48x48">
+<link rel="icon" type="image/png" href="favicon.png" sizes="64x64">`;
+            
+            codeDisplay.textContent = htmlCode;
+        }
+        
+        function copyToClipboard() {
+            const code = codeDisplay.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        }
+        
+        function downloadFavicon() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            
+            // Arka plan
+            ctx.fillStyle = document.getElementById('backgroundColor').value;
+            ctx.fillRect(0, 0, 64, 64);
+            
+            // Metin
+            ctx.fillStyle = document.getElementById('textColor').value;
+            ctx.font = 'bold 32px ' + document.getElementById('font').value;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(document.getElementById('text').value, 32, 32);
+            
+            // PNG olarak indir
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Event listeners
+        document.getElementById('text').addEventListener('input', updateFavicon);
+        document.getElementById('backgroundColor').addEventListener('input', (e) => {
+            document.getElementById('backgroundColorHex').value = e.target.value;
+            updateFavicon();
+        });
+        document.getElementById('textColor').addEventListener('input', (e) => {
+            document.getElementById('textColorHex').value = e.target.value;
+            updateFavicon();
+        });
+        document.getElementById('backgroundColorHex').addEventListener('input', (e) => {
+            document.getElementById('backgroundColor').value = e.target.value;
+            updateFavicon();
+        });
+        document.getElementById('textColorHex').addEventListener('input', (e) => {
+            document.getElementById('textColor').value = e.target.value;
+            updateFavicon();
+        });
+        document.getElementById('font').addEventListener('change', updateFavicon);
+        document.getElementById('shape').addEventListener('change', updateFavicon);
+        document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+        document.getElementById('downloadBtn').addEventListener('click', downloadFavicon);
+        
+        // Sayfa yüklendiğinde favicon'u güncelle
+        updateFavicon();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="E-posta konu satırlarınızın etkinliğini test edin ve optimize edin. Açılış oranlarını artırmak için ipuçları alın.">
+    <meta name="keywords" content="e-posta konu satırı, email subject line, email marketing, email açılış oranı, email optimizasyon">
+    <title>Email Subject Line Tester | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .tester-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tester-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tester-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tester-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .subject-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .subject-input:focus {
+            outline: none;
+            border-color: #32CD32;
+        }
+
+        .character-count {
+            text-align: right;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .character-count.warning {
+            color: #ffc107;
+        }
+
+        .character-count.danger {
+            color: #dc3545;
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .result-value.good {
+            color: #28a745;
+        }
+
+        .result-value.warning {
+            color: #ffc107;
+        }
+
+        .result-value.danger {
+            color: #dc3545;
+        }
+
+        .result-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .suggestions-container {
+            margin-top: 30px;
+        }
+
+        .suggestions-title {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .suggestions-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .suggestion-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .suggestion-item i {
+            color: #32CD32;
+        }
+
+        .suggestion-text {
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .reset-btn {
+            background: #dc3545;
+        }
+
+        .reset-btn:hover {
+            background: #c82333;
+        }
+
+        .email-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .email-tips h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .email-tips ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .email-tips li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .preview-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .preview-title {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .email-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .preview-subject {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .preview-sender {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Email Subject Line Tester</h2>
+            <div class="tester-container">
+                <div class="tester-form">
+                    <div class="tester-info">
+                        <p>Bu araç, e-posta konu satırlarınızın etkinliğini test etmenize ve optimize etmenize yardımcı olur. Açılış oranlarını artırmak için ipuçları alın.</p>
+                    </div>
+
+                    <input type="text" class="subject-input" id="subjectInput" placeholder="E-posta konu satırınızı yazın...">
+                    <div class="character-count" id="characterCount">0/50 karakter</div>
+
+                    <div class="results-container">
+                        <div class="result-card">
+                            <h3>Karakter Sayısı</h3>
+                            <div class="result-value" id="lengthScore">-</div>
+                            <p class="result-description">İdeal: 30-50 karakter</p>
+                        </div>
+                        <div class="result-card">
+                            <h3>Duygu Puanı</h3>
+                            <div class="result-value" id="emotionScore">-</div>
+                            <p class="result-description">Pozitif kelimeler kullanın</p>
+                        </div>
+                        <div class="result-card">
+                            <h3>Spam Skoru</h3>
+                            <div class="result-value" id="spamScore">-</div>
+                            <p class="result-description">Düşük olması tercih edilir</p>
+                        </div>
+                        <div class="result-card">
+                            <h3>Genel Puan</h3>
+                            <div class="result-value" id="overallScore">-</div>
+                            <p class="result-description">100 üzerinden değerlendirme</p>
+                        </div>
+                    </div>
+
+                    <div class="suggestions-container">
+                        <h3 class="suggestions-title">Öneriler</h3>
+                        <ul class="suggestions-list" id="suggestionsList"></ul>
+                    </div>
+
+                    <div class="preview-container">
+                        <h3 class="preview-title">E-posta Önizleme</h3>
+                        <div class="email-preview">
+                            <div class="preview-sender">Gönderen: Sizin Şirketiniz</div>
+                            <div class="preview-subject" id="previewSubject">Konu satırı burada görünecek</div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="testBtn">
+                            <i class="fas fa-check"></i> Test Et
+                        </button>
+                        <button class="action-btn reset-btn" id="resetBtn">
+                            <i class="fas fa-redo"></i> Sıfırla
+                        </button>
+                    </div>
+
+                    <div class="email-tips">
+                        <h3>E-posta Konu Satırı İpuçları:</h3>
+                        <ul>
+                            <li>Kişiselleştirilmiş konu satırları kullanın</li>
+                            <li>Aciliyet ve değer vurgusu yapın</li>
+                            <li>Spam tetikleyici kelimelerden kaçının</li>
+                            <li>Emoji kullanımında dikkatli olun</li>
+                            <li>Test ve optimize etmeyi unutmayın</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elementleri
+        const subjectInput = document.getElementById('subjectInput');
+        const characterCount = document.getElementById('characterCount');
+        const lengthScore = document.getElementById('lengthScore');
+        const emotionScore = document.getElementById('emotionScore');
+        const spamScore = document.getElementById('spamScore');
+        const overallScore = document.getElementById('overallScore');
+        const suggestionsList = document.getElementById('suggestionsList');
+        const previewSubject = document.getElementById('previewSubject');
+        const testBtn = document.getElementById('testBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Spam kelimeleri
+        const spamWords = [
+            'ücretsiz', 'kazan', 'fırsat', 'indirim', 'tıkla', 'acil', 'son gün',
+            'sınırlı', 'garanti', 'para', 'kredi', 'borç', 'ödeme', 'fatura'
+        ];
+
+        // Pozitif kelimeler
+        const positiveWords = [
+            'teşekkür', 'başarı', 'mutlu', 'harika', 'mükemmel', 'özel', 'değerli',
+            'önemli', 'güzel', 'iyi', 'faydalı', 'yardımcı', 'destek', 'çözüm'
+        ];
+
+        // Karakter sayısı güncelleme
+        subjectInput.addEventListener('input', () => {
+            const length = subjectInput.value.length;
+            characterCount.textContent = `${length}/50 karakter`;
+            characterCount.className = 'character-count';
+            
+            if (length > 40) {
+                characterCount.classList.add('warning');
+            }
+            if (length > 50) {
+                characterCount.classList.add('danger');
+            }
+
+            previewSubject.textContent = subjectInput.value || 'Konu satırı burada görünecek';
+        });
+
+        // Test fonksiyonu
+        function testSubjectLine() {
+            const subject = subjectInput.value;
+            const length = subject.length;
+
+            // Uzunluk puanı
+            let lengthScoreValue = 0;
+            if (length >= 30 && length <= 50) {
+                lengthScoreValue = 100;
+            } else if (length > 50) {
+                lengthScoreValue = Math.max(0, 100 - (length - 50) * 2);
+            } else {
+                lengthScoreValue = Math.min(100, length * 3);
+            }
+
+            // Duygu puanı
+            let emotionScoreValue = 0;
+            positiveWords.forEach(word => {
+                if (subject.toLowerCase().includes(word)) {
+                    emotionScoreValue += 20;
+                }
+            });
+            emotionScoreValue = Math.min(100, emotionScoreValue);
+
+            // Spam puanı
+            let spamScoreValue = 100;
+            spamWords.forEach(word => {
+                if (subject.toLowerCase().includes(word)) {
+                    spamScoreValue -= 15;
+                }
+            });
+            spamScoreValue = Math.max(0, spamScoreValue);
+
+            // Genel puan
+            const overallScoreValue = Math.round((lengthScoreValue + emotionScoreValue + spamScoreValue) / 3);
+
+            // Sonuçları güncelle
+            updateScore(lengthScore, lengthScoreValue);
+            updateScore(emotionScore, emotionScoreValue);
+            updateScore(spamScore, spamScoreValue);
+            updateScore(overallScore, overallScoreValue);
+
+            // Önerileri güncelle
+            updateSuggestions(subject, lengthScoreValue, emotionScoreValue, spamScoreValue);
+        }
+
+        // Puan güncelleme
+        function updateScore(element, score) {
+            element.textContent = score;
+            element.className = 'result-value';
+            
+            if (score >= 70) {
+                element.classList.add('good');
+            } else if (score >= 40) {
+                element.classList.add('warning');
+            } else {
+                element.classList.add('danger');
+            }
+        }
+
+        // Önerileri güncelle
+        function updateSuggestions(subject, lengthScore, emotionScore, spamScore) {
+            suggestionsList.innerHTML = '';
+            const suggestions = [];
+
+            if (lengthScore < 70) {
+                if (subject.length < 30) {
+                    suggestions.push('Konu satırınız çok kısa. Daha fazla detay ekleyin.');
+                } else if (subject.length > 50) {
+                    suggestions.push('Konu satırınız çok uzun. Daha kısa ve öz olun.');
+                }
+            }
+
+            if (emotionScore < 40) {
+                suggestions.push('Pozitif kelimeler ekleyerek daha çekici hale getirin.');
+            }
+
+            if (spamScore < 70) {
+                suggestions.push('Spam tetikleyici kelimeleri azaltın veya değiştirin.');
+            }
+
+            if (suggestions.length === 0) {
+                suggestions.push('Konu satırınız iyi görünüyor!');
+            }
+
+            suggestions.forEach(suggestion => {
+                const li = document.createElement('li');
+                li.className = 'suggestion-item';
+                li.innerHTML = `
+                    <i class="fas fa-lightbulb"></i>
+                    <span class="suggestion-text">${suggestion}</span>
+                `;
+                suggestionsList.appendChild(li);
+            });
+        }
+
+        // Olay dinleyicileri
+        testBtn.addEventListener('click', testSubjectLine);
+
+        resetBtn.addEventListener('click', () => {
+            subjectInput.value = '';
+            characterCount.textContent = '0/50 karakter';
+            characterCount.className = 'character-count';
+            lengthScore.textContent = '-';
+            emotionScore.textContent = '-';
+            spamScore.textContent = '-';
+            overallScore.textContent = '-';
+            suggestionsList.innerHTML = '';
+            previewSubject.textContent = 'Konu satırı burada görünecek';
+        });
+    </script>
+</body>
+
+</html>

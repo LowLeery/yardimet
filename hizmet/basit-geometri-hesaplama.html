@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Geometri hesaplama aracı.">
+    <title>Basit Geometri Hesaplama</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Basit Geometri Hesaplama</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <label for="length">Uzunluğu Girin:</label>
+        <input type="number" id="length" placeholder="Uzunluk">
+        <label for="width">Genişliği Girin:</label>
+        <input type="number" id="width" placeholder="Genişlik">
+        <button onclick="calculateArea()">Hesapla</button>
+        <p id="result"></p>
+
+        <!-- SEO dostu açıklama -->
+<div class="seo-container">
+    <p>
+        Basit Geometri Hesaplama aracı sayesinde belirttiğiniz uzunluk ve genişlik bilgileriyle alan hesaplamasını kolayca yapabilirsiniz. 
+        Bu araç, dikdörtgen veya kare gibi geometrik şekillerin alanlarını hızlı bir şekilde hesaplamanızı sağlar.
+    </p>
+    <p>
+        Geometri alanında projelerinizde veya günlük hesaplamalarınızda kullanabileceğiniz bu araç, size zaman kazandıracak ve işlemleri daha verimli hale getirecektir.
+    </p>
+
+    <!-- Kullanım talimatları -->
+    <div class="seo-item">
+        <h3>Nasıl Kullanılır?</h3>
+        <p>Uzunluk ve genişlik değerlerini kutulara girin.</p>
+        <p>Hesapla butonuna tıklayın.</p>
+        <p>Girdiğiniz değerlere göre alan sonucu hesaplanacaktır.</p>
+    </div>
+</div>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+    </footer>
+
+    <script>
+        function calculateArea() {
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const area = length * width;
+            document.getElementById('result').textContent = `Alan: ${area.toFixed(2)} m²`;
+        }
+    </script>
+</body>
+</html>

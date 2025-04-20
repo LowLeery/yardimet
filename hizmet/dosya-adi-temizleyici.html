@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dosya adlarını temizleyin ve düzenleyin. Özel karakterleri kaldırın ve dosya adlarını standartlaştırın.">
+    <meta name="keywords" content="dosya adı temizleyici, file name cleaner, dosya adı düzenleyici, file name sanitizer">
+    <title>Dosya Adı Temizleyici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .cleaner-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .cleaner-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .options-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .option-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: #007bff;
+        }
+
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .suggestions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .suggestions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .suggestions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .suggestions li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .preview-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .preview-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .preview-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .preview-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .preview-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Dosya Adı Temizleyici</h2>
+            <div class="cleaner-container">
+                <div class="cleaner-form">
+                    <div class="input-group">
+                        <label for="inputText">Dosya Adı:</label>
+                        <input type="text" id="inputText" placeholder="Temizlemek istediğiniz dosya adını buraya girin...">
+                    </div>
+
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label for="caseType">Büyük/Küçük Harf:</label>
+                            <select id="caseType">
+                                <option value="lower">Küçük Harf</option>
+                                <option value="upper">Büyük Harf</option>
+                                <option value="title">Başlık Stili</option>
+                                <option value="original">Orijinal</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="separator">Kelime Ayracı:</label>
+                            <select id="separator">
+                                <option value="hyphen">Tire (-)</option>
+                                <option value="underscore">Alt Çizgi (_)</option>
+                                <option value="space">Boşluk</option>
+                                <option value="none">Yok</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="removeAccents" checked>
+                        <label for="removeAccents">Türkçe karakterleri değiştir (ğ->g, ş->s, vb.)</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="removeSpecialChars" checked>
+                        <label for="removeSpecialChars">Özel karakterleri kaldır</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="removeSpaces" checked>
+                        <label for="removeSpaces">Baştaki ve sondaki boşlukları kaldır</label>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="cleanBtn">
+                            <i class="fas fa-magic"></i> Temizle
+                        </button>
+                        <button class="action-btn copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> Kopyala
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="preview-section">
+                        <h3>Önizleme</h3>
+                        <div class="preview-item">
+                            <div class="preview-label">Orijinal Dosya Adı:</div>
+                            <div class="preview-value" id="originalPreview">-</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-label">Temizlenmiş Dosya Adı:</div>
+                            <div class="preview-value" id="cleanedPreview">-</div>
+                        </div>
+                    </div>
+
+                    <div class="suggestions">
+                        <h3>İpuçları:</h3>
+                        <ul>
+                            <li>Dosya adları sadece harf, rakam ve seçilen ayraçları içermelidir</li>
+                            <li>Uzun dosya adları için kelime ayracı kullanmak okunabilirliği artırır</li>
+                            <li>Büyük/küçük harf seçimi dosya sisteminize göre yapılmalıdır</li>
+                            <li>Özel karakterler ve boşluklar web uyumluluğu için kaldırılmalıdır</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const inputText = document.getElementById('inputText');
+        const caseType = document.getElementById('caseType');
+        const separator = document.getElementById('separator');
+        const removeAccents = document.getElementById('removeAccents');
+        const removeSpecialChars = document.getElementById('removeSpecialChars');
+        const removeSpaces = document.getElementById('removeSpaces');
+        const cleanBtn = document.getElementById('cleanBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+        const originalPreview = document.getElementById('originalPreview');
+        const cleanedPreview = document.getElementById('cleanedPreview');
+
+        // Türkçe karakter dönüşüm tablosu
+        const accentMap = {
+            'ğ': 'g', 'Ğ': 'G',
+            'ü': 'u', 'Ü': 'U',
+            'ş': 's', 'Ş': 'S',
+            'ı': 'i', 'İ': 'I',
+            'ö': 'o', 'Ö': 'O',
+            'ç': 'c', 'Ç': 'C'
+        };
+
+        // Dosya adını temizle
+        function cleanFileName() {
+            const fileName = inputText.value;
+            
+            if (!fileName) {
+                showStatus('Lütfen temizlenecek dosya adını girin!', true);
+                return;
+            }
+
+            // Orijinal dosya adını göster
+            originalPreview.textContent = fileName;
+
+            let cleanedName = fileName;
+
+            // Türkçe karakterleri değiştir
+            if (removeAccents.checked) {
+                Object.keys(accentMap).forEach(char => {
+                    cleanedName = cleanedName.replace(new RegExp(char, 'g'), accentMap[char]);
+                });
+            }
+
+            // Özel karakterleri kaldır
+            if (removeSpecialChars.checked) {
+                cleanedName = cleanedName.replace(/[^a-zA-Z0-9\s]/g, '');
+            }
+
+            // Boşlukları ayraçla değiştir
+            const separatorChar = separator.value === 'hyphen' ? '-' : 
+                                separator.value === 'underscore' ? '_' : 
+                                separator.value === 'space' ? ' ' : '';
+            
+            cleanedName = cleanedName.replace(/\s+/g, separatorChar);
+
+            // Baştaki ve sondaki boşlukları kaldır
+            if (removeSpaces.checked) {
+                cleanedName = cleanedName.trim();
+            }
+
+            // Büyük/küçük harf düzenlemesi
+            switch (caseType.value) {
+                case 'lower':
+                    cleanedName = cleanedName.toLowerCase();
+                    break;
+                case 'upper':
+                    cleanedName = cleanedName.toUpperCase();
+                    break;
+                case 'title':
+                    cleanedName = cleanedName.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase());
+                    break;
+            }
+
+            // Temizlenmiş dosya adını göster
+            cleanedPreview.textContent = cleanedName;
+            showStatus('Dosya adı başarıyla temizlendi!', false);
+        }
+
+        // Metni panoya kopyala
+        function copyToClipboard() {
+            if (!cleanedPreview.textContent || cleanedPreview.textContent === '-') {
+                showStatus('Kopyalanacak dosya adı yok!', true);
+                return;
+            }
+
+            navigator.clipboard.writeText(cleanedPreview.textContent)
+                .then(() => showStatus('Dosya adı panoya kopyalandı!', false))
+                .catch(() => showStatus('Dosya adı kopyalanamadı!', true));
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            inputText.value = '';
+            originalPreview.textContent = '-';
+            cleanedPreview.textContent = '-';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        cleanBtn.addEventListener('click', cleanFileName);
+        copyBtn.addEventListener('click', copyToClipboard);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+
+</html>

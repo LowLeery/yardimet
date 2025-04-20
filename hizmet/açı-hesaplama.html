@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Açı hesaplama aracı ile farklı geometrik şekillerin açılarını kolayca hesaplayın. Üçgen, dörtgen ve diğer çokgenlerin açılarını hesaplayın.">
+    <meta name="keywords" content="açı hesaplama, üçgen açıları, dörtgen açıları, çokgen açıları, geometri hesaplama, açı ölçümü">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Açı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33,150,243,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Açı Hesaplama</h2>
+                <form id="angleForm">
+                    <div class="form-group">
+                        <label for="shape">Şekil Seçin</label>
+                        <select id="shape" name="shape" required>
+                            <option value="triangle">Üçgen</option>
+                            <option value="quadrilateral">Dörtgen</option>
+                            <option value="pentagon">Beşgen</option>
+                            <option value="hexagon">Altıgen</option>
+                        </select>
+                    </div>
+                    <div id="inputFields">
+                        <!-- Input fields will be dynamically added here -->
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuç</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="resultValue">0</div>
+                    <div class="result-unit" id="resultUnit">°</div>
+                    <div class="result-description" id="resultDescription">
+                        Açı hesaplaması için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Açı Hesaplama Hakkında</h2>
+            <p>Açı hesaplama aracı, farklı geometrik şekillerin açılarını hesaplamanızı sağlar. Üçgen, dörtgen, beşgen ve altıgen gibi şekillerin açılarını kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Açı Formülleri</h3>
+            <ul>
+                <li><strong>Üçgen:</strong> İç açılar toplamı = 180°</li>
+                <li><strong>Dörtgen:</strong> İç açılar toplamı = 360°</li>
+                <li><strong>Beşgen:</strong> İç açılar toplamı = 540°</li>
+                <li><strong>Altıgen:</strong> İç açılar toplamı = 720°</li>
+            </ul>
+
+            <h3>Açı Türleri</h3>
+            <ul>
+                <li>Dar Açı (0° - 90°)</li>
+                <li>Dik Açı (90°)</li>
+                <li>Geniş Açı (90° - 180°)</li>
+                <li>Doğru Açı (180°)</li>
+                <li>Tümler Açı (Toplamı 90° olan açılar)</li>
+                <li>Bütünler Açı (Toplamı 180° olan açılar)</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Alan Hesaplama</h3>
+                    <p>Geometrik şekillerin alanlarını hesaplayın</p>
+                    <a href="alan-hesaplama.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Çevre Hesaplama</h3>
+                    <p>Geometrik şekillerin çevrelerini hesaplayın</p>
+                    <a href="çevre-hesaplama.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Hacim Hesaplama</h3>
+                    <p>Geometrik cisimlerin hacimlerini hesaplayın</p>
+                    <a href="hacim-hesaplama.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const shapeInputs = {
+            triangle: [
+                { label: '1. Açı (°)', id: 'angle1', type: 'number' },
+                { label: '2. Açı (°)', id: 'angle2', type: 'number' }
+            ],
+            quadrilateral: [
+                { label: '1. Açı (°)', id: 'angle1', type: 'number' },
+                { label: '2. Açı (°)', id: 'angle2', type: 'number' },
+                { label: '3. Açı (°)', id: 'angle3', type: 'number' }
+            ],
+            pentagon: [
+                { label: '1. Açı (°)', id: 'angle1', type: 'number' },
+                { label: '2. Açı (°)', id: 'angle2', type: 'number' },
+                { label: '3. Açı (°)', id: 'angle3', type: 'number' },
+                { label: '4. Açı (°)', id: 'angle4', type: 'number' }
+            ],
+            hexagon: [
+                { label: '1. Açı (°)', id: 'angle1', type: 'number' },
+                { label: '2. Açı (°)', id: 'angle2', type: 'number' },
+                { label: '3. Açı (°)', id: 'angle3', type: 'number' },
+                { label: '4. Açı (°)', id: 'angle4', type: 'number' },
+                { label: '5. Açı (°)', id: 'angle5', type: 'number' }
+            ]
+        };
+
+        document.getElementById('shape').addEventListener('change', function() {
+            const shape = this.value;
+            const inputFields = document.getElementById('inputFields');
+            inputFields.innerHTML = '';
+
+            shapeInputs[shape].forEach(input => {
+                const div = document.createElement('div');
+                div.className = 'form-group';
+                
+                const label = document.createElement('label');
+                label.htmlFor = input.id;
+                label.textContent = input.label;
+                
+                const inputElement = document.createElement('input');
+                inputElement.type = input.type;
+                inputElement.id = input.id;
+                inputElement.name = input.id;
+                inputElement.required = true;
+                inputElement.placeholder = `Örnek: 60`;
+                
+                div.appendChild(label);
+                div.appendChild(inputElement);
+                inputFields.appendChild(div);
+            });
+        });
+
+        document.getElementById('angleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const shape = document.getElementById('shape').value;
+            let totalAngles;
+            let description = '';
+            
+            switch(shape) {
+                case 'triangle':
+                    totalAngles = 180;
+                    break;
+                case 'quadrilateral':
+                    totalAngles = 360;
+                    break;
+                case 'pentagon':
+                    totalAngles = 540;
+                    break;
+                case 'hexagon':
+                    totalAngles = 720;
+                    break;
+            }
+            
+            let sum = 0;
+            let angles = [];
+            
+            shapeInputs[shape].forEach(input => {
+                const angle = parseFloat(document.getElementById(input.id).value);
+                sum += angle;
+                angles.push(angle);
+            });
+            
+            const remainingAngle = totalAngles - sum;
+            description = `Bilinen açılar: ${angles.join('° + ')}° = ${sum}°\nKalan açı: ${remainingAngle}°`;
+            
+            const resultValue = document.getElementById('resultValue');
+            const resultUnit = document.getElementById('resultUnit');
+            const resultDescription = document.getElementById('resultDescription');
+            const resultDiv = document.getElementById('result');
+            
+            resultValue.textContent = remainingAngle.toFixed(2);
+            resultUnit.textContent = '°';
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ağırlık dönüştürme aracı ile farklı ağırlık birimlerini kolayca dönüştürün. Kilogram, gram, pound, ons ve diğer ağırlık birimleri arasında hızlı dönüşüm yapın.">
+    <meta name="keywords" content="ağırlık dönüştürme, kg dönüştürme, gram dönüştürme, pound dönüştürme, ons dönüştürme, ağırlık hesaplama, birim dönüşümü">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Ağırlık Dönüştürme | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33,150,243,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33,150,243,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Ağırlık Dönüştürme</h2>
+                <form id="weightForm">
+                    <div class="form-group">
+                        <label for="weightValue">Ağırlık Değeri</label>
+                        <input type="number" id="weightValue" name="weightValue" placeholder="Örnek: 100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromUnit">Dönüştürülecek Birim</label>
+                        <select id="fromUnit" name="fromUnit" required>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="g">Gram (g)</option>
+                            <option value="mg">Miligram (mg)</option>
+                            <option value="lb">Pound (lb)</option>
+                            <option value="oz">Ons (oz)</option>
+                            <option value="stone">Stone (st)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="toUnit">Hedef Birim</label>
+                        <select id="toUnit" name="toUnit" required>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="g">Gram (g)</option>
+                            <option value="mg">Miligram (mg)</option>
+                            <option value="lb">Pound (lb)</option>
+                            <option value="oz">Ons (oz)</option>
+                            <option value="stone">Stone (st)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuç</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="resultValue">0</div>
+                    <div class="result-unit" id="resultUnit">-</div>
+                    <div class="result-description" id="resultDescription">
+                        Ağırlık dönüşümü için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Ağırlık Dönüştürme Hakkında</h2>
+            <p>Ağırlık dönüştürme aracı, farklı ağırlık birimleri arasında dönüşüm yapmanızı sağlar. Kilogram, gram, pound, ons ve diğer ağırlık birimlerini birbirine dönüştürebilirsiniz.</p>
+            
+            <h3>Ağırlık Birimleri</h3>
+            <ul>
+                <li><strong>Kilogram (kg):</strong> Metrik sistemin temel ağırlık birimi</li>
+                <li><strong>Gram (g):</strong> 1 kilogramın binde biri</li>
+                <li><strong>Miligram (mg):</strong> 1 gramın binde biri</li>
+                <li><strong>Pound (lb):</strong> İngiliz ölçü sisteminde kullanılan birim</li>
+                <li><strong>Ons (oz):</strong> 1 pound'un 1/16'sı</li>
+                <li><strong>Stone (st):</strong> İngiliz ölçü sisteminde kullanılan birim (14 pound)</li>
+            </ul>
+
+            <h3>Dönüşüm Oranları</h3>
+            <ul>
+                <li>1 kilogram = 1000 gram</li>
+                <li>1 gram = 1000 miligram</li>
+                <li>1 pound = 0.45359237 kilogram</li>
+                <li>1 ons = 28.349523125 gram</li>
+                <li>1 stone = 6.35029318 kilogram</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Uzunluk Dönüştürme</h3>
+                    <p>Farklı uzunluk birimlerini dönüştürün</p>
+                    <a href="uzunluk-dönüştürme.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Hacim Dönüştürme</h3>
+                    <p>Farklı hacim birimlerini dönüştürün</p>
+                    <a href="hacim-dönüştürme.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Sıcaklık Dönüştürme</h3>
+                    <p>Farklı sıcaklık birimlerini dönüştürün</p>
+                    <a href="sıcaklık-dönüştürme.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('weightForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const weightValue = parseFloat(document.getElementById('weightValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            
+            // Önce kilograma dönüştür
+            let kilograms;
+            switch(fromUnit) {
+                case 'kg':
+                    kilograms = weightValue;
+                    break;
+                case 'g':
+                    kilograms = weightValue / 1000;
+                    break;
+                case 'mg':
+                    kilograms = weightValue / 1000000;
+                    break;
+                case 'lb':
+                    kilograms = weightValue * 0.45359237;
+                    break;
+                case 'oz':
+                    kilograms = weightValue * 0.028349523125;
+                    break;
+                case 'stone':
+                    kilograms = weightValue * 6.35029318;
+                    break;
+            }
+            
+            // Sonra hedef birime dönüştür
+            let result;
+            let unitSymbol;
+            switch(toUnit) {
+                case 'kg':
+                    result = kilograms;
+                    unitSymbol = 'kg';
+                    break;
+                case 'g':
+                    result = kilograms * 1000;
+                    unitSymbol = 'g';
+                    break;
+                case 'mg':
+                    result = kilograms * 1000000;
+                    unitSymbol = 'mg';
+                    break;
+                case 'lb':
+                    result = kilograms / 0.45359237;
+                    unitSymbol = 'lb';
+                    break;
+                case 'oz':
+                    result = kilograms / 0.028349523125;
+                    unitSymbol = 'oz';
+                    break;
+                case 'stone':
+                    result = kilograms / 6.35029318;
+                    unitSymbol = 'st';
+                    break;
+            }
+            
+            const resultValue = document.getElementById('resultValue');
+            const resultUnit = document.getElementById('resultUnit');
+            const resultDescription = document.getElementById('resultDescription');
+            const resultDiv = document.getElementById('result');
+            
+            resultValue.textContent = result.toFixed(4);
+            resultUnit.textContent = unitSymbol;
+            resultDescription.textContent = `${weightValue} ${getUnitSymbol(fromUnit)} = ${result.toFixed(4)} ${unitSymbol}`;
+            resultDiv.style.display = 'block';
+        });
+        
+        function getUnitSymbol(unit) {
+            switch(unit) {
+                case 'kg': return 'kg';
+                case 'g': return 'g';
+                case 'mg': return 'mg';
+                case 'lb': return 'lb';
+                case 'oz': return 'oz';
+                case 'stone': return 'st';
+                default: return '';
+            }
+        }
+    </script>
+</body>
+</html> 

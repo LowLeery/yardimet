@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Film ve dizi önerileri alın - Kişisel tercihlerinize göre film ve dizi önerileri">
+    <meta name="keywords" content="film önerisi, dizi önerisi, film tavsiyesi, dizi tavsiyesi, film önerici">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <title>Film/Dizi Önerici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .recommendation-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .recommendation-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-card p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .recommendation-card .rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+        }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Film/Dizi Önerici</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <div class="input-group">
+                    <label for="type">Tür Seçin</label>
+                    <select id="type">
+                        <option value="all">Tümü</option>
+                        <option value="action">Aksiyon</option>
+                        <option value="comedy">Komedi</option>
+                        <option value="drama">Drama</option>
+                        <option value="sci-fi">Bilim Kurgu</option>
+                        <option value="horror">Korku</option>
+                        <option value="romance">Romantik</option>
+                        <option value="thriller">Gerilim</option>
+                        <option value="documentary">Belgesel</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="format">Format Seçin</label>
+                    <select id="format">
+                        <option value="all">Tümü</option>
+                        <option value="movie">Film</option>
+                        <option value="series">Dizi</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="year">Yıl Aralığı</label>
+                    <select id="year">
+                        <option value="all">Tümü</option>
+                        <option value="2020s">2020'ler</option>
+                        <option value="2010s">2010'lar</option>
+                        <option value="2000s">2000'ler</option>
+                        <option value="1990s">1990'lar</option>
+                        <option value="1980s">1980'ler</option>
+                    </select>
+                </div>
+                
+                <button class="calculate-btn" id="calculateBtn">Önerileri Göster</button>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <h2>Size Özel Öneriler</h2>
+                <div id="recommendations"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const typeSelect = document.getElementById('type');
+        const formatSelect = document.getElementById('format');
+        const yearSelect = document.getElementById('year');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultSection = document.getElementById('resultSection');
+        const recommendationsDiv = document.getElementById('recommendations');
+
+        const recommendations = {
+            movie: {
+                action: [
+                    { title: 'John Wick', year: 2014, rating: 4.5, description: 'Emekli bir suikastçının intikam hikayesi.' },
+                    { title: 'Mad Max: Fury Road', year: 2015, rating: 4.7, description: 'Post-apokaliptik bir dünyada hayatta kalma mücadelesi.' },
+                    { title: 'The Dark Knight', year: 2008, rating: 4.9, description: 'Joker ile Batman arasındaki efsanevi mücadele.' }
+                ],
+                comedy: [
+                    { title: 'The Hangover', year: 2009, rating: 4.2, description: 'Las Vegas\'ta unutulmaz bir düğün öncesi partisi.' },
+                    { title: 'Superbad', year: 2007, rating: 4.0, description: 'Lise son sınıf öğrencilerinin komik maceraları.' },
+                    { title: 'Bridesmaids', year: 2011, rating: 4.1, description: 'Bir düğün öncesi yaşanan komik olaylar.' }
+                ],
+                drama: [
+                    { title: 'The Shawshank Redemption', year: 1994, rating: 4.9, description: 'Hapishanede geçen umut dolu bir hikaye.' },
+                    { title: 'Forrest Gump', year: 1994, rating: 4.8, description: 'Amerikan tarihinin önemli olaylarına tanıklık eden bir adamın hikayesi.' },
+                    { title: 'The Godfather', year: 1972, rating: 4.9, description: 'Mafya dünyasının efsanevi hikayesi.' }
+                ],
+                'sci-fi': [
+                    { title: 'Inception', year: 2010, rating: 4.8, description: 'Rüyalar içinde geçen akıl almaz bir macera.' },
+                    { title: 'Interstellar', year: 2014, rating: 4.7, description: 'Uzayda yeni bir yaşam alanı arayışı.' },
+                    { title: 'The Matrix', year: 1999, rating: 4.6, description: 'Gerçeklik ve sanal dünya arasındaki çizgiyi bulanıklaştıran bir hikaye.' }
+                ],
+                horror: [
+                    { title: 'The Conjuring', year: 2013, rating: 4.3, description: 'Gerçek bir paranormal olayın hikayesi.' },
+                    { title: 'Get Out', year: 2017, rating: 4.4, description: 'Psikolojik gerilim dolu bir korku filmi.' },
+                    { title: 'Hereditary', year: 2018, rating: 4.5, description: 'Aile içinde geçen korkunç olaylar.' }
+                ],
+                romance: [
+                    { title: 'The Notebook', year: 2004, rating: 4.3, description: 'Unutulmaz bir aşk hikayesi.' },
+                    { title: 'La La Land', year: 2016, rating: 4.4, description: 'Hollywood\'da geçen müzikal bir aşk hikayesi.' },
+                    { title: 'Before Sunrise', year: 1995, rating: 4.5, description: 'Viyana\'da geçen bir gecelik aşk hikayesi.' }
+                ],
+                thriller: [
+                    { title: 'Gone Girl', year: 2014, rating: 4.4, description: 'Kayıp bir kadının gizemli hikayesi.' },
+                    { title: 'The Silence of the Lambs', year: 1991, rating: 4.7, description: 'Seri katil Hannibal Lecter\'ın hikayesi.' },
+                    { title: 'Se7en', year: 1995, rating: 4.6, description: 'Yedi ölümcül günah üzerine kurulu bir gerilim.' }
+                ],
+                documentary: [
+                    { title: 'Free Solo', year: 2018, rating: 4.6, description: 'Alex Honnold\'un El Capitan tırmanışı.' },
+                    { title: 'The Social Dilemma', year: 2020, rating: 4.3, description: 'Sosyal medyanın karanlık yüzü.' },
+                    { title: 'Blackfish', year: 2013, rating: 4.4, description: 'Deniz parklarındaki orkaların hikayesi.' }
+                ]
+            },
+            series: {
+                action: [
+                    { title: 'Breaking Bad', year: 2008, rating: 4.9, description: 'Kanser hastası bir kimya öğretmeninin metamfetamin üreticisi olma hikayesi.' },
+                    { title: 'Game of Thrones', year: 2011, rating: 4.8, description: 'Westeros\'ta geçen efsanevi bir fantastik dizi.' },
+                    { title: 'The Boys', year: 2019, rating: 4.5, description: 'Süper kahramanların karanlık yüzünü anlatan bir dizi.' }
+                ],
+                comedy: [
+                    { title: 'Friends', year: 1994, rating: 4.8, description: 'New York\'ta yaşayan altı arkadaşın hikayesi.' },
+                    { title: 'The Office', year: 2005, rating: 4.7, description: 'Bir ofis çalışanlarının günlük hayatı.' },
+                    { title: 'Brooklyn Nine-Nine', year: 2013, rating: 4.6, description: 'Brooklyn\'deki bir polis karakolunda geçen komik olaylar.' }
+                ],
+                drama: [
+                    { title: 'The Crown', year: 2016, rating: 4.7, description: 'İngiliz kraliyet ailesinin hikayesi.' },
+                    { title: 'Better Call Saul', year: 2015, rating: 4.8, description: 'Breaking Bad\'in öncesini anlatan dizi.' },
+                    { title: 'The Wire', year: 2002, rating: 4.9, description: 'Baltimore\'da geçen suç ve polis hikayesi.' }
+                ],
+                'sci-fi': [
+                    { title: 'Stranger Things', year: 2016, rating: 4.6, description: '1980\'lerde geçen doğaüstü olaylar.' },
+                    { title: 'Black Mirror', year: 2011, rating: 4.7, description: 'Teknoloji ve toplum üzerine distopik hikayeler.' },
+                    { title: 'The Expanse', year: 2015, rating: 4.5, description: 'Uzayda geçen bir bilim kurgu serisi.' }
+                ],
+                horror: [
+                    { title: 'The Haunting of Hill House', year: 2018, rating: 4.4, description: 'Hayaletli bir evde geçen korku hikayesi.' },
+                    { title: 'American Horror Story', year: 2011, rating: 4.3, description: 'Her sezon farklı bir korku hikayesi.' },
+                    { title: 'The Walking Dead', year: 2010, rating: 4.2, description: 'Zombi kıyametinde hayatta kalma mücadelesi.' }
+                ],
+                romance: [
+                    { title: 'Outlander', year: 2014, rating: 4.5, description: 'Zamanda yolculuk yapan bir hemşirenin aşk hikayesi.' },
+                    { title: 'Normal People', year: 2020, rating: 4.4, description: 'İki gencin karmaşık ilişkisi.' },
+                    { title: 'Bridgerton', year: 2020, rating: 4.3, description: 'Regency döneminde geçen bir aşk hikayesi.' }
+                ],
+                thriller: [
+                    { title: 'Mindhunter', year: 2017, rating: 4.6, description: 'FBI\'ın seri katilleri anlama çabası.' },
+                    { title: 'True Detective', year: 2014, rating: 4.7, description: 'Her sezon farklı bir cinayet vakası.' },
+                    { title: 'Ozark', year: 2017, rating: 4.5, description: 'Para aklama işine bulaşan bir ailenin hikayesi.' }
+                ],
+                documentary: [
+                    { title: 'Making a Murderer', year: 2015, rating: 4.5, description: 'Bir cinayet davasının detaylı incelemesi.' },
+                    { title: 'The Last Dance', year: 2020, rating: 4.8, description: 'Michael Jordan ve Chicago Bulls\'un hikayesi.' },
+                    { title: 'Our Planet', year: 2019, rating: 4.7, description: 'Dünyamızın doğal güzelliklerini anlatan belgesel.' }
+                ]
+            }
+        };
+
+        function getRecommendations() {
+            const type = typeSelect.value;
+            const format = formatSelect.value;
+            const year = yearSelect.value;
+            
+            let filteredRecommendations = [];
+            
+            if (format === 'all') {
+                Object.values(recommendations.movie).forEach(category => {
+                    filteredRecommendations = filteredRecommendations.concat(category);
+                });
+                Object.values(recommendations.series).forEach(category => {
+                    filteredRecommendations = filteredRecommendations.concat(category);
+                });
+            } else {
+                if (type === 'all') {
+                    Object.values(recommendations[format]).forEach(category => {
+                        filteredRecommendations = filteredRecommendations.concat(category);
+                    });
+                } else {
+                    filteredRecommendations = recommendations[format][type];
+                }
+            }
+            
+            if (year !== 'all') {
+                const yearRange = parseInt(year);
+                filteredRecommendations = filteredRecommendations.filter(item => {
+                    const itemYear = parseInt(item.year);
+                    return itemYear >= yearRange && itemYear < yearRange + 10;
+                });
+            }
+            
+            // Karıştır ve 3 öneri seç
+            filteredRecommendations = filteredRecommendations
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+            
+            return filteredRecommendations;
+        }
+
+        function displayRecommendations() {
+            const recommendations = getRecommendations();
+            recommendationsDiv.innerHTML = '';
+            
+            recommendations.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'recommendation-card';
+                card.innerHTML = `
+                    <h3>${item.title} (${item.year})</h3>
+                    <p>${item.description}</p>
+                    <div class="rating">
+                        ${'★'.repeat(Math.floor(item.rating))}${'☆'.repeat(5 - Math.floor(item.rating))}
+                        (${item.rating}/5)
+                    </div>
+                `;
+                recommendationsDiv.appendChild(card);
+            });
+            
+            resultSection.classList.add('active');
+        }
+
+        calculateBtn.addEventListener('click', displayRecommendations);
+    </script>
+</body>
+
+</html>

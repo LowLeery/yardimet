@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lise ders puanı hesaplama aracı - Lise ders notlarınızı kolayca hesaplayın">
+    <meta name="keywords" content="lise, ders puanı, not hesaplama, eğitim, sınav">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Lise Ders Puanı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .result-section h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Lise Ders Puanı Hesaplama</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Lise Ders Puanı Hesaplama</h2>
+                <div class="input-group">
+                    <label for="yazili1">1. Yazılı Notu (0-100)</label>
+                    <input type="number" id="yazili1" min="0" max="100" placeholder="1. yazılı notunuzu girin">
+                </div>
+                <div class="input-group">
+                    <label for="yazili2">2. Yazılı Notu (0-100)</label>
+                    <input type="number" id="yazili2" min="0" max="100" placeholder="2. yazılı notunuzu girin">
+                </div>
+                <div class="input-group">
+                    <label for="sozlu1">1. Sözlü Notu (0-100)</label>
+                    <input type="number" id="sozlu1" min="0" max="100" placeholder="1. sözlü notunuzu girin">
+                </div>
+                <div class="input-group">
+                    <label for="sozlu2">2. Sözlü Notu (0-100)</label>
+                    <input type="number" id="sozlu2" min="0" max="100" placeholder="2. sözlü notunuzu girin">
+                </div>
+                <button type="button" class="btn" id="hesaplaBtn">Hesapla</button>
+            </div>
+            
+            <div class="result-section">
+                <h3>Sonuç</h3>
+                <div id="sonuc"></div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Lise Ders Puanı Hakkında</h2>
+            <p>Lise ders puanı, öğrencinin bir dönem boyunca aldığı yazılı ve sözlü notlarının ortalamasıdır.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Nasıl Hesaplanır?</h3>
+                    <p>Dönem Puanı = (Yazılı1 + Yazılı2) × 0.4 + (Sözlü1 + Sözlü2) × 0.2</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Önemli Notlar</h3>
+                    <ul>
+                        <li>Yazılı notları %40 ağırlığa sahiptir</li>
+                        <li>Sözlü notları %20 ağırlığa sahiptir</li>
+                        <li>Notlar 0-100 arasında olmalıdır</li>
+                        <li>Dönem puanı 50'den düşükse dersten kalınır</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const yazili1 = document.getElementById('yazili1');
+        const yazili2 = document.getElementById('yazili2');
+        const sozlu1 = document.getElementById('sozlu1');
+        const sozlu2 = document.getElementById('sozlu2');
+        const hesaplaBtn = document.getElementById('hesaplaBtn');
+        const sonuc = document.getElementById('sonuc');
+
+        function hesapla() {
+            const y1 = parseFloat(yazili1.value);
+            const y2 = parseFloat(yazili2.value);
+            const s1 = parseFloat(sozlu1.value);
+            const s2 = parseFloat(sozlu2.value);
+
+            if (isNaN(y1) || isNaN(y2) || isNaN(s1) || isNaN(s2)) {
+                sonuc.innerHTML = '<p class="error">Lütfen tüm alanları doldurun</p>';
+                return;
+            }
+
+            if (y1 < 0 || y1 > 100 || y2 < 0 || y2 > 100 || s1 < 0 || s1 > 100 || s2 < 0 || s2 > 100) {
+                sonuc.innerHTML = '<p class="error">Notlar 0-100 arasında olmalıdır</p>';
+                return;
+            }
+
+            const dönemPuani = ((y1 + y2) * 0.4) + ((s1 + s2) * 0.2);
+            let durum = dönemPuani >= 50 ? 'Geçti' : 'Kaldı';
+
+            sonuc.innerHTML = `
+                <p><strong>Dönem Puanı:</strong> ${dönemPuani.toFixed(2)}</p>
+                <p><strong>Durum:</strong> ${durum}</p>
+                <p><strong>Yazılı Notları Ağırlığı:</strong> %40</p>
+                <p><strong>Sözlü Notları Ağırlığı:</strong> %20</p>
+            `;
+        }
+
+        hesaplaBtn.addEventListener('click', hesapla);
+    </script>
+</body>
+
+</html>

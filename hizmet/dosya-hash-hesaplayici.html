@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dosyalarınızın hash değerlerini hesaplayın. MD5, SHA-1 ve SHA-256 algoritmaları desteklenir.">
+    <meta name="keywords" content="dosya hash hesaplama, md5, sha1, sha256, hash değeri">
+    <title>Dosya Hash Hesaplayıcı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        .hash-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hash-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .upload-section {
+            margin: 20px 0;
+            padding: 30px;
+            border: 2px dashed #32CD32;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .upload-section:hover {
+            background: #f8f9fa;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #32CD32;
+            margin-bottom: 10px;
+        }
+
+        .algorithm-select {
+            margin: 20px 0;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .result-section {
+            margin-top: 30px;
+        }
+
+        .hash-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background: #28a745;
+        }
+
+        .copy-btn i {
+            font-size: 1.1rem;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #32CD32;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Dosya Hash Hesaplayıcı</h2>
+            <div class="hash-container">
+                <div class="hash-form">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p>Dosyayı sürükleyip bırakın veya tıklayarak seçin</p>
+                        <input type="file" id="fileInput" style="display: none;">
+                    </div>
+
+                    <select class="algorithm-select" id="algorithmSelect">
+                        <option value="MD5">MD5</option>
+                        <option value="SHA1">SHA-1</option>
+                        <option value="SHA256">SHA-256</option>
+                    </select>
+
+                    <div class="status" id="status"></div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+
+                    <div class="result-section">
+                        <div class="hash-result" id="hashResult"></div>
+                        <button class="copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> Hash Değerini Kopyala
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+        const algorithmSelect = document.getElementById('algorithmSelect');
+        const hashResult = document.getElementById('hashResult');
+        const copyBtn = document.getElementById('copyBtn');
+        const status = document.getElementById('status');
+        const progress = document.getElementById('progress');
+
+        // Dosya yükleme işlemleri
+        uploadSection.addEventListener('click', () => fileInput.click());
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#28a745';
+        });
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.style.borderColor = '#32CD32';
+        });
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#32CD32';
+            handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        // Dosya işleme
+        function handleFile(file) {
+            if (!file) {
+                showStatus('Lütfen bir dosya seçin!', true);
+                return;
+            }
+
+            status.textContent = 'Dosya işleniyor...';
+            progress.style.width = '30%';
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const fileData = e.target.result;
+                    calculateHash(fileData);
+                } catch (err) {
+                    console.error('Dosya işleme hatası:', err);
+                    showStatus('Dosya işlenirken bir hata oluştu!', true);
+                    progress.style.width = '0%';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Hash hesaplama
+        function calculateHash(fileData) {
+            const algorithm = algorithmSelect.value;
+            let hash;
+
+            switch (algorithm) {
+                case 'MD5':
+                    hash = CryptoJS.MD5(CryptoJS.lib.WordArray.create(fileData)).toString();
+                    break;
+                case 'SHA1':
+                    hash = CryptoJS.SHA1(CryptoJS.lib.WordArray.create(fileData)).toString();
+                    break;
+                case 'SHA256':
+                    hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(fileData)).toString();
+                    break;
+            }
+
+            hashResult.textContent = hash;
+            progress.style.width = '100%';
+            showStatus('Hash değeri hesaplandı!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Hash değerini kopyala
+        copyBtn.addEventListener('click', () => {
+            const hashText = hashResult.textContent;
+            if (hashText) {
+                navigator.clipboard.writeText(hashText)
+                    .then(() => showStatus('Hash değeri kopyalandı!', false))
+                    .catch(() => showStatus('Kopyalama başarısız!', true));
+            }
+        });
+
+        // Algoritma değişikliğinde yeniden hesapla
+        algorithmSelect.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                handleFile(fileInput.files[0]);
+            }
+        });
+    </script>
+</body>
+
+</html>

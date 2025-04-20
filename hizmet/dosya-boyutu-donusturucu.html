@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dosya boyutu dönüştürücü - Byte, KB, MB, GB ve TB arasında kolayca dönüşüm yapın">
+    <meta name="keywords" content="dosya boyutu, byte, kilobyte, megabyte, gigabyte, terabyte">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Dosya Boyutu Dönüştürücü | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .result-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Dosya Boyutu Dönüştürücü</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Dönüştürme</h2>
+                <form id="sizeForm">
+                    <div class="input-group">
+                        <label for="value">Değer</label>
+                        <input type="number" id="value" step="any" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="fromUnit">Kaynak Birim</label>
+                        <select id="fromUnit" required>
+                            <option value="byte">Byte (B)</option>
+                            <option value="kilobyte">Kilobyte (KB)</option>
+                            <option value="megabyte">Megabyte (MB)</option>
+                            <option value="gigabyte">Gigabyte (GB)</option>
+                            <option value="terabyte">Terabyte (TB)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">Dönüştür</button>
+                </form>
+            </div>
+            
+            <div class="result-section">
+                <h2>Dönüşüm Sonuçları</h2>
+                <div class="result-card">
+                    <h3>Byte (B)</h3>
+                    <p id="byteResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>Kilobyte (KB)</h3>
+                    <p id="kilobyteResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>Megabyte (MB)</h3>
+                    <p id="megabyteResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>Gigabyte (GB)</h3>
+                    <p id="gigabyteResult">-</p>
+                </div>
+                <div class="result-card">
+                    <h3>Terabyte (TB)</h3>
+                    <p id="terabyteResult">-</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Dosya Boyutu Dönüştürme Hakkında</h2>
+            <p>Bu araç, farklı dosya boyutu birimleri arasında kolayca dönüşüm yapmanızı sağlar. Byte, Kilobyte, Megabyte, Gigabyte ve Terabyte birimlerini birbirine dönüştürebilirsiniz.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Dosya Boyutu Birimleri</h3>
+                    <ul>
+                        <li>1 Byte (B) = 8 bit</li>
+                        <li>1 Kilobyte (KB) = 1024 Byte</li>
+                        <li>1 Megabyte (MB) = 1024 Kilobyte</li>
+                        <li>1 Gigabyte (GB) = 1024 Megabyte</li>
+                        <li>1 Terabyte (TB) = 1024 Gigabyte</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Kullanım Alanları</h3>
+                    <ul>
+                        <li>Dosya boyutu hesaplama</li>
+                        <li>Depolama alanı planlama</li>
+                        <li>Veri transferi</li>
+                        <li>Bant genişliği hesaplama</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('sizeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const value = parseFloat(document.getElementById('value').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            
+            // Önce byte'a çevir
+            let bytes;
+            switch(fromUnit) {
+                case 'byte':
+                    bytes = value;
+                    break;
+                case 'kilobyte':
+                    bytes = value * 1024;
+                    break;
+                case 'megabyte':
+                    bytes = value * 1024 * 1024;
+                    break;
+                case 'gigabyte':
+                    bytes = value * 1024 * 1024 * 1024;
+                    break;
+                case 'terabyte':
+                    bytes = value * 1024 * 1024 * 1024 * 1024;
+                    break;
+            }
+            
+            // Sonuçları göster
+            document.getElementById('byteResult').textContent = formatSize(bytes, 'byte');
+            document.getElementById('kilobyteResult').textContent = formatSize(bytes / 1024, 'kilobyte');
+            document.getElementById('megabyteResult').textContent = formatSize(bytes / (1024 * 1024), 'megabyte');
+            document.getElementById('gigabyteResult').textContent = formatSize(bytes / (1024 * 1024 * 1024), 'gigabyte');
+            document.getElementById('terabyteResult').textContent = formatSize(bytes / (1024 * 1024 * 1024 * 1024), 'terabyte');
+        });
+        
+        function formatSize(size, unit) {
+            const units = {
+                'byte': 'B',
+                'kilobyte': 'KB',
+                'megabyte': 'MB',
+                'gigabyte': 'GB',
+                'terabyte': 'TB'
+            };
+            
+            return size.toFixed(2) + ' ' + units[unit];
+        }
+    </script>
+</body>
+
+</html>

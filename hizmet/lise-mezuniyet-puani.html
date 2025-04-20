@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lise mezuniyet puanı hesaplama aracı - Lise mezuniyet puanınızı kolayca hesaplayın">
+    <meta name="keywords" content="lise, mezuniyet puanı, diploma notu, eğitim, sınav">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Lise Mezuniyet Puanı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .result-section h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <h1>Lise Mezuniyet Puanı Hesaplama</h1>
+        
+        <div class="calculator-grid">
+            <div class="calculator-section">
+                <h2>Lise Mezuniyet Puanı Hesaplama</h2>
+                <div class="input-group">
+                    <label for="diplomaNotu">Diploma Notu (0-100)</label>
+                    <input type="number" id="diplomaNotu" min="0" max="100" placeholder="Diploma notunuzu girin">
+                </div>
+                <div class="input-group">
+                    <label for="yilSonuNotu">Yıl Sonu Notu (0-100)</label>
+                    <input type="number" id="yilSonuNotu" min="0" max="100" placeholder="Yıl sonu notunuzu girin">
+                </div>
+                <button type="button" class="btn" id="hesaplaBtn">Hesapla</button>
+            </div>
+            
+            <div class="result-section">
+                <h3>Sonuç</h3>
+                <div id="sonuc"></div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Lise Mezuniyet Puanı Hakkında</h2>
+            <p>Lise mezuniyet puanı, öğrencinin lise eğitimi boyunca aldığı notların ortalamasıdır ve üniversiteye girişte önemli bir rol oynar.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Nasıl Hesaplanır?</h3>
+                    <p>Mezuniyet Puanı = (Diploma Notu × 0.6) + (Yıl Sonu Notu × 0.4)</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Önemli Notlar</h3>
+                    <ul>
+                        <li>Diploma notu ve yıl sonu notu 0-100 arasında olmalıdır</li>
+                        <li>Mezuniyet puanı üniversite sınavında ek puan olarak kullanılır</li>
+                        <li>Puan hesaplaması 100 üzerinden yapılır</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const diplomaNotu = document.getElementById('diplomaNotu');
+        const yilSonuNotu = document.getElementById('yilSonuNotu');
+        const hesaplaBtn = document.getElementById('hesaplaBtn');
+        const sonuc = document.getElementById('sonuc');
+
+        function hesapla() {
+            const diploma = parseFloat(diplomaNotu.value);
+            const yilSonu = parseFloat(yilSonuNotu.value);
+
+            if (isNaN(diploma) || isNaN(yilSonu)) {
+                sonuc.innerHTML = '<p class="error">Lütfen tüm alanları doldurun</p>';
+                return;
+            }
+
+            if (diploma < 0 || diploma > 100 || yilSonu < 0 || yilSonu > 100) {
+                sonuc.innerHTML = '<p class="error">Notlar 0-100 arasında olmalıdır</p>';
+                return;
+            }
+
+            const mezuniyetPuani = (diploma * 0.6) + (yilSonu * 0.4);
+
+            sonuc.innerHTML = `
+                <p><strong>Mezuniyet Puanı:</strong> ${mezuniyetPuani.toFixed(2)}</p>
+                <p><strong>Diploma Notu Ağırlığı:</strong> %60</p>
+                <p><strong>Yıl Sonu Notu Ağırlığı:</strong> %40</p>
+            `;
+        }
+
+        hesaplaBtn.addEventListener('click', hesapla);
+    </script>
+</body>
+
+</html>

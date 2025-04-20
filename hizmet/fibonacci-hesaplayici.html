@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fibonacci Hesaplayıcı">
+    <title>Fibonacci Hesaplayıcı</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Fibonacci Hesaplayıcı</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        
+
+
+        
+        <h2>Fibonacci Dizisi Üret</h2>
+        <input type="number" id="count" placeholder="Kaç terim üretilecek?">
+        <button onclick="generateFibonacci()">Hesapla</button>
+        <pre id="result"></pre>
+
+        
+                <!-- SEO dostu açıklama -->
+        <div class="seo-container">
+        <p>
+            Fibonacci Hesaplayıcı aracı sayesinde belirttiğiniz terim sayısına göre Fibonacci dizisini hızlıca oluşturabilirsiniz.
+            Fibonacci dizisi, matematikte ve bilgisayar bilimlerinde oldukça sık kullanılan bir sayı dizisidir. Her terim,
+            kendisinden önceki iki terimin toplamı ile elde edilir. Finansal analizlerden algoritmalara kadar birçok alanda kullanılmaktadır.
+        </p>
+        <p>
+            Bu araç sayesinde anında Fibonacci dizisini görebilir ve matematik projelerinizde kullanabilirsiniz.
+        </p>
+
+        <!-- Kullanım talimatları -->
+            <div class="seo-item">
+        <h3>Nasıl Kullanılır?</h3>
+        <p>Kaç terim üretmek istediğinizi kutuya yazın.</p>
+        <p>Hesapla butonunu kullanın.</p>
+        <p>Girdiğiniz sayı kadarınca fibonacci tekrarı gösterir.</p>
+        </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="/hakkinda.html">Hakkında</a> | <a href="/iletisim.html">İletişim</a> | <a href="/kvkk.html">KVKK</a></p>
+    </footer>
+
+    <script>
+        function generateFibonacci() {
+            const n = parseInt(document.getElementById('count').value);
+            let fib = [0, 1];
+            for (let i = 2; i < n; i++) {
+                fib[i] = fib[i - 1] + fib[i - 2];
+            }
+            document.getElementById('result').innerText = fib.slice(0, n).join(', ');
+        }
+    </script>
+</body>
+
+</html>

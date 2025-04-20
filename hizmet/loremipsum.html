@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lorem Ipsum üretici - Sahte metin oluşturun">
+    <meta name="keywords" content="lorem ipsum, sahte metin, metin üretici, placeholder text">
+    <title>Lorem Ipsum Üretici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .lorem-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .controls-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .output-section {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-height: 400px;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .output-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .copy-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        @media (max-width: 768px) {
+            .lorem-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-section {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>Lorem Ipsum Üretici</h1>
+        
+        <div class="lorem-container">
+            <div class="controls-section">
+                <div class="input-group">
+                    <label for="amount">Miktar</label>
+                    <input type="number" id="amount" min="1" max="100" value="5">
+                </div>
+                
+                <div class="input-group">
+                    <label for="unit">Birim</label>
+                    <select id="unit">
+                        <option value="paragraphs">Paragraf</option>
+                        <option value="sentences">Cümle</option>
+                        <option value="words">Kelime</option>
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="startWithLorem" checked>
+                    <label for="startWithLorem">"Lorem ipsum dolor sit amet" ile başla</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="addPeriods" checked>
+                    <label for="addPeriods">Noktalama işaretleri ekle</label>
+                </div>
+                
+                <button class="btn" id="generateBtn">Oluştur</button>
+            </div>
+            
+            <div class="output-section">
+                <div id="output" class="output-text"></div>
+                <button class="copy-btn" id="copyBtn">Kopyala</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        const words = loremText.split(' ');
+        const sentences = loremText.split('. ');
+        
+        function generateLoremIpsum() {
+            const amount = parseInt(document.getElementById('amount').value);
+            const unit = document.getElementById('unit').value;
+            const startWithLorem = document.getElementById('startWithLorem').checked;
+            const addPeriods = document.getElementById('addPeriods').checked;
+            
+            let result = '';
+            
+            if (unit === 'paragraphs') {
+                for (let i = 0; i < amount; i++) {
+                    if (startWithLorem && i === 0) {
+                        result += loremText;
+                    } else {
+                        result += generateRandomParagraph();
+                    }
+                    if (i < amount - 1) result += '\n\n';
+                }
+            } else if (unit === 'sentences') {
+                for (let i = 0; i < amount; i++) {
+                    if (startWithLorem && i === 0) {
+                        result += sentences[0] + '.';
+                    } else {
+                        result += generateRandomSentence();
+                    }
+                    if (i < amount - 1) result += ' ';
+                }
+            } else if (unit === 'words') {
+                for (let i = 0; i < amount; i++) {
+                    if (startWithLorem && i === 0) {
+                        result += 'Lorem ipsum dolor sit amet';
+                        i += 4;
+                    } else {
+                        result += words[Math.floor(Math.random() * words.length)];
+                    }
+                    if (i < amount - 1) result += ' ';
+                }
+                if (addPeriods) result += '.';
+            }
+            
+            document.getElementById('output').textContent = result;
+        }
+        
+        function generateRandomParagraph() {
+            const sentenceCount = Math.floor(Math.random() * 3) + 3;
+            let paragraph = '';
+            
+            for (let i = 0; i < sentenceCount; i++) {
+                paragraph += generateRandomSentence();
+                if (i < sentenceCount - 1) paragraph += ' ';
+            }
+            
+            return paragraph;
+        }
+        
+        function generateRandomSentence() {
+            const wordCount = Math.floor(Math.random() * 10) + 5;
+            let sentence = '';
+            
+            for (let i = 0; i < wordCount; i++) {
+                sentence += words[Math.floor(Math.random() * words.length)];
+                if (i < wordCount - 1) sentence += ' ';
+            }
+            
+            if (document.getElementById('addPeriods').checked) {
+                sentence += '.';
+            }
+            
+            return sentence;
+        }
+        
+        function copyToClipboard() {
+            const text = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Metin panoya kopyalandı!');
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        }
+        
+        // Event listeners
+        document.getElementById('generateBtn').addEventListener('click', generateLoremIpsum);
+        document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+        
+        // Sayfa yüklendiğinde otomatik oluştur
+        generateLoremIpsum();
+    </script>
+</body>
+</html>

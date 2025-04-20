@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sayıların içsel çarpanlarını hesaplayın. Bir sayının tüm pozitif bölenlerini bulun ve çarpan ağacı oluşturun.">
+    <meta name="keywords" content="içsel çarpan, bölen, asal çarpan, çarpan ağacı, matematik">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>İçsel Çarpan Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #9C27B0;
+            --secondary-color: #7B1FA2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .factor-tree {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .factor-tree ul {
+            list-style-type: none;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .factor-tree li {
+            margin: 10px 0;
+            padding: 10px;
+            background: var(--light-bg);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .factor-tree li:before {
+            content: "";
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 20px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>İçsel Çarpan Hesaplama</h2>
+                <form id="factorForm">
+                    <div class="form-group">
+                        <label for="number">Sayı</label>
+                        <input type="number" id="number" name="number" min="1" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuç</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="factorResult">-</div>
+                    <div class="result-description" id="resultDescription">
+                        Sonuç için lütfen formu doldurun.
+                    </div>
+                    <div class="factor-tree" id="factorTree"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>İçsel Çarpanlar Hakkında</h2>
+            <p>Bir sayının içsel çarpanları, o sayıyı tam olarak bölen pozitif tam sayılardır. İçsel çarpanlar, sayının bölenleri olarak da bilinir.</p>
+            
+            <h3>İçsel Çarpan Özellikleri</h3>
+            <ul>
+                <li>Her sayı en az iki içsel çarpana sahiptir: 1 ve kendisi</li>
+                <li>Asal sayılar sadece iki içsel çarpana sahiptir</li>
+                <li>İçsel çarpanların sayısı, sayının asal çarpanlarına bağlıdır</li>
+                <li>İçsel çarpanların toplamı, sayının kendisinden küçük veya eşittir</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Karmaşık Sayı</h3>
+                    <p>Karmaşık sayı işlemleri yapın</p>
+                    <a href="karmaşık-sayı.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Matematiksel Ortalama</h3>
+                    <p>Sayı dizilerinin ortalamasını hesaplayın</p>
+                    <a href="ortalama.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Faktöriyel</h3>
+                    <p>Sayıların faktöriyelini hesaplayın</p>
+                    <a href="faktoriyel.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        function findFactors(n) {
+            const factors = [];
+            for (let i = 1; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) {
+                    factors.push(i);
+                    if (i !== n / i) {
+                        factors.push(n / i);
+                    }
+                }
+            }
+            return factors.sort((a, b) => a - b);
+        }
+
+        function isPrime(n) {
+            if (n <= 1) return false;
+            if (n <= 3) return true;
+            if (n % 2 === 0 || n % 3 === 0) return false;
+            for (let i = 5; i * i <= n; i += 6) {
+                if (n % i === 0 || n % (i + 2) === 0) return false;
+            }
+            return true;
+        }
+
+        function getPrimeFactors(n) {
+            const factors = [];
+            while (n % 2 === 0) {
+                factors.push(2);
+                n /= 2;
+            }
+            for (let i = 3; i <= Math.sqrt(n); i += 2) {
+                while (n % i === 0) {
+                    factors.push(i);
+                    n /= i;
+                }
+            }
+            if (n > 2) factors.push(n);
+            return factors;
+        }
+
+        function createFactorTree(n) {
+            if (isPrime(n)) return `<li>${n}</li>`;
+            
+            const factors = getPrimeFactors(n);
+            if (factors.length === 1) return `<li>${n}</li>`;
+            
+            const firstFactor = factors[0];
+            const remaining = n / firstFactor;
+            
+            return `
+                <li>${n}
+                    <ul>
+                        <li>${firstFactor}</li>
+                        ${createFactorTree(remaining)}
+                    </ul>
+                </li>
+            `;
+        }
+
+        document.getElementById('factorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const number = parseInt(document.getElementById('number').value);
+            if (number < 1) {
+                alert('Lütfen pozitif bir sayı girin');
+                return;
+            }
+            
+            const factors = findFactors(number);
+            const primeFactors = getPrimeFactors(number);
+            
+            document.getElementById('factorResult').textContent = `${factors.length} içsel çarpan`;
+            
+            let description = `İçsel Çarpanlar: ${factors.join(', ')}\n\n`;
+            description += `Asal Çarpanlar: ${primeFactors.join(' × ')}\n`;
+            description += `Toplam İçsel Çarpan Sayısı: ${factors.length}\n`;
+            description += `İçsel Çarpanların Toplamı: ${factors.reduce((a, b) => a + b, 0)}`;
+            
+            document.getElementById('resultDescription').textContent = description;
+            document.getElementById('factorTree').innerHTML = `<ul>${createFactorTree(number)}</ul>`;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html> 

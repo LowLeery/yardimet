@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elektrik faturalarınızı hesaplayın. Tüketim miktarı, tarife tipi ve abonelik türüne göre elektrik faturanızı kolayca hesaplayın.">
+    <meta name="keywords" content="elektrik faturası hesaplama, elektrik tüketimi, elektrik tarifesi, elektrik fiyatı, elektrik maliyeti">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Elektrik Faturası Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF9800;
+            --secondary-color: #F57C00;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,152,0,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Elektrik Faturası Hesaplama</h2>
+                <form id="billForm">
+                    <div class="form-group">
+                        <label for="consumption">Aylık Tüketim (kWh)</label>
+                        <input type="number" id="consumption" name="consumption" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tariffType">Tarife Tipi</label>
+                        <select id="tariffType" name="tariffType" required>
+                            <option value="residential">Konut</option>
+                            <option value="commercial">Ticari</option>
+                            <option value="industrial">Sanayi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="subscriptionType">Abonelik Türü</label>
+                        <select id="subscriptionType" name="subscriptionType" required>
+                            <option value="single">Tek Zamanlı</option>
+                            <option value="three">Üç Zamanlı</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Fatura Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="billAmount">-</div>
+                    <div class="result-unit">TL</div>
+                    <div class="result-description" id="resultDescription">
+                        Fatura tutarı için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Elektrik Faturası Hakkında</h2>
+            <p>Elektrik faturası hesaplama aracı, aylık elektrik tüketiminize göre fatura tutarınızı hesaplamanıza yardımcı olur. Tüketim miktarı, tarife tipi ve abonelik türüne göre fatura tutarınızı kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Fatura Hesaplama Faktörleri</h3>
+            <ul>
+                <li>Aylık Tüketim (kWh)</li>
+                <li>Tarife Tipi (Konut/Ticari/Sanayi)</li>
+                <li>Abonelik Türü (Tek/Üç Zamanlı)</li>
+                <li>Dağıtım Bedeli</li>
+                <li>TRT Payı</li>
+                <li>KDV Oranı</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Su Faturası</h3>
+                    <p>Su faturalarınızı hesaplayın</p>
+                    <a href="su-faturasi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Doğalgaz Faturası</h3>
+                    <p>Doğalgaz faturalarınızı hesaplayın</p>
+                    <a href="dogalgaz-faturasi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>İnternet Faturası</h3>
+                    <p>İnternet faturalarınızı hesaplayın</p>
+                    <a href="internet-faturasi.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('billForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const consumption = parseFloat(document.getElementById('consumption').value);
+            const tariffType = document.getElementById('tariffType').value;
+            const subscriptionType = document.getElementById('subscriptionType').value;
+            
+            // Temel birim fiyatlar (TL/kWh)
+            let basePrice = 0;
+            let distributionFee = 0;
+            
+            // Tarife tipine göre fiyatlandırma
+            switch(tariffType) {
+                case 'residential':
+                    basePrice = 1.5;
+                    distributionFee = 0.3;
+                    break;
+                case 'commercial':
+                    basePrice = 2.0;
+                    distributionFee = 0.4;
+                    break;
+                case 'industrial':
+                    basePrice = 1.8;
+                    distributionFee = 0.5;
+                    break;
+            }
+            
+            // Abonelik türüne göre çarpan
+            let subscriptionMultiplier = 1;
+            if (subscriptionType === 'three') {
+                subscriptionMultiplier = 1.2; // Üç zamanlı tarife %20 daha pahalı
+            }
+            
+            // TRT payı ve KDV hesaplama
+            const trtShare = 0.02; // %2
+            const vatRate = 0.18; // %18
+            
+            // Toplam fatura hesaplama
+            let energyCost = consumption * basePrice * subscriptionMultiplier;
+            let distributionCost = consumption * distributionFee;
+            let trtCost = energyCost * trtShare;
+            let subtotal = energyCost + distributionCost + trtCost;
+            let vatAmount = subtotal * vatRate;
+            let totalBill = subtotal + vatAmount;
+            
+            const resultDiv = document.getElementById('result');
+            const billAmountDiv = document.getElementById('billAmount');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            billAmountDiv.textContent = totalBill.toFixed(2);
+            
+            let description = `Fatura Detayları:\n\n`;
+            description += `Tüketim: ${consumption} kWh\n`;
+            description += `Tarife Tipi: ${tariffType}\n`;
+            description += `Abonelik Türü: ${subscriptionType}\n`;
+            description += `Enerji Maliyeti: ${energyCost.toFixed(2)} TL\n`;
+            description += `Dağıtım Bedeli: ${distributionCost.toFixed(2)} TL\n`;
+            description += `TRT Payı: ${trtCost.toFixed(2)} TL\n`;
+            description += `KDV (%18): ${vatAmount.toFixed(2)} TL\n`;
+            description += `Toplam Fatura: ${totalBill.toFixed(2)} TL`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+
+</html>

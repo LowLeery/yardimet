@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kıdem tazminatınızı hesaplayın. Çalışma süresi, son maaş ve işten ayrılma nedeni gibi faktörlere göre kıdem tazminatı tutarınızı kolayca hesaplayın.">
+    <meta name="keywords" content="kıdem tazminatı hesaplama, işten ayrılma tazminatı, kıdem tazminatı tutarı, işçi tazminatı, işten çıkarma tazminatı">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Kıdem Tazminatı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF9800;
+            --secondary-color: #F57C00;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,152,0,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Kıdem Tazminatı Hesaplama</h2>
+                <form id="severanceForm">
+                    <div class="form-group">
+                        <label for="startDate">İşe Başlama Tarihi</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">İşten Ayrılma Tarihi</label>
+                        <input type="date" id="endDate" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastSalary">Son Brüt Maaş (TL)</label>
+                        <input type="number" id="lastSalary" name="lastSalary" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">İşten Ayrılma Nedeni</label>
+                        <select id="reason" name="reason" required>
+                            <option value="resignation">İstifa</option>
+                            <option value="termination">İşten Çıkarılma</option>
+                            <option value="retirement">Emeklilik</option>
+                            <option value="death">Vefat</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Tazminat Sonucu</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="severanceAmount">-</div>
+                    <div class="result-unit">TL</div>
+                    <div class="result-description" id="resultDescription">
+                        Tazminat tutarı için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Kıdem Tazminatı Hakkında</h2>
+            <p>Kıdem tazminatı hesaplama aracı, işten ayrılma durumunuzda hak ettiğiniz tazminat tutarını hesaplamanıza yardımcı olur. Çalışma süresi, son maaş ve işten ayrılma nedeni gibi faktörlere göre tazminat tutarınızı kolayca hesaplayabilirsiniz.</p>
+            
+            <h3>Tazminat Hesaplama Faktörleri</h3>
+            <ul>
+                <li>Çalışma Süresi</li>
+                <li>Son Brüt Maaş</li>
+                <li>İşten Ayrılma Nedeni</li>
+                <li>Yıllık Enflasyon Oranı</li>
+                <li>SGK Prim Gün Sayısı</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>İhbar Tazminatı</h3>
+                    <p>İhbar tazminatınızı hesaplayın</p>
+                    <a href="ihbar-tazminati.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Emeklilik Maaşı</h3>
+                    <p>Emeklilik maaşınızı hesaplayın</p>
+                    <a href="emeklilik-maasi.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>SGK Prim</h3>
+                    <p>SGK primlerinizi hesaplayın</p>
+                    <a href="sgk-prim.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('severanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+            const lastSalary = parseFloat(document.getElementById('lastSalary').value);
+            const reason = document.getElementById('reason').value;
+            
+            // Çalışma süresini yıl olarak hesapla
+            const diffTime = Math.abs(endDate - startDate);
+            const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
+            
+            // Kıdem tazminatı hesaplama (30 günlük brüt maaş * çalışma yılı)
+            let severanceAmount = lastSalary * diffYears;
+            
+            // İşten ayrılma nedenine göre çarpan
+            let reasonMultiplier = 1;
+            switch(reason) {
+                case 'resignation':
+                    reasonMultiplier = 0.5; // İstifa durumunda %50
+                    break;
+                case 'termination':
+                    reasonMultiplier = 1.0; // İşten çıkarılma durumunda %100
+                    break;
+                case 'retirement':
+                    reasonMultiplier = 1.0; // Emeklilik durumunda %100
+                    break;
+                case 'death':
+                    reasonMultiplier = 1.0; // Vefat durumunda %100
+                    break;
+            }
+            
+            // Toplam tazminat hesaplama
+            let totalSeverance = severanceAmount * reasonMultiplier;
+            
+            const resultDiv = document.getElementById('result');
+            const severanceAmountDiv = document.getElementById('severanceAmount');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            severanceAmountDiv.textContent = totalSeverance.toFixed(2);
+            
+            let description = `Tazminat Detayları:\n\n`;
+            description += `Çalışma Süresi: ${diffYears} yıl\n`;
+            description += `Son Brüt Maaş: ${lastSalary.toFixed(2)} TL\n`;
+            description += `İşten Ayrılma Nedeni: ${reason}\n`;
+            description += `Tazminat Çarpanı: ${reasonMultiplier}\n`;
+            description += `Toplam Tazminat: ${totalSeverance.toFixed(2)} TL`;
+            
+            resultDescription.textContent = description;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+
+</body>
+
+</html>

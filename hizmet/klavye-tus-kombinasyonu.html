@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mekanik klavye tuş kombinasyonlarını öğrenin ve pratik yapın. Windows, Mac ve Linux için kısayollar.">
+    <meta name="keywords" content="klavye kısayolları, tuş kombinasyonları, mekanik klavye, klavye öğrenme">
+    <title>Mekanik Klavye Tuş Kombinasyonu Öğretici | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .keyboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .keyboard-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .os-selector {
+            margin-bottom: 20px;
+        }
+
+        .os-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .os-selector select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ddd;
+        }
+
+        .category-tab:hover, .category-tab.active {
+            background: #32CD32;
+            color: white;
+            border-color: #32CD32;
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .shortcut-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .shortcut-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .shortcut-card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .shortcut-keys {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .key {
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .shortcut-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .practice-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .practice-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .practice-area {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .keyboard-visual {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .keyboard-key {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .keyboard-key.active {
+            background: #32CD32;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .stats-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .stat-item h4 {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .stat-item p {
+            margin: 5px 0 0;
+            color: #32CD32;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Mekanik Klavye Tuş Kombinasyonu Öğretici</h2>
+            <div class="keyboard-container">
+                <div class="keyboard-form">
+                    <div class="os-selector">
+                        <label for="osSelect">İşletim Sistemi:</label>
+                        <select id="osSelect">
+                            <option value="windows">Windows</option>
+                            <option value="mac">macOS</option>
+                            <option value="linux">Linux</option>
+                        </select>
+                    </div>
+
+                    <div class="category-tabs">
+                        <div class="category-tab active" data-category="general">Genel</div>
+                        <div class="category-tab" data-category="text">Metin Düzenleme</div>
+                        <div class="category-tab" data-category="browser">Tarayıcı</div>
+                        <div class="category-tab" data-category="system">Sistem</div>
+                        <div class="category-tab" data-category="apps">Uygulamalar</div>
+                    </div>
+
+                    <div class="shortcuts-grid" id="shortcutsGrid">
+                        <!-- Kısayollar buraya dinamik olarak eklenecek -->
+                    </div>
+
+                    <div class="practice-section">
+                        <h3>Pratik Yap</h3>
+                        <div class="practice-area">
+                            <p>Kısayolları uygulamak için klavyenizi kullanın:</p>
+                            <div class="keyboard-visual">
+                                <div class="keyboard-row">
+                                    <div class="keyboard-key">Q</div>
+                                    <div class="keyboard-key">W</div>
+                                    <div class="keyboard-key">E</div>
+                                    <div class="keyboard-key">R</div>
+                                    <div class="keyboard-key">T</div>
+                                    <div class="keyboard-key">Y</div>
+                                    <div class="keyboard-key">U</div>
+                                    <div class="keyboard-key">I</div>
+                                    <div class="keyboard-key">O</div>
+                                    <div class="keyboard-key">P</div>
+                                </div>
+                                <div class="keyboard-row">
+                                    <div class="keyboard-key">A</div>
+                                    <div class="keyboard-key">S</div>
+                                    <div class="keyboard-key">D</div>
+                                    <div class="keyboard-key">F</div>
+                                    <div class="keyboard-key">G</div>
+                                    <div class="keyboard-key">H</div>
+                                    <div class="keyboard-key">J</div>
+                                    <div class="keyboard-key">K</div>
+                                    <div class="keyboard-key">L</div>
+                                </div>
+                                <div class="keyboard-row">
+                                    <div class="keyboard-key">Z</div>
+                                    <div class="keyboard-key">X</div>
+                                    <div class="keyboard-key">C</div>
+                                    <div class="keyboard-key">V</div>
+                                    <div class="keyboard-key">B</div>
+                                    <div class="keyboard-key">N</div>
+                                    <div class="keyboard-key">M</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats-section">
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <h4>Doğru</h4>
+                                    <p id="correctCount">0</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h4>Yanlış</h4>
+                                    <p id="wrongCount">0</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h4>Doğruluk</h4>
+                                    <p id="accuracy">0%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Örnek kısayollar
+        const shortcuts = {
+            windows: {
+                general: [
+                    { name: "Kopyala", keys: ["Ctrl", "C"], description: "Seçili öğeyi kopyala" },
+                    { name: "Yapıştır", keys: ["Ctrl", "V"], description: "Kopyalanan öğeyi yapıştır" },
+                    { name: "Kes", keys: ["Ctrl", "X"], description: "Seçili öğeyi kes" },
+                    { name: "Geri Al", keys: ["Ctrl", "Z"], description: "Son işlemi geri al" }
+                ],
+                text: [
+                    { name: "Tümünü Seç", keys: ["Ctrl", "A"], description: "Tüm metni seç" },
+                    { name: "Kalın", keys: ["Ctrl", "B"], description: "Seçili metni kalın yap" },
+                    { name: "İtalik", keys: ["Ctrl", "I"], description: "Seçili metni italik yap" }
+                ],
+                browser: [
+                    { name: "Yeni Sekme", keys: ["Ctrl", "T"], description: "Yeni sekme aç" },
+                    { name: "Sekmeyi Kapat", keys: ["Ctrl", "W"], description: "Aktif sekmeyi kapat" },
+                    { name: "Yeniden Yükle", keys: ["Ctrl", "R"], description: "Sayfayı yeniden yükle" }
+                ],
+                system: [
+                    { name: "Görev Yöneticisi", keys: ["Ctrl", "Shift", "Esc"], description: "Görev yöneticisini aç" },
+                    { name: "Kilit Ekran", keys: ["Win", "L"], description: "Ekranı kilitle" },
+                    { name: "Projeksiyon", keys: ["Win", "P"], description: "Projeksiyon seçeneklerini aç" }
+                ],
+                apps: [
+                    { name: "Hesap Makinesi", keys: ["Win", "R"], description: "Çalıştır penceresini aç" },
+                    { name: "Ekran Alıntısı", keys: ["Win", "Shift", "S"], description: "Ekran alıntısı aracını aç" },
+                    { name: "Ayarlar", keys: ["Win", "I"], description: "Ayarlar uygulamasını aç" }
+                ]
+            },
+            mac: {
+                general: [
+                    { name: "Kopyala", keys: ["⌘", "C"], description: "Seçili öğeyi kopyala" },
+                    { name: "Yapıştır", keys: ["⌘", "V"], description: "Kopyalanan öğeyi yapıştır" },
+                    { name: "Kes", keys: ["⌘", "X"], description: "Seçili öğeyi kes" }
+                ],
+                text: [
+                    { name: "Tümünü Seç", keys: ["⌘", "A"], description: "Tüm metni seç" },
+                    { name: "Kalın", keys: ["⌘", "B"], description: "Seçili metni kalın yap" },
+                    { name: "İtalik", keys: ["⌘", "I"], description: "Seçili metni italik yap" }
+                ],
+                browser: [
+                    { name: "Yeni Sekme", keys: ["⌘", "T"], description: "Yeni sekme aç" },
+                    { name: "Sekmeyi Kapat", keys: ["⌘", "W"], description: "Aktif sekmeyi kapat" },
+                    { name: "Yeniden Yükle", keys: ["⌘", "R"], description: "Sayfayı yeniden yükle" }
+                ],
+                system: [
+                    { name: "Spotlight", keys: ["⌘", "Space"], description: "Spotlight aramasını aç" },
+                    { name: "Mission Control", keys: ["⌘", "↑"], description: "Mission Control'ü aç" },
+                    { name: "Uygulama Geçişi", keys: ["⌘", "Tab"], description: "Uygulamalar arası geçiş yap" }
+                ],
+                apps: [
+                    { name: "Hesap Makinesi", keys: ["⌘", "Space"], description: "Spotlight ile hesap makinesini aç" },
+                    { name: "Ekran Görüntüsü", keys: ["⌘", "Shift", "4"], description: "Ekran görüntüsü al" },
+                    { name: "Sistem Tercihleri", keys: ["⌘", ","], description: "Sistem tercihlerini aç" }
+                ]
+            },
+            linux: {
+                general: [
+                    { name: "Kopyala", keys: ["Ctrl", "C"], description: "Seçili öğeyi kopyala" },
+                    { name: "Yapıştır", keys: ["Ctrl", "V"], description: "Kopyalanan öğeyi yapıştır" },
+                    { name: "Kes", keys: ["Ctrl", "X"], description: "Seçili öğeyi kes" }
+                ],
+                text: [
+                    { name: "Tümünü Seç", keys: ["Ctrl", "A"], description: "Tüm metni seç" },
+                    { name: "Kalın", keys: ["Ctrl", "B"], description: "Seçili metni kalın yap" },
+                    { name: "İtalik", keys: ["Ctrl", "I"], description: "Seçili metni italik yap" }
+                ],
+                browser: [
+                    { name: "Yeni Sekme", keys: ["Ctrl", "T"], description: "Yeni sekme aç" },
+                    { name: "Sekmeyi Kapat", keys: ["Ctrl", "W"], description: "Aktif sekmeyi kapat" },
+                    { name: "Yeniden Yükle", keys: ["Ctrl", "R"], description: "Sayfayı yeniden yükle" }
+                ],
+                system: [
+                    { name: "Terminal", keys: ["Ctrl", "Alt", "T"], description: "Terminal aç" },
+                    { name: "Kilit Ekran", keys: ["Ctrl", "Alt", "L"], description: "Ekranı kilitle" },
+                    { name: "Çıkış", keys: ["Ctrl", "Alt", "Del"], description: "Oturumu kapat" }
+                ],
+                apps: [
+                    { name: "Dosya Yöneticisi", keys: ["Super", "E"], description: "Dosya yöneticisini aç" },
+                    { name: "Ekran Görüntüsü", keys: ["Print"], description: "Ekran görüntüsü al" },
+                    { name: "Ayarlar", keys: ["Super", "I"], description: "Ayarları aç" }
+                ]
+            }
+        };
+
+        let correctCount = 0;
+        let wrongCount = 0;
+        let activeKeys = new Set();
+
+        // Kısayolları göster
+        function displayShortcuts() {
+            const os = document.getElementById('osSelect').value;
+            const category = document.querySelector('.category-tab.active').dataset.category;
+            const shortcutsGrid = document.getElementById('shortcutsGrid');
+            shortcutsGrid.innerHTML = '';
+
+            shortcuts[os][category].forEach(shortcut => {
+                const card = document.createElement('div');
+                card.className = 'shortcut-card';
+                card.innerHTML = `
+                    <h3>${shortcut.name}</h3>
+                    <div class="shortcut-keys">
+                        ${shortcut.keys.map(key => `<span class="key">${key}</span>`).join('')}
+                    </div>
+                    <p class="shortcut-description">${shortcut.description}</p>
+                `;
+                shortcutsGrid.appendChild(card);
+            });
+        }
+
+        // Kategori değiştiğinde
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                displayShortcuts();
+            });
+        });
+
+        // İşletim sistemi değiştiğinde
+        document.getElementById('osSelect').addEventListener('change', displayShortcuts);
+
+        // Klavye olaylarını dinle
+        document.addEventListener('keydown', (e) => {
+            const key = e.key.toUpperCase();
+            activeKeys.add(key);
+            updateKeyboardVisual();
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const key = e.key.toUpperCase();
+            activeKeys.delete(key);
+            updateKeyboardVisual();
+        });
+
+        // Klavye görselini güncelle
+        function updateKeyboardVisual() {
+            document.querySelectorAll('.keyboard-key').forEach(key => {
+                if (activeKeys.has(key.textContent)) {
+                    key.classList.add('active');
+                } else {
+                    key.classList.remove('active');
+                }
+            });
+        }
+
+        // İstatistikleri güncelle
+        function updateStats() {
+            const total = correctCount + wrongCount;
+            const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+            
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('wrongCount').textContent = wrongCount;
+            document.getElementById('accuracy').textContent = `${accuracy}%`;
+        }
+
+        // Başlangıçta kısayolları göster
+        displayShortcuts();
+    </script>
+
+</body>
+
+</html>

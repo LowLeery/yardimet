@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kelime sayacı ile metninizin kelime, karakter, cümle ve paragraf sayısını öğrenin.">
+    <meta name="keywords" content="kelime sayacı, word counter, karakter sayacı, metin analizi">
+    <title>Kelime Sayacı | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .counter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .counter-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #32CD32;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: #007bff;
+        }
+
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .info-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .suggestions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .suggestions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .suggestions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .suggestions li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .detailed-stats {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .detailed-stats h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .detailed-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .detailed-stat-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .detailed-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .detailed-stat-value {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .detailed-stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Kelime Sayacı</h2>
+            <div class="counter-container">
+                <div class="counter-form">
+                    <div class="input-group">
+                        <label for="inputText">Metin:</label>
+                        <textarea id="inputText" placeholder="Analiz etmek istediğiniz metni buraya girin..."></textarea>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-label">Kelime</div>
+                            <div class="stat-value" id="wordCount">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Karakter</div>
+                            <div class="stat-value" id="charCount">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Cümle</div>
+                            <div class="stat-value" id="sentenceCount">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Paragraf</div>
+                            <div class="stat-value" id="paragraphCount">0</div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> Kopyala
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="detailed-stats">
+                        <h3>Detaylı İstatistikler</h3>
+                        <div class="detailed-stats-grid">
+                            <div class="detailed-stat-item">
+                                <div class="detailed-stat-label">Boşluksuz Karakter</div>
+                                <div class="detailed-stat-value" id="charNoSpaceCount">0</div>
+                            </div>
+                            <div class="detailed-stat-item">
+                                <div class="detailed-stat-label">Satır</div>
+                                <div class="detailed-stat-value" id="lineCount">0</div>
+                            </div>
+                            <div class="detailed-stat-item">
+                                <div class="detailed-stat-label">Ortalama Kelime Uzunluğu</div>
+                                <div class="detailed-stat-value" id="avgWordLength">0</div>
+                            </div>
+                            <div class="detailed-stat-item">
+                                <div class="detailed-stat-label">Ortalama Cümle Uzunluğu</div>
+                                <div class="detailed-stat-value" id="avgSentenceLength">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suggestions">
+                        <h3>İpuçları:</h3>
+                        <ul>
+                            <li>Kelime sayısı: Boşluk veya noktalama işareti ile ayrılan kelimeler sayılır</li>
+                            <li>Cümle sayısı: Nokta, ünlem veya soru işareti ile biten cümleler sayılır</li>
+                            <li>Paragraf sayısı: Boş satır ile ayrılan paragraflar sayılır</li>
+                            <li>Boşluksuz karakter sayısı: Boşluk ve satır sonu karakterleri hariç tüm karakterler</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const inputText = document.getElementById('inputText');
+        const wordCount = document.getElementById('wordCount');
+        const charCount = document.getElementById('charCount');
+        const sentenceCount = document.getElementById('sentenceCount');
+        const paragraphCount = document.getElementById('paragraphCount');
+        const charNoSpaceCount = document.getElementById('charNoSpaceCount');
+        const lineCount = document.getElementById('lineCount');
+        const avgWordLength = document.getElementById('avgWordLength');
+        const avgSentenceLength = document.getElementById('avgSentenceLength');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+
+        // Metni analiz et
+        function analyzeText() {
+            const text = inputText.value;
+
+            // Kelime sayısı
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCount.textContent = words.length;
+
+            // Karakter sayısı
+            charCount.textContent = text.length;
+
+            // Boşluksuz karakter sayısı
+            charNoSpaceCount.textContent = text.replace(/\s/g, '').length;
+
+            // Cümle sayısı
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+            sentenceCount.textContent = sentences.length;
+
+            // Paragraf sayısı
+            const paragraphs = text.split(/\n\s*\n/).filter(para => para.trim().length > 0);
+            paragraphCount.textContent = paragraphs.length;
+
+            // Satır sayısı
+            const lines = text.split('\n').filter(line => line.trim().length > 0);
+            lineCount.textContent = lines.length;
+
+            // Ortalama kelime uzunluğu
+            const totalWordLength = words.reduce((sum, word) => sum + word.length, 0);
+            avgWordLength.textContent = words.length ? (totalWordLength / words.length).toFixed(1) : '0';
+
+            // Ortalama cümle uzunluğu (kelime olarak)
+            const avgSentWords = sentences.length ? (words.length / sentences.length).toFixed(1) : '0';
+            avgSentenceLength.textContent = avgSentWords;
+        }
+
+        // Metni panoya kopyala
+        function copyToClipboard() {
+            if (!inputText.value) {
+                showStatus('Kopyalanacak metin yok!', true);
+                return;
+            }
+
+            navigator.clipboard.writeText(inputText.value)
+                .then(() => showStatus('Metin panoya kopyalandı!', false))
+                .catch(() => showStatus('Metin kopyalanamadı!', true));
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            inputText.value = '';
+            analyzeText();
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        inputText.addEventListener('input', analyzeText);
+        copyBtn.addEventListener('click', copyToClipboard);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+</html> 

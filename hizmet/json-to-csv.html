@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JSON verilerinizi CSV formatına dönüştürün. Hızlı ve kolay dönüşüm aracı.">
+    <meta name="keywords" content="json csv dönüştürme, veri dönüşümü, json to csv">
+    <title>JSON to CSV Dönüştürücü | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        textarea {
+            width: 80%;
+            max-width: 500px;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .output-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #csvOutput {
+            background: #fff;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .converter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .converter-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-section, .output-section {
+            margin: 20px 0;
+        }
+
+        .input-section textarea, .output-section textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        .options {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .option-group {
+            margin: 10px 0;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .option-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>JSON to CSV Dönüştürücü</h2>
+            <div class="converter-container">
+                <div class="converter-form">
+                    <div class="input-section">
+                        <textarea id="jsonInput" placeholder="JSON verinizi buraya yapıştırın..."></textarea>
+                    </div>
+
+                    <div class="options">
+                        <div class="option-group">
+                            <label for="delimiter">Ayraç (Delimiter):</label>
+                            <input type="text" id="delimiter" value="," maxlength="1">
+                        </div>
+                        <div class="option-group">
+                            <label for="quoteChar">Tırnak İşareti:</label>
+                            <input type="text" id="quoteChar" value='"' maxlength="1">
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="convertBtn">
+                            <i class="fas fa-exchange-alt"></i> Dönüştür
+                        </button>
+                        <button class="action-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                        <button class="action-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i> Kopyala
+                        </button>
+                        <button class="action-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> İndir
+                        </button>
+                    </div>
+
+                    <div class="status" id="status"></div>
+
+                    <div class="output-section">
+                        <textarea id="csvOutput" placeholder="CSV çıktısı burada görünecek..." readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const jsonInput = document.getElementById('jsonInput');
+        const csvOutput = document.getElementById('csvOutput');
+        const delimiter = document.getElementById('delimiter');
+        const quoteChar = document.getElementById('quoteChar');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const status = document.getElementById('status');
+
+        // JSON'ı CSV'ye dönüştür
+        function convertToCSV() {
+            try {
+                const jsonData = JSON.parse(jsonInput.value);
+                const csv = jsonToCSV(jsonData, delimiter.value, quoteChar.value);
+                csvOutput.value = csv;
+                showStatus('Dönüşüm başarılı!', false);
+            } catch (err) {
+                showStatus('Geçersiz JSON formatı!', true);
+                console.error('Dönüşüm hatası:', err);
+            }
+        }
+
+        // JSON verisini CSV formatına dönüştür
+        function jsonToCSV(jsonData, delimiter, quoteChar) {
+            if (!Array.isArray(jsonData)) {
+                jsonData = [jsonData];
+            }
+
+            if (jsonData.length === 0) {
+                return '';
+            }
+
+            // Başlıkları al
+            const headers = Object.keys(jsonData[0]);
+            
+            // CSV satırlarını oluştur
+            const rows = [
+                headers.map(header => quoteChar + header + quoteChar).join(delimiter)
+            ];
+
+            // Veri satırlarını ekle
+            jsonData.forEach(item => {
+                const row = headers.map(header => {
+                    let value = item[header];
+                    if (value === null || value === undefined) {
+                        value = '';
+                    } else if (typeof value === 'object') {
+                        value = JSON.stringify(value);
+                    }
+                    return quoteChar + String(value).replace(/"/g, '""') + quoteChar;
+                });
+                rows.push(row.join(delimiter));
+            });
+
+            return rows.join('\n');
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Metni kopyala
+        function copyToClipboard() {
+            csvOutput.select();
+            document.execCommand('copy');
+            showStatus('Metin kopyalandı!', false);
+        }
+
+        // CSV dosyasını indir
+        function downloadCSV() {
+            const blob = new Blob([csvOutput.value], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted-data.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Giriş alanını temizle
+        function clearInputs() {
+            jsonInput.value = '';
+            csvOutput.value = '';
+            showStatus('Alanlar temizlendi!', false);
+        }
+
+        // Olay dinleyicileri
+        convertBtn.addEventListener('click', convertToCSV);
+        clearBtn.addEventListener('click', clearInputs);
+        copyBtn.addEventListener('click', copyToClipboard);
+        downloadBtn.addEventListener('click', downloadCSV);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı. Vücut kitle indeksi, kredi hesaplama, yaş hesaplama, takvim ve daha fazlası.">
+    <meta name="keywords" content="hesaplama araçları, günlük hesaplama, vücut kitle indeksi, kredi hesaplama, yaş hesaplama, takvim, ücretsiz hesaplama araçları">
+    <meta name="google-adsense-account" content="ca-pub-9482719326732079">
+    <title>Günlük Hesaplama Araçları | 150+ Ücretsiz Hesaplama Aracı</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9482719326732079"
+     crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #32CD32;
+            --secondary-color: #28a745;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .welcome-section h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease;
+        }
+
+        .welcome-text {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            padding-left: 50px;
+        }
+
+        .search-bar::before {
+            content: '🔍';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(50,205,50,0.2);
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .content h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .service-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .service-item {
+            background: linear-gradient(135deg, #ffffff, var(--light-bg));
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(50,205,50,0.1), rgba(40,167,69,0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .service-item:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            display: block;
+            margin: 0 auto 20px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(50,205,50,0.3);
+        }
+
+        .service-item:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 15px rgba(50,205,50,0.4);
+        }
+
+        .service-item a {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-item:hover a {
+            color: var(--primary-color);
+        }
+
+        .service-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover .service-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            font-weight: 500;
+        }
+
+        .category-tab:hover, .category-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .seo-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .seo-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: var(--light-bg);
+            transition: all 0.3s ease;
+        }
+
+        .seo-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .seo-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-content a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-content a:hover {
+            color: #f8f9fa;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .welcome-text {
+                font-size: 1.1rem;
+            }
+            
+            .content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .service-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .service-item {
+                padding: 20px;
+            }
+
+            .category-tabs {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+    
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+    
+    <section class="main-content">
+        <div class="welcome-section">
+            <h2>150+ Ücretsiz Hesaplama Aracı</h2>
+            <p class="welcome-text">Günlük hayatınızı kolaylaştıracak, tamamen ücretsiz hesaplama araçları. Sağlık, finans, eğitim ve daha birçok alanda ihtiyacınız olan hesaplamaları hızlı ve kolayca yapın.</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="search-bar" placeholder="Aradığınız hesaplama aracını yazın..." onkeyup="searchServices()">
+        </div>
+
+        <div class="category-tabs">
+            <div class="category-tab active" data-category="all">Tümü</div>
+            <div class="category-tab" data-category="health">Sağlık</div>
+            <div class="category-tab" data-category="finance">Finans</div>
+            <div class="category-tab" data-category="geometry">Geometri</div>
+            <div class="category-tab" data-category="math">Matematik</div>
+            <div class="category-tab" data-category="time">Zaman</div>
+            <div class="category-tab" data-category="conversion">Dönüştürme</div>
+            <div class="category-tab" data-category="education">Eğitim</div>
+            <div class="category-tab" data-category="entertainment">Eğlence</div>
+            <div class="category-tab" data-category="tools">Araçlar</div>
+            <div class="category-tab" data-category="media">Medya</div>
+            <div class="category-tab" data-category="data">Veri</div>
+            <div class="category-tab" data-category="text">Metin</div>
+            <div class="category-tab" data-category="security">Güvenlik</div>
+            <div class="category-tab" data-category="other">Diğer</div>
+        </div>
+
+        <div class="content">
+            <h2>Öne Çıkan Hizmetler</h2>
+            <div class="service-container">
+            <div class="service-list" id="service-list">
+                <!-- Öne çıkarılan hizmetler buraya dinamik olarak gelecek -->
+            </div>
+            </div>
+        </div>
+
+        <div class="seo-container">
+            <h2>Günlük Hesaplama Araçları Hakkında</h2>
+            <div class="seo-item">
+                <h3>Kapsamlı Hesaplama Çözümleri</h3>
+                <p>Günlük Hesaplama Araçları, günlük hayatınızda ihtiyaç duyabileceğiniz tüm hesaplamaları tek bir platformda sunar. Sağlık hesaplamalarından finansal hesaplamalara, eğitim hesaplamalarından günlük yaşam hesaplamalarına kadar geniş bir yelpazede hizmet verir.</p>
+            </div>
+            <div class="seo-item">
+                <h3>Kullanıcı Dostu Arayüz</h3>
+                <p>Tüm hesaplama araçlarımız kullanıcı dostu bir arayüz ile tasarlanmıştır. Hesaplamalarınızı hızlı ve kolay bir şekilde yapabilir, sonuçları anında görebilirsiniz. Mobil cihazlardan da rahatça erişebilirsiniz.</p>
+            </div>
+            <div class="seo-item">
+                <h3>Güvenilir ve Doğru Sonuçlar</h3>
+                <p>Hesaplama araçlarımız güncel formüller ve algoritmalar kullanılarak geliştirilmiştir. Tüm sonuçlar güvenilir ve doğrudur. Hesaplamalarınızı güvenle yapabilirsiniz.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="hakkinda.html">Hakkında</a> | <a href="iletisim.html">İletişim</a> | <a href="kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+       const services = [
+            // Sağlık Kategorisi
+            { name: "Vücut Kitle İndeksi Hesapla", link: "hizmet/vki.html", category: "health", description: "Vücut kitle indeksinizi hesaplayın ve ideal kilonuzu öğrenin." },
+            { name: "Regl Takip Aracı", link: "hizmet/regl-takip.html", category: "health", description: "Adet döngünüzü takip edin ve tahminler alın." },
+            { name: "Hedef Kilo Hesaplama", link: "hizmet/hedef-kilo.html", category: "health", description: "Hedef kilonuzu belirleyin ve takip edin." },
+            { name: "Kalp Atış Hızı Hesaplayıcı", link: "hizmet/kalp-atis-hizi.html", category: "health", description: "Kalp atış hızınızı hesaplayın ve takip edin." },
+            { name: "Uyku Kalitesi Analiz Aracı", link: "hizmet/uyku-kalitesi.html", category: "health", description: "Uyku kalitenizi analiz edin ve iyileştirin." },
+            { name: "Günlük Ruh Hali Takipçisi", link: "hizmet/gunluk-ruh-hali-takip.html", category: "health", description: "Ruh halinizi takip edin ve analiz edin." },
+            { name: "Uykusuzluk Günü Takipçisi", link: "hizmet/uykusuzluk-gunu.html", category: "health", description: "Uyku düzeninizi takip edin." },
+            { name: "Sigara Bırakma Tasarruf Hesaplama", link: "hizmet/sigara-birakma.html", category: "health", description: "Sigara bırakarak ne kadar tasarruf edeceğinizi hesaplayın." },
+            { name: "Su Tüketim Takipçisi", link: "hizmet/su-tuketimi.html", category: "health", description: "Günlük su tüketiminizi takip edin." },
+            { name: "Günlük Adım Sayısı Hedefi Belirleyici", link: "hizmet/gunluk-adim-sayisi.html", category: "health", description: "Günlük adım hedeflerinizi belirleyin." },
+            { name: "Makro Besin Dağılımı Hesaplama", link: "hizmet/besin-dagilimi.html", category: "health", description: "Besin dağılımınızı hesaplayın." },
+            { name: "Kalori Hesaplayıcı", link: "hizmet/kalori-hesapla.html", category: "health", description: "Günlük kalori ihtiyacınızı hesaplayın." },
+
+            // Finans Kategorisi
+            { name: "Kredi Hesaplama Aracı", link: "hizmet/kredi-hesaplama.html", category: "finance", description: "Kredi taksitlerinizi hesaplayın." },
+            { name: "Basit Faiz Hesapla", link: "hizmet/basit-faiz.html", category: "finance", description: "Basit faiz hesaplamaları yapın." },
+            { name: "Kredi Kartı Borç Hesapla", link: "hizmet/kredi-kartı-borç.html", category: "finance", description: "Kredi kartı borçlarınızı hesaplayın." },
+            { name: "Taksit Hesaplama", link: "hizmet/taksit-hesaplama.html", category: "finance", description: "Taksit ödemelerinizi hesaplayın." },
+            { name: "Dolar/TL Dönüştürme", link: "hizmet/dolar-tl-donusturme.html", category: "finance", description: "Döviz kurlarını hesaplayın." },
+            { name: "Araç Vergisi Hesaplama", link: "hizmet/arac-vergisi-hesaplama.html", category: "finance", description: "Araç vergilerinizi hesaplayın." },
+            { name: "Kıdem Tazminatı Hesaplama", link: "hizmet/kidem-tazminati.html", category: "finance", description: "Kıdem tazminatınızı hesaplayın." },
+            { name: "Yatırım Getirisi Hesaplama", link: "hizmet/yatirim-getiri.html", category: "finance", description: "Yatırım getirilerinizi hesaplayın." },
+            { name: "Aylık Bütçe Planlayıcı", link: "hizmet/aylik-butce.html", category: "finance", description: "Aylık bütçenizi planlayın." },
+            { name: "Kripto Kazanç Hesaplama", link: "hizmet/kripto-kazanc-hesaplama.html", category: "finance", description: "Kripto kazançlarınızı hesaplayın." },
+            { name: "Freelance Gelir Takipçisi", link: "hizmet/freelance-gelir.html", category: "finance", description: "Freelance gelirlerinizi takip edin." },
+            { name: "Ciro Hesapla", link: "hizmet/ciro.html", category: "finance", description: "İşletme cirolarınızı hesaplayın." },
+            { name: "Birim Fiyat Hesapla", link: "hizmet/birim-fiyat.html", category: "finance", description: "Birim fiyatları hesaplayın." },
+            { name: "Fiyat Endeksi Hesapla", link: "hizmet/fiyat-endeksi.html", category: "finance", description: "Fiyat endekslerini hesaplayın." },
+            { name: "Toplam Maliyet Hesapla", link: "hizmet/toplam-maliyet-hesaplama.html", category: "finance", description: "Toplam maliyetleri hesaplayın." },
+            { name: "Elektrik Faturasını Hesapla", link: "hizmet/elektrik-faturasi.html", category: "finance", description: "Elektrik faturalarınızı hesaplayın." },
+            { name: "Trafik Cezası Hesapla", link: "hizmet/trafik-cezasi.html", category: "finance", description: "Trafik cezalarınızı hesaplayın." },
+            { name: "Tatil Gideri Hesaplayıcı", link: "hizmet/tatil-gideri-hesaplama.html", category: "finance", description: "Tatil giderlerinizi hesaplayın." },
+            { name: "IBAN Doğrulama Aracı", link: "hizmet/iban-dogrulama.html", category: "finance", description: "IBAN numaralarını doğrulayın." },
+
+            // Geometri Kategorisi
+            { name: "Dikdörtgen Alan Hesapla", link: "hizmet/dikdortgen-alan.html", category: "geometry", description: "Dikdörtgen alanını hesaplayın." },
+            { name: "Daire Alan Hesaplama", link: "hizmet/daire-alan.html", category: "geometry", description: "Daire alanını hesaplayın." },
+            { name: "Üçgen Alan Hesapla", link: "hizmet/üçgen-alan.html", category: "geometry", description: "Üçgen alanını hesaplayın." },
+            { name: "Dik Üçgen Hipotenüsü Hesapla", link: "hizmet/dik-üçgen-hipotenüs.html", category: "geometry", description: "Dik üçgen hipotenüsünü hesaplayın." },
+            { name: "Kare Alanı Hesaplama", link: "hizmet/kare-alan.html", category: "geometry", description: "Kare alanını hesaplayın." },
+            { name: "Küp Yüzey Alanı Hesapla", link: "hizmet/kup-yuzey-alani.html", category: "geometry", description: "Küp yüzey alanını hesaplayın." },
+            { name: "Daire Çevresi Hesaplama", link: "hizmet/daire-cevresi-hesaplama.html", category: "geometry", description: "Daire çevresini hesaplayın." },
+            { name: "Basit Geometri Hesaplama", link: "hizmet/basit-geometri-hesaplama.html", category: "geometry", description: "Temel geometri hesaplamaları yapın." },
+
+            // Matematik Kategorisi
+            { name: "Permütasyon Hesaplama", link: "hizmet/permütasyon.html", category: "math", description: "Permütasyon hesaplamaları yapın." },
+            { name: "Faktöriyel Hesaplama", link: "hizmet/faktoriyel.html", category: "math", description: "Faktöriyel hesaplamaları yapın." },
+            { name: "Matematiksel Ortalama Hesapla", link: "hizmet/ortalama.html", category: "math", description: "Matematiksel ortalamaları hesaplayın." },
+            { name: "Karmaşık Sayı Hesapla", link: "hizmet/karmaşık-sayı.html", category: "math", description: "Karmaşık sayı hesaplamaları yapın." },
+            { name: "İçsel Çarpan Hesapla", link: "hizmet/icsel-carpan.html", category: "math", description: "İçsel çarpanları hesaplayın." },
+            { name: "Fibonacci Hesaplayıcı", link: "hizmet/fibonacci-hesaplayici.html", category: "math", description: "Fibonacci sayılarını hesaplayın." },
+
+            // Zaman Kategorisi
+            { name: "Zaman Hesaplama", link: "hizmet/zaman-hesaplama.html", category: "time", description: "Zaman hesaplamaları yapın." },
+            { name: "Saat Dilimi Hesaplama", link: "hizmet/saat-dilimi.html", category: "time", description: "Saat dilimlerini hesaplayın." },
+            { name: "Takvim Hesaplama", link: "hizmet/takvim.html", category: "time", description: "Takvim hesaplamaları yapın." },
+            { name: "İşlem Zamanı Hesapla", link: "hizmet/islem-zamani-hesaplama.html", category: "time", description: "İşlem sürelerini hesaplayın." },
+            { name: "Zaman Zarfı Hesapla", link: "hizmet/zaman-zarfi.html", category: "time", description: "Zaman aralıklarını hesaplayın." },
+            { name: "Tarih Arası Gün Hesaplama", link: "hizmet/tarih-arasi-gun-hesaplama.html", category: "time", description: "Tarihler arası gün sayısını hesaplayın." },
+            { name: "İş/Mesai Süresi Hesaplayıcı", link: "hizmet/mesai-suresi.html", category: "time", description: "Mesai sürelerini hesaplayın." },
+
+            // Dönüştürme Kategorisi
+            { name: "Sıcaklık Dönüştürme", link: "hizmet/sicaklik-donusturme.html", category: "conversion", description: "Sıcaklık birimlerini dönüştürün." },
+            { name: "Birim Dönüşümü (Kg/Litre)", link: "hizmet/birim-donusumu.html", category: "conversion", description: "Birim dönüşümleri yapın." },
+            { name: "Ağırlık Hesapla", link: "hizmet/agirlik-hesaplama.html", category: "conversion", description: "Ağırlık dönüşümleri yapın." },
+            { name: "Tartı Birimi Dönüştürme", link: "hizmet/tarti-birimi-donusturme.html", category: "conversion", description: "Tartı birimlerini dönüştürün." },
+            { name: "Hız Birimi Dönüştür", link: "hizmet/hiz-birimi-donusturme.html", category: "conversion", description: "Hız birimlerini dönüştürün." },
+            { name: "Renk Dönüştürme (Hex/RGB)", link: "hizmet/renk-donusturme.html", category: "conversion", description: "Renk kodlarını dönüştürün." },
+            { name: "Dosya Boyutu Dönüştürücü", link: "hizmet/dosya-boyutu-donusturucu.html", category: "conversion", description: "Dosya boyutlarını dönüştürün." },
+            { name: "PNG to JPG Çevirici", link: "hizmet/png-to-jpg.html", category: "conversion", description: "Görsel formatlarını dönüştürün." },
+            { name: "Fotoğrafı WebP'ye Çevirme Aracı", link: "hizmet/webp-converter.html", category: "conversion", description: "Görselleri WebP formatına dönüştürün." },
+            { name: "XML to JSON Dönüştürücü", link: "hizmet/xml-json.html", category: "conversion", description: "XML ve JSON formatlarını dönüştürün." },
+            { name: "Markdown to HTML Dönüştürücü", link: "hizmet/markdown-html.html", category: "conversion", description: "Markdown'ı HTML'e dönüştürün." },
+
+            // Eğitim Kategorisi
+            { name: "Vize Hesaplama", link: "hizmet/vize-hesaplama.html", category: "education", description: "Vize notlarınızı hesaplayın." },
+            { name: "Lise Mezuniyet Puanı Hesapla", link: "hizmet/lise-mezuniyet-puani.html", category: "education", description: "Lise mezuniyet puanınızı hesaplayın." },
+            { name: "Lise Ders Puanı Hesapla", link: "hizmet/lise-ders-puani.html", category: "education", description: "Lise ders puanlarınızı hesaplayın." },
+            { name: "Okula Başlama Yaşı Hesapla", link: "hizmet/okula-baslama-yasi.html", category: "education", description: "Okula başlama yaşını hesaplayın." },
+            { name: "Üniversite Not Ortalaması Hesapla", link: "hizmet/universite-not-ortalamasi.html", category: "education", description: "Üniversite not ortalamanızı hesaplayın." },
+            { name: "Online Ders Programı Planlayıcı", link: "hizmet/ders-programi.html", category: "education", description: "Ders programınızı planlayın." },
+
+            // Eğlence Kategorisi
+            { name: "Dama Oyna", link: "hizmet/dama.html", category: "entertainment", description: "Online dama oynayın." },
+            { name: "Tavla Oyna", link: "hizmet/tavla.html", category: "entertainment", description: "Online tavla oynayın." },
+            { name: "Satranç Oyna", link: "hizmet/satranç.html", category: "entertainment", description: "Online satranç oynayın." },
+            { name: "Zodyak Uyumu Hesaplayıcı", link: "hizmet/zodyakuyumu.html", category: "entertainment", description: "Burç uyumunuzu hesaplayın." },
+            { name: "Doğum Günü Sayacı ve Burç Hesaplama", link: "hizmet/dg-burc-hesaplama.html", category: "entertainment", description: "Doğum günü ve burç hesaplamaları yapın." },
+            { name: "Film/Dizi Önerici", link: "hizmet/filmdizi-onerici.html", category: "entertainment", description: "Film ve dizi önerileri alın." },
+            { name: "Online Çekiliş Yapıcı", link: "hizmet/cekilis-yapici.html", category: "entertainment", description: "Online çekilişler düzenleyin." },
+            { name: "Futbol Maçı Skor Tahmin Aracı", link: "hizmet/futbol-skor-tahmin.html", category: "entertainment", description: "Futbol maçı skorlarını tahmin edin." },
+
+            // Araçlar Kategorisi
+            { name: "Zihin Haritası Oluşturucu", link: "hizmet/zihin-haritasi.html", category: "tools", description: "Zihin haritaları oluşturun." },
+            { name: "QR Kod Oluşturucu", link: "hizmet/qrolusturucu.html", category: "tools", description: "QR kodlar oluşturun." },
+            { name: "Lorem Ipsum Üretici", link: "hizmet/loremipsum.html", category: "tools", description: "Lorem Ipsum metinleri oluşturun." },
+            { name: "Şifre Üretici", link: "hizmet/sifre-uretici.html", category: "tools", description: "Güvenli şifreler oluşturun." },
+            { name: "Online Sayaç", link: "hizmet/online-sayac.html", category: "tools", description: "Online sayaç kullanın." },
+            { name: "Slogan Üretici", link: "hizmet/slogan-uretici.html", category: "tools", description: "Sloganlar oluşturun." },
+            { name: "CSS Gradient Üretici", link: "hizmet/css-gradient-uretici.html", category: "tools", description: "CSS gradientler oluşturun." },
+            { name: "Favicon Üretici", link: "hizmet/favicon-uretici.html", category: "tools", description: "Faviconlar oluşturun." },
+            { name: "UUID Üretici", link: "hizmet/uuid-uretici.html", category: "tools", description: "UUID'ler oluşturun." },
+            { name: "Basit Zaman Çizelgesi Yapıcı", link: "hizmet/zaman-cizelgesi.html", category: "tools", description: "Zaman çizelgeleri oluşturun." },
+            { name: "Teklif & Fatura Şablon Üretici", link: "hizmet/teklif-fatura-sablonu.html", category: "tools", description: "Teklif ve fatura şablonları oluşturun." },
+            { name: "UTM Link Builder", link: "hizmet/utm-link-builder.html", category: "tools", description: "UTM linkleri oluşturun." },
+            { name: "Meta Tag Generator", link: "hizmet/meta-tag-generator.html", category: "tools", description: "Meta etiketleri oluşturun." },
+            { name: "Open Graph Debug Tool", link: "hizmet/open-graph-debugger.html", category: "tools", description: "Open Graph etiketlerini test edin." },
+            { name: "Robots.txt Generator", link: "hizmet/robots-generator.html", category: "tools", description: "Robots.txt dosyaları oluşturun." },
+            { name: "Sitemap XML Creator", link: "hizmet/sitemap-generator.html", category: "tools", description: "Sitemap XML dosyaları oluşturun." },
+
+            // Medya Kategorisi
+            { name: "GIF Oluşturucu", link: "hizmet/gif-olustur.html", category: "media", description: "GIF'ler oluşturun." },
+            { name: "Ses Kesici", link: "hizmet/ses-kes.html", category: "media", description: "Ses dosyalarını kesin." },
+            { name: "Video Birleştirici", link: "hizmet/video-birlestir.html", category: "media", description: "Video dosyalarını birleştirin." },
+            { name: "Resim Filigran Ekleme", link: "hizmet/resim-figuran-ekle.html", category: "media", description: "Resimlere filigran ekleyin." },
+            { name: "Online Ses Kaydedici", link: "hizmet/ses-kaydedici.html", category: "media", description: "Ses kayıtları yapın." },
+            { name: "Sesli Yazıya Çevirici", link: "hizmet/sesli-yazi-cevirici.html", category: "media", description: "Ses dosyalarını yazıya çevirin." },
+            { name: "Sesli Metin Okuma Aracı", link: "hizmet/sesli-metin-okuma.html", category: "media", description: "Metinleri sesli okuyun." },
+
+            // Veri Kategorisi
+            { name: "JSON to CSV Dönüştürücü", link: "hizmet/json-to-csv.html", category: "data", description: "JSON verilerini CSV'ye dönüştürün." },
+            { name: "Dosya Hash Hesaplayıcı", link: "hizmet/dosya-hash-hesaplayici.html", category: "data", description: "Dosya hash değerlerini hesaplayın." },
+            { name: "PDF to TXT Extractor", link: "hizmet/pdf-to-txt.html", category: "data", description: "PDF'den metin çıkarın." },
+            { name: "PDF'den Görsel Çıkarma Aracı", link: "hizmet/pdf-gorsel-cikarma.html", category: "data", description: "PDF'den görseller çıkarın." },
+            { name: "Basit PDF Birleştirici", link: "hizmet/pdf-birlestirici.html", category: "data", description: "PDF dosyalarını birleştirin." },
+
+            // Metin Kategorisi
+            { name: "Metin Şifreleyici / Deşifre Edici", link: "hizmet/metinsifreleme.html", category: "text", description: "Metinleri şifreleyin ve deşifre edin." },
+            { name: "Şifre Güçlülük Testi", link: "hizmet/sifre-gucluluk-testi.html", category: "text", description: "Şifrelerin güçlülüğünü test edin." },
+            { name: "Metin Kelime ve Harf Sayacı", link: "hizmet/kelime-harf-sayaci.html", category: "text", description: "Metinlerdeki kelime ve harf sayısını sayın." },
+            { name: "Paragraf Yeniden Yazıcı", link: "hizmet/paragraf-spin.html", category: "text", description: "Paragrafları yeniden yazın." },
+            { name: "Metin Sıralayıcı", link: "hizmet/metin-siralayici.html", category: "text", description: "Metinleri sıralayın." },
+            { name: "Capslock Fixer", link: "hizmet/capslock-fixer.html", category: "text", description: "Büyük harf sorunlarını düzeltin." },
+            { name: "Dosya Adı Temizleyici", link: "hizmet/dosya-adi-temizleyici.html", category: "text", description: "Dosya adlarını temizleyin." },
+
+            // Güvenlik Kategorisi
+            { name: "IP Adresi Bilgi Aracı", link: "hizmet/ip-bilgi-araci.html", category: "security", description: "IP adresi bilgilerini görüntüleyin." },
+            { name: "Hız Testi (Ping Simülasyonu)", link: "hizmet/ping-testi.html", category: "security", description: "Bağlantı hızınızı test edin." },
+            { name: "Web Sitesi SEO Analiz Aracı", link: "hizmet/seo-analiz.html", category: "security", description: "Web sitelerinin SEO durumunu analiz edin." },
+
+            // Diğer Kategorisi
+            { name: "Evcil Hayvan Yaş Hesaplama", link: "hizmet/evcil-hayvan-yas-hesaplama.html", category: "other", description: "Evcil hayvan yaşını hesaplayın." },
+            { name: "Bağlantı Hızı Hesaplama", link: "hizmet/baglanti-hizi-hesaplama.html", category: "other", description: "Bağlantı hızınızı hesaplayın." },
+            { name: "Yağ Yakma Hesapla", link: "hizmet/yag-yakma.html", category: "other", description: "Yağ yakma hesaplamaları yapın." },
+            { name: "Yolculuk Mesafesi Hesapla", link: "hizmet/yolculuk-mesafesi.html", category: "other", description: "Yolculuk mesafelerini hesaplayın." },
+            { name: "Kalkış ve Varış Saati Hesapla", link: "hizmet/kalkis-varis-saati.html", category: "other", description: "Kalkış ve varış saatlerini hesaplayın." },
+            { name: "Araç Yakıt Tüketimi Hesaplama", link: "hizmet/yakit-tuketimi.html", category: "other", description: "Araç yakıt tüketimini hesaplayın." },
+            { name: "Ev Taşıma Checklist", link: "hizmet/ev-tasimachecklist.html", category: "other", description: "Ev taşıma kontrol listesi oluşturun." },
+            { name: "Yemek Tarifi Önerici", link: "hizmet/yemektarifi-onerici.html", category: "other", description: "Yemek tarifleri önerileri alın." },
+            { name: "Dil Çevirisi ve Telaffuz Rehberi", link: "hizmet/dil-cevirisi-telaffuz.html", category: "other", description: "Dil çevirileri ve telaffuz rehberi." },
+            { name: "Mekanik Klavye Tuş Kombinasyonu Öğretici", link: "hizmet/klavye-tus-kombinasyonu.html", category: "other", description: "Klavye tuş kombinasyonlarını öğrenin." },
+            { name: "E-kitap Okuma Takipçisi", link: "hizmet/ebook-takip.html", category: "other", description: "E-kitap okuma takibi yapın." },
+            { name: "Podcast Dinleme ve Not Alma Aracı", link: "hizmet/podcast-not-alma.html", category: "other", description: "Podcast dinleme ve not alma." },
+            { name: "Ses Frekans Analiz Aracı", link: "hizmet/ses-frekans-analiz.html", category: "other", description: "Ses frekanslarını analiz edin." },
+            { name: "Görme Mesafesi Hesaplayıcı", link: "hizmet/gorme-mesafesi.html", category: "other", description: "Görme mesafesini hesaplayın." },
+            { name: "Renk Körlüğü Testi", link: "hizmet/renk-korlugu-testi.html", category: "other", description: "Renk körlüğü testi yapın." },
+            { name: "Gürültü Ölçer", link: "hizmet/gurultu-olcer.html", category: "other", description: "Gürültü seviyesini ölçün." },
+            { name: "HTML Escape / Unescape Aracı", link: "hizmet/html-escape-unescape.html", category: "other", description: "HTML karakterlerini dönüştürün." },
+            { name: "Basit Regex Tester", link: "hizmet/regex-tester.html", category: "other", description: "Regex ifadelerini test edin." },
+            { name: "Karakter Seti Dönüştürücü", link: "hizmet/karakter-set-donusturucu.html", category: "other", description: "Karakter setlerini dönüştürün." },
+            { name: "Emoji ve Simge Kopyalama Aracı", link: "hizmet/emoji-kopyala.html", category: "other", description: "Emoji ve simgeleri kopyalayın." },
+            { name: "Fotoğraf Boyutlandırıcı", link: "hizmet/resize-photo.html", category: "other", description: "Fotoğrafları boyutlandırın." },
+            { name: "Email Subject Line Tester", link: "hizmet/email-subject-tester.html", category: "other", description: "E-posta konu satırlarını test edin." },
+            { name: "Yazılım Lisansı Hesaplama Aracı", link: "hizmet/yazilim-lisans-hesaplama.html", category: "other", description: "Yazılım lisanslarını hesaplayın." }
+        ];
+
+        function filterServices(category) {
+            const serviceContainer = document.querySelector('.service-container');
+            serviceContainer.innerHTML = '';
+            
+            const filteredServices = category === 'all' ? services : services.filter(service => service.category === category);
+            
+            filteredServices.forEach(service => {
+                const serviceItem = document.createElement('div');
+                serviceItem.className = 'service-item';
+                serviceItem.innerHTML = `
+                    <div class="service-icon">📊</div>
+                    <h3>${service.name}</h3>
+                    <p class="service-description">${service.description}</p>
+                    <a href="${service.link}" class="service-link">Hesapla</a>
+                `;
+                serviceContainer.appendChild(serviceItem);
+            });
+        }
+
+        function updateActiveTab(category) {
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.category === category) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                filterServices(category);
+                updateActiveTab(category);
+            });
+        });
+
+        // Arama çubuğuyla hizmetleri filtrele
+        function searchServices() {
+            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+            const serviceContainer = document.querySelector('.service-container');
+            serviceContainer.innerHTML = '';
+            
+            const filteredServices = services.filter(service => 
+                service.name.toLowerCase().includes(searchQuery) || 
+                service.description.toLowerCase().includes(searchQuery)
+            );
+            
+            filteredServices.forEach(service => {
+                const serviceItem = document.createElement('div');
+                serviceItem.className = 'service-item';
+                serviceItem.innerHTML = `
+                    <div class="service-icon">📊</div>
+                    <h3>${service.name}</h3>
+                    <p class="service-description">${service.description}</p>
+                    <a href="${service.link}" class="service-link">Hesapla</a>
+                `;
+                serviceContainer.appendChild(serviceItem);
+            });
+        }
+
+        // Initialize with all services
+        filterServices('all');
+        updateActiveTab('all');
+    </script>
+</body>
+</html>

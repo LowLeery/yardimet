@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meta etiketleri oluşturun. Web sitenizin SEO performansını artırın.">
+    <meta name="keywords" content="meta etiketleri, SEO, arama motoru, site optimizasyonu">
+    <title>Meta Tag Generator | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .meta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .meta-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-code {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+
+        .copy-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #28a745;
+        }
+
+        .generate-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .generate-btn:hover {
+            background: #28a745;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .preview-title {
+            font-size: 1.2rem;
+            color: #1a0dab;
+            margin-bottom: 5px;
+        }
+
+        .preview-url {
+            color: #006621;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .preview-description {
+            color: #545454;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Meta Tag Generator</h2>
+            <div class="meta-container">
+                <div class="meta-form">
+                    <div class="form-group">
+                        <label for="title">Sayfa Başlığı</label>
+                        <input type="text" id="title" placeholder="Sayfa başlığını girin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Meta Açıklaması</label>
+                        <textarea id="description" placeholder="Sayfa açıklamasını girin" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="keywords">Anahtar Kelimeler</label>
+                        <input type="text" id="keywords" placeholder="Virgülle ayırarak anahtar kelimeleri girin">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Yazar</label>
+                        <input type="text" id="author" placeholder="Yazar adını girin">
+                    </div>
+                    <div class="form-group">
+                        <label for="viewport">Viewport</label>
+                        <input type="text" id="viewport" value="width=device-width, initial-scale=1.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="robots">Robots</label>
+                        <select id="robots">
+                            <option value="index, follow">İndeksle ve Takip Et</option>
+                            <option value="noindex, nofollow">İndeksleme ve Takip Etme</option>
+                            <option value="index, nofollow">İndeksle ama Takip Etme</option>
+                            <option value="noindex, follow">İndeksleme ama Takip Et</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ogTitle">Open Graph Başlık</label>
+                        <input type="text" id="ogTitle" placeholder="Sosyal medya paylaşım başlığı">
+                    </div>
+                    <div class="form-group">
+                        <label for="ogDescription">Open Graph Açıklama</label>
+                        <textarea id="ogDescription" placeholder="Sosyal medya paylaşım açıklaması"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ogImage">Open Graph Görsel URL</label>
+                        <input type="url" id="ogImage" placeholder="Sosyal medya paylaşım görseli URL'si">
+                    </div>
+                    <button class="generate-btn" onclick="generateMetaTags()">Meta Etiketleri Oluştur</button>
+                </div>
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>Oluşturulan Meta Etiketleri</h3>
+                    <div class="result-code" id="resultCode"></div>
+                    <button class="copy-btn" onclick="copyToClipboard()">Kodu Kopyala</button>
+                    <div class="preview-container">
+                        <h4>Google Arama Önizlemesi</h4>
+                        <div class="preview-title" id="previewTitle"></div>
+                        <div class="preview-url" id="previewUrl">https://example.com</div>
+                        <div class="preview-description" id="previewDescription"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        function generateMetaTags() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const keywords = document.getElementById('keywords').value;
+            const author = document.getElementById('author').value;
+            const viewport = document.getElementById('viewport').value;
+            const robots = document.getElementById('robots').value;
+            const ogTitle = document.getElementById('ogTitle').value;
+            const ogDescription = document.getElementById('ogDescription').value;
+            const ogImage = document.getElementById('ogImage').value;
+
+            let metaTags = '';
+
+            metaTags += `<title>${title}</title>\n`;
+            metaTags += `<meta name="description" content="${description}">\n`;
+            
+            if (keywords) {
+                metaTags += `<meta name="keywords" content="${keywords}">\n`;
+            }
+            
+            if (author) {
+                metaTags += `<meta name="author" content="${author}">\n`;
+            }
+            
+            metaTags += `<meta name="viewport" content="${viewport}">\n`;
+            metaTags += `<meta name="robots" content="${robots}">\n`;
+            
+            if (ogTitle || ogDescription || ogImage) {
+                metaTags += '\n<!-- Open Graph Meta Tags -->\n';
+                
+                if (ogTitle) {
+                    metaTags += `<meta property="og:title" content="${ogTitle}">\n`;
+                }
+                
+                if (ogDescription) {
+                    metaTags += `<meta property="og:description" content="${ogDescription}">\n`;
+                }
+                
+                if (ogImage) {
+                    metaTags += `<meta property="og:image" content="${ogImage}">\n`;
+                }
+            }
+
+            document.getElementById('resultCode').textContent = metaTags;
+            document.getElementById('resultContainer').style.display = 'block';
+
+            // Update preview
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewDescription').textContent = description;
+        }
+
+        function copyToClipboard() {
+            const resultCode = document.getElementById('resultCode');
+            navigator.clipboard.writeText(resultCode.textContent).then(() => {
+                alert('Meta etiketleri kopyalandı!');
+            }).catch(err => {
+                console.error('Kopyalama hatası:', err);
+            });
+        }
+    </script>
+</body>
+
+</html>

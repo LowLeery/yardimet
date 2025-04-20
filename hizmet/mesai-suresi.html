@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mesai süresi hesaplama aracı - Çalışma saatlerinizi kolayca hesaplayın">
+    <meta name="keywords" content="mesai, çalışma süresi, iş saati, hesaplama, overtime">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Mesai Süresi Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-card {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--secondary-color);
+        }
+
+        .result-value {
+            font-weight: 500;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .time-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator-container">
+        <h1>Mesai Süresi Hesaplama</h1>
+        
+        <div class="calculator-card">
+            <form id="overtimeForm">
+                <div class="form-group">
+                    <label for="startTime">Başlangıç Saati</label>
+                    <input type="time" id="startTime" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="endTime">Bitiş Saati</label>
+                    <input type="time" id="endTime" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="breakTime">Mola Süresi (Dakika)</label>
+                    <input type="number" id="breakTime" min="0" value="0" required>
+                </div>
+                
+                <button type="submit" class="btn">Hesapla</button>
+            </form>
+            
+            <div class="result-section" id="resultSection">
+                <div class="result-item">
+                    <span class="result-label">Toplam Çalışma Süresi:</span>
+                    <span class="result-value" id="totalTime">0 saat 0 dakika</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Normal Mesai:</span>
+                    <span class="result-value" id="normalTime">0 saat 0 dakika</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Fazla Mesai:</span>
+                    <span class="result-value" id="overtime">0 saat 0 dakika</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Mesai Süresi Hesaplama Hakkında</h2>
+            <p>Bu araç, çalışma saatlerinizi ve mesai sürelerinizi kolayca hesaplamanızı sağlar. Aşağıdaki bilgileri göz önünde bulundurun:</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Hesaplama Detayları</h3>
+                    <ul>
+                        <li>Normal mesai: 8 saat/gün</li>
+                        <li>Fazla mesai: Normal mesai üzerindeki süre</li>
+                        <li>Mola süresi toplam süreden çıkarılır</li>
+                        <li>Haftalık çalışma süresi: 45 saat</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Önemli Notlar</h3>
+                    <ul>
+                        <li>Haftalık 45 saati aşan süreler fazla mesai sayılır</li>
+                        <li>Günlük 8 saati aşan süreler fazla mesai sayılır</li>
+                        <li>Mola süreleri çalışma süresinden çıkarılır</li>
+                        <li>Hesaplamalar 24 saat formatında yapılır</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('overtimeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const breakTime = parseInt(document.getElementById('breakTime').value);
+            
+            // Saat ve dakikaları ayır
+            const [startHour, startMinute] = startTime.split(':').map(Number);
+            const [endHour, endMinute] = endTime.split(':').map(Number);
+            
+            // Toplam dakikayı hesapla
+            let totalMinutes = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
+            
+            // Mola süresini çıkar
+            totalMinutes -= breakTime;
+            
+            // Negatif süre kontrolü
+            if (totalMinutes < 0) {
+                totalMinutes += 24 * 60; // 24 saat ekle
+            }
+            
+            // Normal mesai (8 saat = 480 dakika)
+            const normalMinutes = Math.min(totalMinutes, 480);
+            const overtimeMinutes = Math.max(0, totalMinutes - 480);
+            
+            // Sonuçları formatla
+            const formatTime = (minutes) => {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return `${hours} saat ${mins} dakika`;
+            };
+            
+            // Sonuçları göster
+            document.getElementById('totalTime').textContent = formatTime(totalMinutes);
+            document.getElementById('normalTime').textContent = formatTime(normalMinutes);
+            document.getElementById('overtime').textContent = formatTime(overtimeMinutes);
+            
+            // Sonuç bölümünü göster
+            document.getElementById('resultSection').classList.add('active');
+        });
+    </script>
+</body>
+
+</html>

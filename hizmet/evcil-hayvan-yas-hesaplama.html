@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Evcil hayvanınızın yaşını insan yaşına çevirin ve yaşla ilgili bilgileri öğrenin.">
+    <meta name="keywords" content="evcil hayvan yaş hesaplama, kedi yaşı, köpek yaşı, pet yaş hesaplama">
+    <title>Evcil Hayvan Yaş Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 200px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .pet-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .pet-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group select,
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 0 2px rgba(50,205,50,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #28a745;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .results-section h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .pet-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .pet-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .pet-info ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .pet-info li {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .pet-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pet-image i {
+            font-size: 4rem;
+            color: #32CD32;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <div class="content">
+            <h2>Evcil Hayvan Yaş Hesaplama</h2>
+            <div class="pet-container">
+                <div class="pet-form">
+                    <div class="pet-image">
+                        <i class="fas fa-paw"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="petType">Hayvan Türü:</label>
+                        <select id="petType">
+                            <option value="dog">Köpek</option>
+                            <option value="cat">Kedi</option>
+                            <option value="bird">Kuş</option>
+                            <option value="hamster">Hamster</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="petAge">Hayvan Yaşı:</label>
+                        <input type="number" id="petAge" min="0" max="30" placeholder="Yaşını girin">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Hesapla
+                        </button>
+                        <button class="action-btn clear-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i> Temizle
+                        </button>
+                    </div>
+
+                    <div class="results-section">
+                        <h3>Hesaplama Sonuçları</h3>
+                        <div class="result-item">
+                            <div class="result-label">İnsan Yaşına Göre:</div>
+                            <div class="result-value" id="humanAge">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Yaşam Evresi:</div>
+                            <div class="result-value" id="lifeStage">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Ortalama Yaşam Süresi:</div>
+                            <div class="result-value" id="lifeExpectancy">-</div>
+                        </div>
+                    </div>
+
+                    <div class="pet-info">
+                        <h3>Yaşam Evreleri ve Öneriler:</h3>
+                        <ul id="petInfoList">
+                            <li>Yavru (0-1 yaş): Özel beslenme ve aşı programı gerekir</li>
+                            <li>Genç (1-3 yaş): Aktif bakım ve düzenli veteriner kontrolü</li>
+                            <li>Yetişkin (3-7 yaş): Rutin bakım ve sağlık kontrolleri</li>
+                            <li>Yaşlı (7+ yaş): Özel diyet ve daha sık sağlık kontrolleri</li>
+                        </ul>
+                    </div>
+
+                    <div class="status" id="status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        const petType = document.getElementById('petType');
+        const petAge = document.getElementById('petAge');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const status = document.getElementById('status');
+
+        // Yaş hesaplama fonksiyonları
+        const ageCalculators = {
+            dog: (age) => {
+                if (age <= 1) return age * 15;
+                if (age <= 2) return 15 + (age - 1) * 9;
+                return 24 + (age - 2) * 5;
+            },
+            cat: (age) => {
+                if (age <= 1) return age * 15;
+                if (age <= 2) return 15 + (age - 1) * 9;
+                return 24 + (age - 2) * 4;
+            },
+            bird: (age) => age * 5,
+            hamster: (age) => age * 25
+        };
+
+        // Yaşam evresi belirleme
+        function getLifeStage(age, type) {
+            if (age < 1) return 'Yavru';
+            if (age < 3) return 'Genç';
+            if (age < 7) return 'Yetişkin';
+            return 'Yaşlı';
+        }
+
+        // Ortalama yaşam süresi
+        const lifeExpectancy = {
+            dog: '10-13 yıl',
+            cat: '12-15 yıl',
+            bird: '5-10 yıl',
+            hamster: '2-3 yıl'
+        };
+
+        // Yaş hesapla
+        function calculateAge() {
+            const type = petType.value;
+            const age = parseFloat(petAge.value);
+
+            if (isNaN(age) || age < 0) {
+                showStatus('Lütfen geçerli bir yaş girin!', true);
+                return;
+            }
+
+            const humanAge = ageCalculators[type](age);
+            const stage = getLifeStage(age, type);
+            const expectancy = lifeExpectancy[type];
+
+            document.getElementById('humanAge').textContent = `${humanAge.toFixed(1)} yaş`;
+            document.getElementById('lifeStage').textContent = stage;
+            document.getElementById('lifeExpectancy').textContent = expectancy;
+
+            showStatus('Yaş hesaplaması tamamlandı!', false);
+        }
+
+        // Tüm alanları temizle
+        function clearAll() {
+            petAge.value = '';
+            document.getElementById('humanAge').textContent = '-';
+            document.getElementById('lifeStage').textContent = '-';
+            document.getElementById('lifeExpectancy').textContent = '-';
+            showStatus('Tüm alanlar temizlendi!', false);
+        }
+
+        // Durum mesajını göster
+        function showStatus(message, isError) {
+            status.textContent = message;
+            status.style.display = 'block';
+            status.className = 'status' + (isError ? ' error' : '');
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        // Olay dinleyicileri
+        calculateBtn.addEventListener('click', calculateAge);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+</html>

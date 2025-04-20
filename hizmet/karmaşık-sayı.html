@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Karmaşık sayı hesaplamaları yapın. Karmaşık sayıların toplama, çıkarma, çarpma ve bölme işlemlerini gerçekleştirin.">
+    <meta name="keywords" content="karmaşık sayı, kompleks sayı, reel kısım, sanal kısım, matematik">
+    <meta name="author" content="Günlük Hesaplama Araçları">
+    <meta name="robots" content="index, follow">
+    <title>Karmaşık Sayı Hesaplama | Günlük Hesaplama Araçları</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #9C27B0;
+            --secondary-color: #7B1FA2;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calculator-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .operation-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .operation-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.3);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .result-unit {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .related-tools {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-section {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-card, .result-card {
+                padding: 20px;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Günlük Hesaplama Araçları</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2>Karmaşık Sayı Hesaplama</h2>
+                <form id="complexForm">
+                    <div class="form-group">
+                        <label for="real1">1. Sayı Reel Kısım</label>
+                        <input type="number" id="real1" name="real1" step="any" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imaginary1">1. Sayı Sanal Kısım</label>
+                        <input type="number" id="imaginary1" name="imaginary1" step="any" required>
+                    </div>
+                    <select class="operation-select" id="operation" required>
+                        <option value="add">Toplama (+)</option>
+                        <option value="subtract">Çıkarma (-)</option>
+                        <option value="multiply">Çarpma (×)</option>
+                        <option value="divide">Bölme (÷)</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="real2">2. Sayı Reel Kısım</label>
+                        <input type="number" id="real2" name="real2" step="any" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imaginary2">2. Sayı Sanal Kısım</label>
+                        <input type="number" id="imaginary2" name="imaginary2" step="any" required>
+                    </div>
+                    <button type="submit" class="calculate-btn">Hesapla</button>
+                </form>
+            </div>
+
+            <div class="result-card">
+                <h2>Sonuç</h2>
+                <div id="result" style="display: none;">
+                    <div class="result-value" id="complexResult">-</div>
+                    <div class="result-description" id="resultDescription">
+                        Sonuç için lütfen formu doldurun.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Karmaşık Sayılar Hakkında</h2>
+            <p>Karmaşık sayılar, reel ve sanal kısımlardan oluşan sayılardır. Matematik, fizik ve mühendislik alanlarında yaygın olarak kullanılır.</p>
+            
+            <h3>Karmaşık Sayı Özellikleri</h3>
+            <ul>
+                <li>a + bi formunda yazılır (a: reel kısım, b: sanal kısım)</li>
+                <li>i: sanal birim (i² = -1)</li>
+                <li>Toplama: (a+bi) + (c+di) = (a+c) + (b+d)i</li>
+                <li>Çarpma: (a+bi) × (c+di) = (ac-bd) + (ad+bc)i</li>
+                <li>Eşlenik: a+bi'nin eşleniği a-bi'dir</li>
+            </ul>
+
+            <h3>İlgili Hesaplama Araçları</h3>
+            <div class="related-tools">
+                <div class="tool-card">
+                    <h3>Matematiksel Ortalama</h3>
+                    <p>Sayı dizilerinin ortalamasını hesaplayın</p>
+                    <a href="ortalama.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Faktöriyel</h3>
+                    <p>Sayıların faktöriyelini hesaplayın</p>
+                    <a href="faktoriyel.html" class="tool-link">Hesapla</a>
+                </div>
+                <div class="tool-card">
+                    <h3>İçsel Çarpan</h3>
+                    <p>Sayıların içsel çarpanlarını hesaplayın</p>
+                    <a href="içsel-çarpan.html" class="tool-link">Hesapla</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Günlük Hesaplama Araçları | <a href="../hakkinda.html">Hakkında</a> | <a href="../iletisim.html">İletişim</a> | <a href="../kvkk.html">KVKK</a></p>
+            <p class="footer-description">Günlük hayatınızı kolaylaştıracak 150'den fazla ücretsiz hesaplama aracı.</p>
+        </div>
+    </footer>
+
+    <script>
+        function formatComplexNumber(real, imaginary) {
+            if (imaginary === 0) return real.toString();
+            if (real === 0) return imaginary === 1 ? 'i' : imaginary === -1 ? '-i' : imaginary + 'i';
+            return real + (imaginary > 0 ? '+' : '') + (imaginary === 1 ? 'i' : imaginary === -1 ? '-i' : imaginary + 'i');
+        }
+
+        function addComplex(a, b, c, d) {
+            return [a + c, b + d];
+        }
+
+        function subtractComplex(a, b, c, d) {
+            return [a - c, b - d];
+        }
+
+        function multiplyComplex(a, b, c, d) {
+            return [a * c - b * d, a * d + b * c];
+        }
+
+        function divideComplex(a, b, c, d) {
+            const denominator = c * c + d * d;
+            if (denominator === 0) throw new Error('Sıfıra bölme hatası');
+            return [(a * c + b * d) / denominator, (b * c - a * d) / denominator];
+        }
+
+        document.getElementById('complexForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const real1 = parseFloat(document.getElementById('real1').value);
+            const imaginary1 = parseFloat(document.getElementById('imaginary1').value);
+            const real2 = parseFloat(document.getElementById('real2').value);
+            const imaginary2 = parseFloat(document.getElementById('imaginary2').value);
+            const operation = document.getElementById('operation').value;
+            
+            let result;
+            try {
+                switch (operation) {
+                    case 'add':
+                        result = addComplex(real1, imaginary1, real2, imaginary2);
+                        break;
+                    case 'subtract':
+                        result = subtractComplex(real1, imaginary1, real2, imaginary2);
+                        break;
+                    case 'multiply':
+                        result = multiplyComplex(real1, imaginary1, real2, imaginary2);
+                        break;
+                    case 'divide':
+                        result = divideComplex(real1, imaginary1, real2, imaginary2);
+                        break;
+                }
+                
+                const formattedResult = formatComplexNumber(result[0], result[1]);
+                document.getElementById('complexResult').textContent = formattedResult;
+                
+                let description = `İşlem Detayları:\n\n`;
+                description += `1. Sayı: ${formatComplexNumber(real1, imaginary1)}\n`;
+                description += `2. Sayı: ${formatComplexNumber(real2, imaginary2)}\n`;
+                description += `İşlem: ${operation === 'add' ? 'Toplama' : operation === 'subtract' ? 'Çıkarma' : operation === 'multiply' ? 'Çarpma' : 'Bölme'}\n`;
+                description += `Sonuç: ${formattedResult}`;
+                
+                document.getElementById('resultDescription').textContent = description;
+                document.getElementById('result').style.display = 'block';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
